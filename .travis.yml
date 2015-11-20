@@ -2,9 +2,8 @@ language: java
 jdk:
 - oraclejdk8
 script:
-- ./gradlew check
-- ./gradlew assembleDist installDist
-
+- "./gradlew check"
+- "./gradlew assembleDist bootRepackage"
 before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
@@ -12,12 +11,10 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 deploy:
-  provider: openshift
+  provider: heroku
+  api_key:
+    secure: KIzkthAHTaVY+v5GBqwyy9pBRfqVickJFjDxhoAjqIcO0HZLit8dhUd7TEteaphnWbQgwcl5IAOr4L5U9Q0YIJnJ6Eq+17BRFAEVppRyDUjcm97LNtO4ZoL9WcTjaDliPABUjmKDv5gj40TWg0MyrDN7PY8zAAfL9/aFgPnS4z9wRNOhmC40I2h8eNstNltpJFIMUN6o0guToM6sMvdRbj7YLbM+Oyst2ox10kvAI9dga+dn0FPb10FFxr1yJvxGu2VW4QeSHOWH3NXz7TshRwyfnvLD4c5eaGzNPMduAfmCpD8U3zJVJYQAcjiTqBFed97uBo1/SvPfvqT1NGAEfSTUlycO1XysE1QW8M7P9CfPuF3gcMiQVA1DCl14WpyfsopqdsxyTi2nIGcWXhjcY1sQKb92fsWDUv2C1uImuv2XlA4aG4yroxHS0TUqsaZBLzj07te8HkziarUIRyf7lksxc6MzqTZop7/AZgatWJzKnAzkntzq0MNOt4/ATbMCj20Xj7l9uFrkRSV4E/y++R+287dWL8Z1Vgsq5fs1N6IMgseRvsuiUS5fuTXfpZLShzN2wzyq/CTfPjpYJjUNGD7GEDAmIen7p+uJ6/3QLKeTEIgaj0eSAG1wmIHrLq/tafLl0ah+lbVCD3YPXSv7fboalVBsfeOAJLc1SyCa2Os=
+  app: 
+    develop: leaderboard-dev
   skip_cleanup: true
-  user: walter.niklas@gmail.com
-  password:
-    secure: tyqf6RcuIJ3JcKxavivxni/ZIdQBZTa2MEHOiHr6GsQHmW56Hoba32OPI/WgQDn4vua1femsWbaH8u4j7HiwSjrW+mAVjah+eSv+WxxMzR+HAAHVreRB7JHiUaTlaW7rip3sCjkh5Wh/rANsrexUgVOmtz5NYp8Qa+JOF1Z3NJvkgo+TeK90GWnXqqslpUjAY/Blbqx1FoLMfUUmFulsJzRc63cNzvjaJ/JQexX0cge16TRH5nogygKGxg8Q3i7+L40soilOFcfow3q5xkNefHf5v9LBnNlEyYBWF9bou5B6sGdTud6NME2rGzmInBC03Atx0ldguFU/yZ8mwQh1gxR+6tYp+XIw9lMke3I5AJqhQ+INP6Xop7S5rVLo63f2ja5kTQAgcxoJ8Dca/0Z6M+H0MhJ+tu/BaH3tnWOykcwqgIki5tDRXtVB4Qa7EPf7r+JfNoipF1O0Ib9JrB62uQGhQwBxfFhQouX1jEmqVEK13Rb/q2x4FpFlTuIFvoVDyvaEX4wgAZoaw9KOnAYs5JNRshAVd0hKDG3pBptgm/3I0O6hIt2zOeuSXC9nhIBsKPGGOXWI+ljKVNSSYZKG559YQknyaXZQy58EjfGMNYSZnikkw64qM/KCwu4DSSvRcDjwuiQNIvnc/EInW/mqJlRw21x+TFKOvtsni6ghJ2k=
-  app: leaderboard
-  domain: mcripper
-  on:
-    repo: TwoStone/leaderboard
+  

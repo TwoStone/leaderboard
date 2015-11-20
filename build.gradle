@@ -11,3 +11,4 @@ subprojects {
 
 	version = rootProject.version
 }
+
