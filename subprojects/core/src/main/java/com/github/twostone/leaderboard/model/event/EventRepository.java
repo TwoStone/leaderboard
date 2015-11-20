@@ -1,12 +1,14 @@
 package com.github.twostone.leaderboard.model.event;
 
+import org.springframework.data.repository.Repository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
 import java.util.Collection;
 
-import org.springframework.data.repository.Repository;
-
+@RepositoryRestResource(path = "/event")
 public interface EventRepository extends Repository<Event, String> {
-	
-	Event findOne(String id);
-	
-	Collection<Event> findByCompetitionId(String competitionId);
+
+  Event findOne(String id);
+
+  Collection<Event> findByCompetitionId(String competitionId);
 }

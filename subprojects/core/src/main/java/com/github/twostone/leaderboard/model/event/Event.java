@@ -4,53 +4,64 @@ import com.github.twostone.leaderboard.model.AbstractEntity;
 import com.github.twostone.leaderboard.model.competition.Competition;
 
 import java.io.Serializable;
-import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
- * Entity implementation class for Entity: Event
+ * Entity implementation class for Entity: Event.
  */
 @Entity
 public class Event extends AbstractEntity implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private String name;
-	private String description;
-	
-	@ManyToOne
-	private EventType type;
-	
-	@OneToMany
-	private Collection<Result> results; 
+  private static final long serialVersionUID = 1L;
+  private String name;
+  private String description;
 
-	@ManyToOne
-	private Competition competition;
-	
-	public Event() {
-		super();
-		this.results = new ArrayList<>();
-	}   
+  @ManyToOne(cascade = CascadeType.ALL)
+  private EventType type;
 
-	public String getName() {
-		return this.name;
-	}
+  @OneToMany
+  private Collection<Result> results;
 
-	public void setName(String name) {
-		this.name = name;
-	}   
-	public String getDescription() {
-		return this.description;
-	}
+  @ManyToOne
+  private Competition competition;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	public Collection<Result> getResults() {
-		return results;
-	}
-   
+  protected Event() {
+    super();
+    this.results = new ArrayList<>();
+  }
+
+  public Event(String name, EventType type) {
+    super();
+    this.name = name;
+    this.type = type;
+  }
+
+
+
+  public String getName() {
+    return this.name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getDescription() {
+    return this.description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public Collection<Result> getResults() {
+    return this.results;
+  }
+
 }
