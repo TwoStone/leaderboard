@@ -1,0 +1,35 @@
+plugins {
+    id "com.moowork.node" version "0.11"
+}
+
+apply plugin:'java'
+
+node {
+    version = '4.2.2'
+    npmVersion = '3.4.1'
+    download = true
+}
+
+ext.jsDistributionDir = 'dist'
+
+jar {
+	from(fileTree(jsDistributionDir)) {
+		into 'META-INF/resources'
+	}
+}
+
+task jspm_install(type: NpmTask, dependsOn: npm_install) {
+    args = ['run', 'jspm-install']
+}
+
+task npm_build(type: NpmTask, dependsOn: jspm_install) {
+    args = ['run', 'build']
+}
+
+task npm_clean(type: NpmTask) {
+    args = ['run', 'clean']
+}
+
+jar.dependsOn npm_build
+
+clean.dependsOn npm_clean

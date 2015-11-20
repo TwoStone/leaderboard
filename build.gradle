@@ -1,3 +1,13 @@
+defaultTasks 'assemble'
+
+apply plugin: 'java-base'
+
+archivesBaseName = 'leaderboard'
+
+version = "1.0.0"
+
 subprojects {
 	apply from: "$rootDir/gradle/codeQuality.gradle"
+
+	version = rootProject.version
 }
