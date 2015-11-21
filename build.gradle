@@ -12,3 +12,4 @@ subprojects {
 	version = rootProject.version
 }
 
+task stage { }
