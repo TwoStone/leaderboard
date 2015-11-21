@@ -26,10 +26,8 @@ task jspm_install(type: NpmTask, dependsOn: npm_install) {
 }
 
 task npm_build(type: NpmTask, dependsOn: jspm_install) {
-    inputs.dir fileTree(dir:'src') {
-        exclude 'lib'
-    }
-    outputs.dir jsDistributionDir
+    inputs.dir file('src')
+    outputs.dir file(jsDistributionDir)
     args = ['run', 'build']
 }
 
