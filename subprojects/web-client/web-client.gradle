@@ -20,13 +20,16 @@ jar {
 
 task jspm_install(type: NpmTask, dependsOn: npm_install) {
     inputs.file file('package.json')
-    outputs.dir file('src/libs')
-    
+    outputs.dir file('src/lib')
+
     args = ['run', 'jspm-install']
 }
 
 task npm_build(type: NpmTask, dependsOn: jspm_install) {
-
+    inputs.dir fileTree(dir:'src') {
+        exclude 'lib'
+    }
+    outputs.dir jsDistributionDir
     args = ['run', 'build']
 }
 
