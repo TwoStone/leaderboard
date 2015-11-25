@@ -5,7 +5,7 @@ var path = require('path'),
     flatten = require('gulp-flatten'),
     debug = require('gulp-debug'),
     gulp = require('gulp'),
-    Builder = require('systemjs-builder');
+    Builder = require('jspm').Builder;
 
 var paths = {
     baseUrl: path.join(__dirname, 'src'),
@@ -31,13 +31,8 @@ gulp.task('optimize-and-copy-css', function() {
 gulp.task('optimize-and-copy-js', function(cb) {
     var builder = new Builder();
     builder.loadConfig('./src/config.js')
-        .then(function() {
-        	console.log(paths.baseUrl)
-            builder.config({ 
-            	
-        	});
-            
-            builder.buildSFX('app/app', paths.destination + '/app/app.js', { minify: true, sourceMaps: true });
+        .then(function() {            
+            builder.bundle('app/app', paths.destination + '/app/app.js', { minify: true, sourceMaps: true });
             cb();
         })
         .catch(function(err) {

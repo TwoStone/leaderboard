@@ -20,3 +20,4 @@ hs_err_pid*
 subprojects/web-client/dist/
 subprojects/web-client/node_modules/
 subprojects/web-client/src/lib/
+node_modules
