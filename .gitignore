@@ -21,3 +21,5 @@ subprojects/web-client/dist/
 subprojects/web-client/node_modules/
 subprojects/web-client/src/lib/
 node_modules
+subprojects/web-client/.tmp/
+subprojects/web-client/build/

@@ -1,0 +1,17 @@
+doctype html
+html
+    head(ng-controller="appController as app")
+        title {{app.title}}
+        if production
+            link(rel='stylesheet' href='/css/app.min.css')
+        else 
+            link(rel='stylesheet' href='/css/style.css')
+    body(ng-cloak)
+        main
+        if production
+            script(src='/app.min.js')
+        else
+            script(src='/lib/system.js')
+            script(src='/config.js')
+            script(type='text/javascript').
+                System.import('./app/app.js')
