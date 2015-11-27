@@ -1,15 +1,58 @@
-defaultTasks 'assemble'
+buildscript {
+    ext {
+        springBootVersion = '1.3.0.RELEASE'
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
+    }
+}
 
-apply plugin: 'java-base'
+defaultTasks 'build'
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+apply plugin: 'application'
 
 archivesBaseName = 'leaderboard'
+mainClassName = 'com.github.twostone.leaderboard.LeaderboardMain'
 
 version = "1.0.0"
+group = 'com.github.twostone.leaderboard'
+
+ext {
+    if (project.hasProperty('useBintrayVersion')) {
+        project.useBintrayVersion = true
+    } else {
+        ext.useBintrayVersion = false
+    }
+}
 
 subprojects {
-	apply from: "$rootDir/gradle/codeQuality.gradle"
+    apply from: "$rootDir/gradle/java.gradle"
+    apply from: "$rootDir/gradle/codeQuality.gradle"
 
-	version = rootProject.version
+    version = rootProject.version
+    group = rootProject.group
+
+    configurations.all {
+        resolutionStrategy {
+            failOnVersionConflict()
+        }
+    }
+}
+
+repositories {
+	jcenter()
+}
+
+dependencies {
+    compile project(':core')
+    compile project(':web-client')
+    
+    compile 'org.springframework.boot:spring-boot-starter-web'
 }
 
 task stage { }

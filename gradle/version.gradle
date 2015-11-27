@@ -1,0 +1,50 @@
+task determineCommitId {
+    ext.commitId = null
+
+    doLast {
+        def strategies = []
+
+        def env = System.getenv()
+
+        // Builds of Gradle happening on the CI server
+        strategies << {
+            env["TRAVIS_BUILD_NUMBER"]
+        }
+
+        // If it's a checkout, ask Git for it
+        strategies << {
+            if (file(".git/HEAD").exists()) {
+                def baos = new ByteArrayOutputStream()
+                def execResult = exec {
+                    ignoreExitValue = true
+                    commandLine = ["git", "log", "-1", "--format=%H"]
+                    if (OperatingSystem.current().windows) {
+                        commandLine = ["cmd", "/c"] + commandLine
+                    }
+
+                    standardOutput = baos
+                }
+                if (execResult.exitValue == 0) {
+                    new String(baos.toByteArray(), "utf8").trim()
+                } else {
+                    // Read commit id directly from filesystem
+                    def headRef = file(".git/HEAD").text
+                    headRef = headRef.replaceAll('ref: ', '').trim()
+                    file(".git/$headRef").text.trim()
+                }
+            } else {
+                null
+            }
+        }
+
+        for (strategy in strategies) {
+            commitId = strategy()
+            if (commitId) {
+                break
+            }
+        }
+        if (!commitId) {
+            throw new InvalidUserDataException("Could not determine commit id")
+        }
+    }
+}
