@@ -11,9 +11,9 @@
   },
   "jspm": {
     "directories": {
-      "baseURL": "src",
-      "lib": "src",
-      "packages": "src/lib"
+      "baseURL": "src/main/web",
+      "lib": "src/main/web",
+      "packages": "src/main/web/lib"
     },
     "dependencies": {
       "angular": "github:angular/bower-angular@^1.4.8",

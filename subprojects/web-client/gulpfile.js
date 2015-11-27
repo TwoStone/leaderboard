@@ -11,15 +11,17 @@ var path = require('path'),
     gulp = require('gulp'),
     Builder = require('jspm').Builder;
 
+var srcDir = 'src/main/web';
+
 var paths = {
-    baseUrl: path.join(__dirname, 'src'),
-    bowerLibs: ['src/lib/**', '!src/lib/*/test/*'],
-    css: ['src/css/*.css', '.tmp/**/*.css'],
-    less: ['src/less/*.less'],
-    assets: ['src/cache.manifest', 'src/index.html'],
-    images: ['src/img/*'],
-    fonts: ['src/fonts/*', 'src/lib/**/fonts/*'],
-    jade: ['src/**/*.jade'],
+    baseUrl: path.join(__dirname, srcDir),
+    bowerLibs: ['src/main/web/lib/**', '!src/main/web/lib/*/test/*'],
+    css: ['src/main/web/css/*.css', '.tmp/**/*.css'],
+    less: ['src/main/web/less/*.less'],
+    assets: ['src/main/web/cache.manifest', 'src/main/web/index.html'],
+    images: ['src/main/web/img/*'],
+    fonts: ['src/main/web/fonts/*', 'src/main/web/lib/**/fonts/*'],
+    jade: ['src/main/web/**/*.jade'],
     html: ['.tmp/**/*.html'],
     destination: './dist'
 };
@@ -35,7 +37,7 @@ gulp.task('optimize-and-copy-css', ['less'], function() {
 // Optimize application JavaScript files and copy to 'dist' folder
 gulp.task('optimize-and-copy-js', function(cb) {
     var builder = new Builder();
-    builder.loadConfig('./src/config.js')
+    builder.loadConfig(srcDir + '/config.js')
         .then(function() {  
             builder.buildStatic('app/app', paths.destination + '/app.min.js', { 
                 minify: true, 
@@ -122,8 +124,8 @@ gulp.task('watch', function () {
 });
 
 gulp.task('livereload', function () {
-    gulp.src(['.tmp/*.{css,html}', ,'src/*.js'])
-        .pipe(watch(['.tmp/*.{css,html}', 'src/*.js']))
+    gulp.src(['.tmp/*.{css,html}', srcDir + '/*.js'])
+        .pipe(watch(['.tmp/*.{css,html}', srcDir + '/*.js']))
         .pipe(connect.reload());
 });
 
