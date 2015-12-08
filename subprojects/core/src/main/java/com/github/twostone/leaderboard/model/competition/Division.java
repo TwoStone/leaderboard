@@ -12,8 +12,8 @@ import javax.persistence.Entity;
 @Entity
 public class Division extends AbstractEntity implements Serializable {
 
-
   private String name;
+
   private static final long serialVersionUID = 1L;
 
   protected Division() {
@@ -31,6 +31,11 @@ public class Division extends AbstractEntity implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  @Override
+  public String toString() {
+    return this.name;
   }
 
 }

@@ -5,7 +5,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.Collection;
 
-@RepositoryRestResource(path = "/event")
+@RepositoryRestResource
 public interface EventRepository extends Repository<Event, String> {
 
   Event findOne(String id);

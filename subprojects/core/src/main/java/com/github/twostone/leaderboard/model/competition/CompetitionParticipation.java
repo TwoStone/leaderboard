@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Participation extends AbstractEntity {
+public class CompetitionParticipation extends AbstractEntity {
 
   private static final long serialVersionUID = 1L;
 
@@ -20,21 +20,33 @@ public class Participation extends AbstractEntity {
   @ManyToOne
   private Division division;
 
-  protected Participation() {
+  protected CompetitionParticipation() {
     super();
   }
 
-  Participation(Athlete athlete, Division division, Competition competition) {
+  CompetitionParticipation(Athlete athlete, Division division, Competition competition) {
     super();
     this.participant = athlete;
     this.division = division;
     this.competition = competition;
   }
 
+  public Athlete getParticipant() {
+    return participant;
+  }
+
+  public Division getDivision() {
+    return division;
+  }
+
+  public Competition getCompetition() {
+    return competition;
+  }
+
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof Participation) {
-      Participation other = (Participation) obj;
+    if (obj instanceof CompetitionParticipation) {
+      CompetitionParticipation other = (CompetitionParticipation) obj;
       return this.participant.equals(other.participant)
           && this.competition.equals(other.competition);
     }

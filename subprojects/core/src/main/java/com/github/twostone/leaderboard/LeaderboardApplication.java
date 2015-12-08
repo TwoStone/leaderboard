@@ -1,23 +1,23 @@
 package com.github.twostone.leaderboard;
 
-import java.time.LocalDate;
-
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
 import com.github.twostone.leaderboard.model.athlete.Athlete;
 import com.github.twostone.leaderboard.model.athlete.AthleteRepository;
 import com.github.twostone.leaderboard.model.competition.Competition;
 import com.github.twostone.leaderboard.model.competition.CompetitionRepository;
 import com.github.twostone.leaderboard.model.competition.Division;
-import com.github.twostone.leaderboard.model.event.Event;
-import com.github.twostone.leaderboard.model.event.EventType;
-import com.github.twostone.leaderboard.model.event.EventType.Ordering;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import java.time.LocalDate;
 
 @SpringBootApplication
 public class LeaderboardApplication {
 
+  /**
+   * Creates demo data.
+   */
   @Bean
   public CommandLineRunner demo(CompetitionRepository competitionRepository,
       AthleteRepository athleteRepository) {
@@ -34,8 +34,6 @@ public class LeaderboardApplication {
       competition.registerAthlete(athlete, division);
       competition.registerAthlete(rich, division);
 
-      Event event = new Event("WOD 1", new EventType(Ordering.ASCENDING));
-      competition.addEvent(event);
 
       competitionRepository.save(competition);
     };

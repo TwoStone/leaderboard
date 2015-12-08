@@ -5,6 +5,7 @@ import com.github.twostone.leaderboard.model.athlete.Athlete;
 import com.github.twostone.leaderboard.model.event.Event;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,26 +28,26 @@ public class Competition extends AbstractEntity implements Serializable {
   @OneToMany(cascade = CascadeType.ALL)
   private Collection<Division> divisions;
 
-  @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL)
-  private Collection<Participation> participations;
+  @OneToMany(mappedBy = "competition")
+  private Collection<CompetitionParticipation> participations;
 
-  @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "competition")
   private List<Event> events;
 
   protected Competition() {
     super();
+    this.divisions = new ArrayList<>();
+    this.participations = new ArrayList<>();
+    this.events = new ArrayList<>();
   }
 
   /**
    * Creates a new {@link Competition} Object.
    */
   public Competition(String name, LocalDate date) {
-    super();
+    this();
     this.name = name;
     this.date = date;
-    this.divisions = new ArrayList<>();
-    this.participations = new ArrayList<>();
-    this.events = new ArrayList<>();
   }
 
   public String getName() {
@@ -69,7 +70,7 @@ public class Competition extends AbstractEntity implements Serializable {
     return this.divisions;
   }
 
-  public Collection<Participation> getParticipations() {
+  public Collection<CompetitionParticipation> getParticipations() {
     return this.participations;
   }
 
@@ -80,8 +81,15 @@ public class Competition extends AbstractEntity implements Serializable {
   /**
    * Registers the athlete for the competition.
    */
-  public Participation registerAthlete(Athlete athlete, Division division) {
-    Participation participation = new Participation(athlete, division, this);
+  public CompetitionParticipation registerAthlete(Athlete athlete, Division division) {
+    if (!this.divisions.contains(division)) {
+      throw new RuntimeException(MessageFormat.format(
+          "Cannot register athlete {0} for division {1} in competition {2}, "
+          + "because the division does not belong to the competition",
+          athlete, division, this));
+    }
+    
+    CompetitionParticipation participation = new CompetitionParticipation(athlete, division, this);
     if (this.participations.contains(participation)) {
       throw new AthleteAlreadyRegisteredException(athlete, this);
     }
@@ -90,9 +98,30 @@ public class Competition extends AbstractEntity implements Serializable {
     return participation;
   }
 
+  /**
+   * Adds the division to the competition.
+   */
   public Division addDivision(Division division) {
+    if (this.divisions.contains(division)) {
+      throw new RuntimeException(MessageFormat.format(
+          "The divison {0} has already been added to the competition {1}.", division, this));
+    }
     this.divisions.add(division);
     return division;
+  }
+
+  /**
+   * Removes the division from the competition.
+   * This action is only possible, if no athlete is registered for the division.
+   */
+  public void removeDivision(Division division) {
+    if (this.participations.stream().anyMatch(p -> p.getDivision().equals(division))) {
+      throw new RuntimeException(
+          MessageFormat.format(
+              "Cannot remove division {0} because there are already athletes registered for", 
+              division));
+    }
+    this.divisions.remove(division);
   }
 
   public Event addEvent(Event event) {
@@ -103,5 +132,9 @@ public class Competition extends AbstractEntity implements Serializable {
   @Override
   public String toString() {
     return this.name;
+  }
+
+  public void removeEvent(Event event) {
+    this.events.remove(event);
   }
 }
