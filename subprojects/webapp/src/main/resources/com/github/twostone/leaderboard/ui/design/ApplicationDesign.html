@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <style>
+// Workaround for a https://dev.vaadin.com/ticket/19170 to get hidden icons in some environments to show
+#responsive-application-template.valo-menu-responsive .valo-menu-part .valo-menu-item span.v-icon {
+	opacity: 1.0;
+}
+ </style> 
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;valo&quot;}">
+ </head> 
+ <body> 
+  <vaadin-horizontal-layout style-name="valo-menu-responsive" responsive="true" id="responsive-application-template" size-full="true"> 
+   <vaadin-css-layout style-name="valo-menu"> 
+    <vaadin-css-layout style-name="valo-menu-part"> 
+     <vaadin-horizontal-layout style-name="valo-menu-title" width-full="true" _id="menuTitle"> 
+      <vaadin-label size-auto="true" _id="menuTitleLabel" :middle="" :expand="">
+        Leader 
+       <strong>Board</strong> 
+      </vaadin-label> 
+     </vaadin-horizontal-layout> 
+     <vaadin-button icon="fonticon://FontAwesome/f03a" style-name="primary small valo-menu-toggle" plain-text="" _id="menuToggle">
+       Menu 
+     </vaadin-button> 
+     <vaadin-css-layout style-name="valo-menuitems" _id="menuItems"> 
+      <vaadin-button icon="fonticon://FontAwesome/f1c0" primary-style-name="valo-menu-item" width-full="true" plain-text="" _id="competitionsButton">
+        Competitions 
+      </vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f080" primary-style-name="valo-menu-item" _id="statusButton">
+        Status 
+      </vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f01c" primary-style-name="valo-menu-item" _id="inboxButton">
+        Inbox 
+       <span class="valo-menu-badge">7</span> 
+      </vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f187" primary-style-name="valo-menu-item" _id="archiveButton">
+        Archive 
+      </vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f1de" primary-style-name="valo-menu-item" _id="settingsButton">
+        Settings 
+      </vaadin-button> 
+      <vaadin-button icon="fonticon://FontAwesome/f08b" primary-style-name="valo-menu-item" plain-text="" _id="logoutButton">
+        Logout 
+      </vaadin-button> 
+     </vaadin-css-layout> 
+    </vaadin-css-layout> 
+   </vaadin-css-layout> 
+   <vaadin-vertical-layout margin="true" _id="content" :expand=""></vaadin-vertical-layout> 
+  </vaadin-horizontal-layout>  
+ </body>
+</html>

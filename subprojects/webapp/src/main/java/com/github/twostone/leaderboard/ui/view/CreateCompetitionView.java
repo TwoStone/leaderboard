@@ -4,6 +4,8 @@ import com.github.twostone.leaderboard.model.competition.Competition;
 import com.github.twostone.leaderboard.ui.controller.CreateCompetitionController;
 import com.github.twostone.leaderboard.ui.design.CreateCompetitionDesign;
 
+import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.event.ShortcutAction.ModifierKey;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringView;
@@ -42,6 +44,8 @@ public class CreateCompetitionView extends CreateCompetitionDesign implements Vi
         CreateCompetitionView.this.createCompetition();
       }
     });
+    
+    this.submitButton.setClickShortcut(KeyCode.S, ModifierKey.ALT);
 
     this.abortButton.addClickListener(new ClickListener() {
 
@@ -50,7 +54,8 @@ public class CreateCompetitionView extends CreateCompetitionDesign implements Vi
         CreateCompetitionView.this.getUI().getNavigator().navigateTo(CompetitionsView.VIEW_NAME);
       }
     });
-
+    
+    this.nameField.focus();
   }
 
   private void createCompetition() {

@@ -3,23 +3,19 @@ package com.github.twostone.leaderboard.ui.view;
 import com.github.twostone.leaderboard.model.competition.Competition;
 import com.github.twostone.leaderboard.model.competition.CompetitionRepository;
 import com.github.twostone.leaderboard.ui.controller.CompetitionsController;
+import com.github.twostone.leaderboard.ui.design.CompetitionsDesign;
 
+import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.event.ShortcutAction.ModifierKey;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.viritin.ListContainer;
-import org.vaadin.viritin.fields.MTable;
 
 import java.text.MessageFormat;
 
@@ -27,12 +23,9 @@ import javax.annotation.PostConstruct;
 
 @SuppressWarnings("serial")
 @SpringView(name = CompetitionsView.VIEW_NAME)
-public class CompetitionsView extends VerticalLayout implements View {
+public class CompetitionsView extends CompetitionsDesign implements View {
 
   public static final String VIEW_NAME = "competitions";
-
-  private MTable<Competition> table;
-  private Button newCompetitionButton;
 
   @Autowired
   private CompetitionsController controller;
@@ -47,47 +40,39 @@ public class CompetitionsView extends VerticalLayout implements View {
   @Override
   public void enter(ViewChangeEvent event) {}
 
+  @SuppressWarnings("unchecked")
   @PostConstruct
   void init() {
     this.setMargin(true);
 
-    this.table = new MTable<>(Competition.class).withProperties("name", "date")
-        .withColumnHeaders("Name", "Date").withFullWidth().withIcon(FontAwesome.DATABASE)
-        .withCaption("<h3>Competitions</h3>");
-    this.table.setCaptionAsHtml(true);
-    this.table.addGeneratedColumn("name", this::createCompetitionLinkButton);
+    this.competitionsTable
+        .withColumnHeaders("Date", "Name")
+        .withProperties("date")
+        .withGeneratedColumn("name", this::createCompetitionLinkButton);
+    this.competitionsTable.setCaptionAsHtml(true);
+    this.competitionsTable.setColumnWidth("date", 150);
+    this.competitionsTable.setSortableProperties("date", "name");
 
-    new PagingRepostioryAdapter<>(this.repository, this.table);
+    new PagingRepostioryAdapter<>(this.repository, this.competitionsTable);
 
-    this.newCompetitionButton = new Button("New competition", FontAwesome.PLUS);
-    this.newCompetitionButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
-    this.newCompetitionButton.addClickListener(event -> CompetitionsView.this.getUI().getNavigator()
+    this.createButton.addClickListener(event -> CompetitionsView.this.getUI().getNavigator()
         .navigateTo(CreateCompetitionView.VIEW_NAME));
-
-    HorizontalLayout buttonContainer = new HorizontalLayout();
-    buttonContainer.setWidth(100, Unit.PERCENTAGE);
-    buttonContainer.addComponent(this.newCompetitionButton);
-    buttonContainer.setComponentAlignment(this.newCompetitionButton, Alignment.TOP_RIGHT);
-
-    this.addComponent(buttonContainer);
-    this.addComponent(this.table);
-
+    this.createButton.setClickShortcut(
+        KeyCode.C, ModifierKey.ALT); 
     this.controller.setView(this);
   }
 
-  private Object createCompetitionLinkButton(Table source, Object itemId, Object columnId) {
-    @SuppressWarnings("unchecked")
-    ListContainer<Competition>.DynaBeanItem<Competition> item =
-        (ListContainer<Competition>.DynaBeanItem<Competition>) source.getItem(itemId);
-
-    Button button = new Button(item.getBean().getName());
+  private Object createCompetitionLinkButton(Object object) {
+    Competition competition = (Competition) object;
+    
+    Button button = new Button(competition.getName());
     button.setStyleName(ValoTheme.BUTTON_LINK);
     button.addClickListener(new ClickListener() {
 
       @Override
       public void buttonClick(ClickEvent event) {
         CompetitionsView.this.getUI().getNavigator()
-            .navigateTo("competition/" + item.getBean().getId());
+            .navigateTo("competition/" + competition.getId());
       }
     });
     return button;
@@ -97,7 +82,7 @@ public class CompetitionsView extends VerticalLayout implements View {
    * EventHandler for new competitions.
    */
   public void onCompetitionCreated(Competition competition) {
-    this.table.refreshRowCache();
+    this.competitionsTable.refreshRowCache();
     Notification.show(MessageFormat.format("Competition \"{1}\" created.", competition.getName()),
         Notification.Type.TRAY_NOTIFICATION);
   }
