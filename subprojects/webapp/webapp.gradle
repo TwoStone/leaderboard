@@ -1,0 +1,25 @@
+plugins {
+    id "fi.jasoft.plugin.vaadin" version "0.10.4"
+}
+
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile('com.vaadin:vaadin-spring-boot-starter:1.0.0') {
+    	exclude group: 'com.vaadin', module: 'vaadin-client-compiled'
+    	exclude group: 'com.vaadin', module: 'vaadin-server'
+    	exclude group: 'com.vaadin', module: 'vaadin-themes'
+    }
+    
+    compile 'com.vaadin:vaadin-client-compiled:7.5.10'
+    compile 'com.vaadin:vaadin-server:7.5.10'
+    compile 'org.vaadin:viritin:1.38'
+    
+    compile 'com.vaadin:vaadin-themes:7.5.10'
+    
+	compile project(':core')
+}
+
+vaadin {
+	version '7.5.10'
+}

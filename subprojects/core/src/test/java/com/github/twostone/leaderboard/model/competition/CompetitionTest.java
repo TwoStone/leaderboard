@@ -9,10 +9,10 @@ import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.junit.Assert.assertThat;
 
 import com.github.twostone.leaderboard.model.athlete.Athlete;
+import com.github.twostone.leaderboard.model.athlete.Gender;
 import com.github.twostone.leaderboard.model.event.Event;
 import com.github.twostone.leaderboard.model.event.EventType;
 import com.github.twostone.leaderboard.model.event.Result;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,103 +41,103 @@ public class CompetitionTest {
   @Test
   public void testConstruction() {
 
-    assertThat(competition.getName(), is("Competition 1"));
-    assertThat(competition.getDate(), isDay(2015, Month.DECEMBER, 31));
+    assertThat(this.competition.getName(), is("Competition 1"));
+    assertThat(this.competition.getDate(), isDay(2015, Month.DECEMBER, 31));
   }
 
   @Test
   public void testSetName() {
-    competition.setName("New Name");
+    this.competition.setName("New Name");
 
-    assertThat(competition.getName(), is("New Name"));
+    assertThat(this.competition.getName(), is("New Name"));
   }
 
   @Test
   public void testSetDate() {
-    competition.setDate(LocalDate.of(2016, Month.APRIL, 1));
+    this.competition.setDate(LocalDate.of(2016, Month.APRIL, 1));
 
-    assertThat(competition.getDate(), isDay(2016, Month.APRIL, 1));
+    assertThat(this.competition.getDate(), isDay(2016, Month.APRIL, 1));
   }
 
   @Test
   public void testAddDivision() {
-    Division eliteMale = new Division("Elite Male");
-    competition.addDivision(eliteMale);
+    Division eliteMale = new Division("Elite Male", DivisionType.INDIVIDUAL);
+    this.competition.addDivision(eliteMale);
 
-    assertThat(competition.getDivisions(), hasItem(eliteMale));
+    assertThat(this.competition.getDivisions(), hasItem(eliteMale));
   }
 
   @Test
   public void testAddDivisionTwice() {
-    exception.expect(RuntimeException.class);
-    exception.expectMessage("has already been added to the competition");
+    this.exception.expect(RuntimeException.class);
+    this.exception.expectMessage("has already been added to the competition");
 
-    Division eliteMale = new Division("Elite Male");
-    competition.addDivision(eliteMale);
-    competition.addDivision(eliteMale);
+    Division eliteMale = new Division("Elite Male", DivisionType.INDIVIDUAL);
+    this.competition.addDivision(eliteMale);
+    this.competition.addDivision(eliteMale);
   }
 
   @Test
   public void testRemoveDivision() {
-    Division eliteMale = new Division("Elite Male");
-    competition.addDivision(eliteMale);
-    competition.removeDivision(eliteMale);
+    Division eliteMale = new Division("Elite Male", DivisionType.INDIVIDUAL);
+    this.competition.addDivision(eliteMale);
+    this.competition.removeDivision(eliteMale);
 
-    assertThat(competition.getDivisions(), is(empty()));
+    assertThat(this.competition.getDivisions(), is(empty()));
   }
 
   @Test
   public void testRemoveDivisionWithAthlete() {
-    exception.expect(RuntimeException.class);
-    exception.expectMessage("there are already athletes registered for");
+    this.exception.expect(RuntimeException.class);
+    this.exception.expectMessage("there are already athletes registered for");
 
-    Division eliteMale = new Division("Elite Male");
-    competition.addDivision(eliteMale);
+    Division eliteMale = new Division("Elite Male", DivisionType.INDIVIDUAL);
+    this.competition.addDivision(eliteMale);
 
-    Athlete athlete = new Athlete("Rich", "Froning", LocalDate.of(1987, 7, 21));
-    competition.registerAthlete(athlete, eliteMale);
+    Athlete athlete = new Athlete("Rich", "Froning", Gender.MALE, LocalDate.of(1987, 7, 21));
+    this.competition.registerAthlete(athlete, eliteMale);
 
-    competition.removeDivision(eliteMale);
+    this.competition.removeDivision(eliteMale);
   }
 
   @Test
   public void testRegisterAthlete() {
-    Division eliteMale = new Division("Elite Male");
-    competition.addDivision(eliteMale);
+    Division eliteMale = new Division("Elite Male", DivisionType.INDIVIDUAL);
+    this.competition.addDivision(eliteMale);
 
-    Athlete athlete = new Athlete("Rich", "Froning", LocalDate.of(1987, 7, 21));
-    CompetitionParticipation registration = competition.registerAthlete(athlete, eliteMale);
+    Athlete athlete = new Athlete("Rich", "Froning", Gender.MALE, LocalDate.of(1987, 7, 21));
+    CompetitionParticipation registration = this.competition.registerAthlete(athlete, eliteMale);
 
-    assertThat(competition.getParticipations(), hasItem(registration));
+    assertThat(this.competition.getParticipations(), hasItem(registration));
     assertThat(registration, is(notNullValue()));
     assertThat(registration.getDivision(), is(eliteMale));
     assertThat(registration.getParticipant(), is(athlete));
-    assertThat(registration.getCompetition(), is(competition));
+    assertThat(registration.getCompetition(), is(this.competition));
   }
 
   @Test
   public void testRegisterAthleteTwice() {
-    exception.expect(AthleteAlreadyRegisteredException.class);
-    exception.expectMessage("is already registered for the competition");
+    this.exception.expect(AthleteAlreadyRegisteredException.class);
+    this.exception.expectMessage("is already registered for the competition");
 
-    Division eliteMale = new Division("Elite Male");
-    Division mastersMale = new Division("Masters Male");
-    competition.addDivision(eliteMale);
+    Division eliteMale = new Division("Elite Male", DivisionType.INDIVIDUAL);
+    Division mastersMale = new Division("Masters Male", DivisionType.INDIVIDUAL);
+    this.competition.addDivision(eliteMale);
 
-    Athlete athlete = new Athlete("Rich", "Froning", LocalDate.of(1987, 7, 21));
-    competition.registerAthlete(athlete, eliteMale);
-    competition.registerAthlete(athlete, mastersMale);
+    Athlete athlete = new Athlete("Rich", "Froning", Gender.MALE, LocalDate.of(1987, 7, 21));
+    this.competition.registerAthlete(athlete, eliteMale);
+    this.competition.registerAthlete(athlete, mastersMale);
   }
 
   @Test
   public void testRegisterAthleteForWrongDivision() {
-    exception.expect(RuntimeException.class);
-    exception.expectMessage("because the division does not belong to the competition");
+    this.exception.expect(RuntimeException.class);
+    this.exception.expectMessage("because the division does not belong to the competition");
 
-    Division eliteMale = new Division("Elite Male");
+    Division eliteMale = new Division("Elite Male", DivisionType.INDIVIDUAL);
 
-    Athlete athlete = new Athlete("Rich", "Froning", LocalDate.of(1987, 7, 21));
-    competition.registerAthlete(athlete, eliteMale);
+    Athlete athlete = new Athlete("Rich", "Froning", Gender.MALE, LocalDate.of(1987, 7, 21));
+    this.competition.registerAthlete(athlete, eliteMale);
   }
 
   @Test
@@ -145,8 +145,8 @@ public class CompetitionTest {
     Event event = new Event("Event 1", new StubEventType());
     this.competition.addEvent(event);
 
-    assertThat(competition.getEvents(), hasSize(1));
-    assertThat(competition.getEvents(), hasItem(event));
+    assertThat(this.competition.getEvents(), hasSize(1));
+    assertThat(this.competition.getEvents(), hasItem(event));
   }
 
   @Test
@@ -156,7 +156,7 @@ public class CompetitionTest {
 
     this.competition.removeEvent(event);
 
-    assertThat(competition.getEvents(), is(empty()));
+    assertThat(this.competition.getEvents(), is(empty()));
   }
 
   private static class StubEventType extends EventType {

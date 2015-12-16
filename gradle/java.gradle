@@ -8,5 +8,12 @@ tasks.withType(AbstractCompile) {
     options.encoding = 'UTF-8'
 }
 
-
 archivesBaseName = "${rootProject.name}-${project.name}"
+
+dependencies {
+	testCompile 'junit:junit:4.12'
+	
+	testCompile 'com.spencerwi:hamcrest-jdk8-time:0.7.1'
+    
+    testCompile 'org.exparity:hamcrest-date:2.0.1'
+}	

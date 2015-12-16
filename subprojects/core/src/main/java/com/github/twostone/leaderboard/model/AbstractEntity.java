@@ -42,6 +42,7 @@ public abstract class AbstractEntity implements Serializable {
   @PrePersist
   protected void onCreate() {
     this.createdAt = Instant.now();
+    this.updatedAt = this.createdAt;
   }
 
   @PreUpdate

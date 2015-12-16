@@ -5,9 +5,8 @@
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
-    Checkstyle-Configuration: Google Code Style
-    Description: 
-Google Code Style - customized for this project
+    Checkstyle-Configuration: Custom Google Checkstyle Config
+    Description: none
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
@@ -138,7 +137,10 @@ Google Code Style - customized for this project
     <module name="NonEmptyAtclauseDescription"/>
     <module name="JavadocTagContinuationIndentation"/>
     <module name="SummaryJavadocCheck"/>
-    <module name="JavadocParagraph"/>
+    <module name="JavadocParagraph">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
     <module name="AtclauseOrder">
       <property name="target" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
       <property name="tagOrder" value="@param, @return, @throws, @deprecated"/>

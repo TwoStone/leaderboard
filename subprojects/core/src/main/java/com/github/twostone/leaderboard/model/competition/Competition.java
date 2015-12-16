@@ -32,6 +32,9 @@ public class Competition extends AbstractEntity implements Serializable {
   private Collection<CompetitionParticipation> participations;
 
   @OneToMany(mappedBy = "competition")
+  private Collection<TeamRegistration> teams;
+
+  @OneToMany(mappedBy = "competition")
   private List<Event> events;
 
   protected Competition() {
@@ -85,10 +88,10 @@ public class Competition extends AbstractEntity implements Serializable {
     if (!this.divisions.contains(division)) {
       throw new RuntimeException(MessageFormat.format(
           "Cannot register athlete {0} for division {1} in competition {2}, "
-          + "because the division does not belong to the competition",
+              + "because the division does not belong to the competition",
           athlete, division, this));
     }
-    
+
     CompetitionParticipation participation = new CompetitionParticipation(athlete, division, this);
     if (this.participations.contains(participation)) {
       throw new AthleteAlreadyRegisteredException(athlete, this);
@@ -111,15 +114,14 @@ public class Competition extends AbstractEntity implements Serializable {
   }
 
   /**
-   * Removes the division from the competition.
-   * This action is only possible, if no athlete is registered for the division.
+   * Removes the division from the competition. This action is only possible, if no athlete is
+   * registered for the division.
    */
   public void removeDivision(Division division) {
     if (this.participations.stream().anyMatch(p -> p.getDivision().equals(division))) {
-      throw new RuntimeException(
-          MessageFormat.format(
-              "Cannot remove division {0} because there are already athletes registered for", 
-              division));
+      throw new RuntimeException(MessageFormat.format(
+          "Cannot remove division {0} because there are already athletes registered for",
+          division));
     }
     this.divisions.remove(division);
   }
