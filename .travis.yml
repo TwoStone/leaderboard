@@ -7,11 +7,4 @@ cache:
   directories:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
-deploy:
-  provider: heroku
-  api_key:
-    secure: KIzkthAHTaVY+v5GBqwyy9pBRfqVickJFjDxhoAjqIcO0HZLit8dhUd7TEteaphnWbQgwcl5IAOr4L5U9Q0YIJnJ6Eq+17BRFAEVppRyDUjcm97LNtO4ZoL9WcTjaDliPABUjmKDv5gj40TWg0MyrDN7PY8zAAfL9/aFgPnS4z9wRNOhmC40I2h8eNstNltpJFIMUN6o0guToM6sMvdRbj7YLbM+Oyst2ox10kvAI9dga+dn0FPb10FFxr1yJvxGu2VW4QeSHOWH3NXz7TshRwyfnvLD4c5eaGzNPMduAfmCpD8U3zJVJYQAcjiTqBFed97uBo1/SvPfvqT1NGAEfSTUlycO1XysE1QW8M7P9CfPuF3gcMiQVA1DCl14WpyfsopqdsxyTi2nIGcWXhjcY1sQKb92fsWDUv2C1uImuv2XlA4aG4yroxHS0TUqsaZBLzj07te8HkziarUIRyf7lksxc6MzqTZop7/AZgatWJzKnAzkntzq0MNOt4/ATbMCj20Xj7l9uFrkRSV4E/y++R+287dWL8Z1Vgsq5fs1N6IMgseRvsuiUS5fuTXfpZLShzN2wzyq/CTfPjpYJjUNGD7GEDAmIen7p+uJ6/3QLKeTEIgaj0eSAG1wmIHrLq/tafLl0ah+lbVCD3YPXSv7fboalVBsfeOAJLc1SyCa2Os=
-  app: 
-    develop: leaderboard-dev
-  skip_cleanup: true
   
