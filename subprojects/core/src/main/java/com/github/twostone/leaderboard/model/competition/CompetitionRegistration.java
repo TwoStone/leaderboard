@@ -2,26 +2,33 @@ package com.github.twostone.leaderboard.model.competition;
 
 import com.github.twostone.leaderboard.model.AbstractEntity;
 
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 
-@MappedSuperclass
-public abstract class CompetitionRegistration extends AbstractEntity {
+@SuppressWarnings("serial")
+@Entity
+public class CompetitionRegistration extends AbstractEntity {
 
-  private static final long serialVersionUID = 1L;
-
+  private String name;
   @ManyToOne
-  private Competition competition;
   private Division division;
-
-  protected CompetitionRegistration(Competition competition, Division division) {
+  
+  CompetitionRegistration() {
     super();
-    this.competition = competition;
+  }
+  
+  public CompetitionRegistration(String name, Division division) {
+    this();
+    this.name = name;
     this.division = division;
   }
 
-  public Competition getCompetition() {
-    return this.competition;
+  public String getName() {
+    return this.name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public Division getDivision() {

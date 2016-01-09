@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}" 
     }
-}
+} 
 
 defaultTasks 'build'
 
@@ -38,17 +38,6 @@ allprojects {
 		}
 	}
 	
-/*	configurations.all {
-  		resolutionStrategy {
-  			failOnVersionConflict()
-  		
-  			force 'commons-logging:commons-logging:1.2',
-  				'org.eclipse.jetty.websocket:websocket-client:9.3.0.v20150612',
-  				'org.eclipse.jetty.websocket:websocket-common:9.3.0.v20150612',
-  				'org.eclipse.jetty.websocket:websocket-servlet:9.3.0.v20150612'
-  		}
-	}*/
-	
 	apply from: rootProject.file('gradle/java.gradle')
     apply from: rootProject.file('gradle/codeQuality.gradle')
 	
@@ -71,7 +60,6 @@ subprojects {
 
 dependencies {
     compile project(':core')
-    compile project(':webapp')
     
     compile 'org.springframework.boot:spring-boot-starter-web'
     
