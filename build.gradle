@@ -37,24 +37,41 @@ allprojects {
 			url 'http://maven.vaadin.com/vaadin-addons'
 		}
 	}
+	
+/*	configurations.all {
+  		resolutionStrategy {
+  			failOnVersionConflict()
+  		
+  			force 'commons-logging:commons-logging:1.2',
+  				'org.eclipse.jetty.websocket:websocket-client:9.3.0.v20150612',
+  				'org.eclipse.jetty.websocket:websocket-common:9.3.0.v20150612',
+  				'org.eclipse.jetty.websocket:websocket-servlet:9.3.0.v20150612'
+  		}
+	}*/
+	
+	apply from: rootProject.file('gradle/java.gradle')
+    apply from: rootProject.file('gradle/codeQuality.gradle')
+	
+	repositories {
+		jcenter()
+	}
+	
+	dependencies {
+		compile 'org.springframework:spring-core'
+		compile 'javax.inject:javax.inject:1'
+		compile 'com.google.guava:guava:19.0'
+	}
 }
 
 subprojects {
-    apply from: rootProject.file('gradle/java.gradle')
-    apply from: rootProject.file('gradle/codeQuality.gradle')
 
     version = rootProject.version
     group = rootProject.group
 }
 
-repositories {
-	jcenter()
-}
-
 dependencies {
     compile project(':core')
     compile project(':webapp')
-    //compile project(':web-client')
     
     compile 'org.springframework.boot:spring-boot-starter-web'
     
