@@ -1,6 +1,7 @@
 package com.github.twostone.leaderboard.model.competition;
 
-import com.github.twostone.leaderboard.model.AbstractEntity;
+import com.github.twostone.leaderboard.model.base.AbstractEntity;
+import com.github.twostone.leaderboard.model.event.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,17 @@ public class Competition extends AbstractEntity {
   @OneToMany
   private List<Division> divisions;
   
-  @OneToMany(fetch =FetchType.EAGER)
+  @OneToMany(fetch = FetchType.EAGER)
   private List<CompetitionRegistration> registrations;
+  
+  @OneToMany
+  private List<Event> events;
   
   Competition() {
     super();
     this.divisions = new ArrayList<>();
     this.registrations = new ArrayList<>();
+    this.events = new ArrayList<>();
   }
   
   public Competition(String name) {
@@ -54,5 +59,13 @@ public class Competition extends AbstractEntity {
   
   public List<CompetitionRegistration> getRegistrations() {
     return this.registrations;
+  }
+  
+  public void addEvent(Event event) {
+    this.events.add(event);
+  }
+  
+  public List<Event> getEvents() {
+    return this.events;
   }
 }

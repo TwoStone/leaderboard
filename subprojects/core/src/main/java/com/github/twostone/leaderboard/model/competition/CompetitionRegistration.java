@@ -1,6 +1,6 @@
 package com.github.twostone.leaderboard.model.competition;
 
-import com.github.twostone.leaderboard.model.AbstractEntity;
+import com.github.twostone.leaderboard.model.base.AbstractEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

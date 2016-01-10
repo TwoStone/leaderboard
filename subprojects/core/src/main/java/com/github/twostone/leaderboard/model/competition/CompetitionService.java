@@ -1,5 +1,7 @@
 package com.github.twostone.leaderboard.model.competition;
 
+import com.github.twostone.leaderboard.model.event.Event;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +31,7 @@ public class CompetitionService {
   
   
   @RequestMapping(
-      path = "/{competitionId}/addDivision",
+      path = "/{competitionId}/divisions.add",
       method = RequestMethod.POST)
   public Division addDivision(
       @PathVariable("competitionId") Long competitionId, 
@@ -51,5 +53,14 @@ public class CompetitionService {
     Competition competition = this.competitionManager.findOne(competitionId);
     Division division = competition.getDivisions().stream().filter((d) -> d.getId().equals(divisionId)).findFirst().get();
     this.competitionManager.register(competition, division, name);
+  }
+  
+  @RequestMapping(
+      path = "/{competitionId}/events.add")
+  public Event addEvent(
+      @PathVariable("competitionId") Long competitionId,
+      @RequestParam("name") String eventName) {
+    Competition competition = this.competitionManager.findOne(competitionId);
+    return this.competitionManager.addEvent(competition, eventName);
   }
 }

@@ -1,5 +1,8 @@
 package com.github.twostone.leaderboard.model.competition;
 
+import com.github.twostone.leaderboard.model.event.Event;
+import com.github.twostone.leaderboard.model.event.EventRepository;
+
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -10,15 +13,18 @@ public class CompetitionManager {
   private CompetitionRepository competitionRepository;
   private DivisionRespository divisionRepository;
   private RegistrationRepository registrationRepository;
+  private EventRepository eventRepository;
   
   @Inject
   CompetitionManager(CompetitionRepository competitionRepository, 
       DivisionRespository divisionRespository,
-      RegistrationRepository registrationRepository) {
+      RegistrationRepository registrationRepository,
+      EventRepository eventRepository) {
     super();
     this.competitionRepository = competitionRepository;
     this.divisionRepository = divisionRespository;
     this.registrationRepository = registrationRepository;
+    this.eventRepository = eventRepository;
   }
   
   public Competition refresh(Competition oldCompetition) {
@@ -49,5 +55,14 @@ public class CompetitionManager {
     competition.addRegistration(registration);
     
     this.competitionRepository.save(competition);
+  }
+
+  public Event addEvent(Competition competition, String eventName) {
+    Event event = new Event(eventName);
+    event = this.eventRepository.save(event);
+    competition.addEvent(event);
+    
+    this.competitionRepository.save(competition);
+    return event;
   }
 }
