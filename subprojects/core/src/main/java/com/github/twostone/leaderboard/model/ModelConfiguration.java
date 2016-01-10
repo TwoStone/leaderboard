@@ -21,16 +21,22 @@ import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType
 @EnableAutoConfiguration
 @ComponentScan
 @EnableHypermediaSupport(type = HypermediaType.HAL)
-public class ModelConfiguration extends RepositoryRestConfigurerAdapter {
+public class ModelConfiguration {
   
-  @Override
-  public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-    super.configureRepositoryRestConfiguration(config);
-    config.exposeIdsFor(
-        Competition.class, 
-        Division.class, 
-        Event.class, 
-        CompetitionRegistration.class);
+  @Bean
+  public RepositoryRestConfigurerAdapter configureRestRepository() {
+    return new RepositoryRestConfigurerAdapter() {
+      @Override
+      public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+        super.configureRepositoryRestConfiguration(config);
+        config.exposeIdsFor(
+            Competition.class, 
+            Division.class, 
+            Event.class, 
+            CompetitionRegistration.class);
+        config.setBasePath("/api");
+      }
+    };
   }
   
   @Bean
