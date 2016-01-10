@@ -60,6 +60,7 @@ subprojects {
 
 dependencies {
     compile project(':core')
+    compile project(':web-client')
     
     compile 'org.springframework.boot:spring-boot-starter-web'
     

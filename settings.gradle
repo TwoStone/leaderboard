@@ -1,6 +1,6 @@
 include 'core'
+include 'web-client'
 // include 'webapp'
-// include 'web-client'
 
 rootProject.name = 'leaderboard'
 
