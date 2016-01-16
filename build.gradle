@@ -61,10 +61,6 @@ node {
   workDir = file("${project.buildDir}/nodejs")
 }
 
-task npmInstall(type: NpmTask) {
-	workingDir = file('src/main/webapp')
-	args = ['install']
-
 task assembleClient(type: NpmTask) {
     workingDir = file('src/main/webapp')
     args = ['build']
