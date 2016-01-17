@@ -6,24 +6,24 @@ import {Competition} from './competition';
 import {CompetitionService} from './competition.service';
 
 @Component({
-	template: `
-		<h1 *ngIf="competition">{{competition.name}}</h1>
-	`,
-	providers: [HTTP_PROVIDERS]
+    template: `
+        <h1 *ngIf="competition">{{competition.name}}</h1>
+    `,
+    providers: [HTTP_PROVIDERS]
 })
 export class CompetitionComponent implements OnInit {
 
-	competition: Competition;
+    competition: Competition;
 
-	constructor(
-		private _routeParams: RouteParams,
-		private _competitionService: CompetitionService) {
+    constructor(
+        private routeParams: RouteParams,
+        private competitionService: CompetitionService) {
 
-	}
+    }
 
-	ngOnInit () {
-		let competitionId = this._routeParams.get('id');
+    ngOnInit () {
+        let competitionId = this.routeParams.get('id');
 
-		this._competitionService.get(competitionId).subscribe(competition => this.competition = competition);
-	}
+        this.competitionService.get(competitionId).subscribe((competition: Competition) => this.competition = competition);
+    }
 }

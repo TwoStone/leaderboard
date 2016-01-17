@@ -5,20 +5,20 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
     template: `
-    	<ul>
-    		<li *ngFor="#competition of competitions">
-				<a [routerLink]="['Competition', { id: competition.id}]">
-				{{ competition.name }}
-				</a>
-    		</li>
-    	</ul>
+        <ul>
+            <li *ngFor="#competition of competitions">
+                <a [routerLink]="['Competition', { id: competition.id}]">
+                {{ competition.name }}
+                </a>
+            </li>
+        </ul>
     `,
     directives: [ROUTER_DIRECTIVES]
 })
 export class CompetitionList {
-	competitions: Competition[];
+    competitions: Competition[];
 
-	constructor(private _competitionService: CompetitionService) {
-		this._competitionService.getCompetitions().subscribe(competitions => this.competitions = competitions);
-	}
+    constructor(private _competitionService: CompetitionService) {
+        this._competitionService.getCompetitions().subscribe(competitions => this.competitions = competitions);
+    }
 }
