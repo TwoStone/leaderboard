@@ -20,7 +20,9 @@ public class LeaderboardApplication {
    * Creates demo data.
    */
   @Bean
-  public CommandLineRunner demo(EntityManager entityManager, CompetitionManager competitionManager) {
+  public CommandLineRunner demo(
+      EntityManager entityManager, 
+      CompetitionManager competitionManager) {
     return (args) -> {
       Competition competition = competitionManager.createCompetition("DEMO Competition");
       Division eliteDivision = competitionManager.createDivision(competition, "Elite");

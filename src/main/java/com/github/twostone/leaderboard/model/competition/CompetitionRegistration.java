@@ -17,6 +17,9 @@ public class CompetitionRegistration extends AbstractEntity {
     super();
   }
   
+  /**
+   * Constructs a new {@link CompetitionRegistration}.
+   */
   public CompetitionRegistration(String name, Division division) {
     this();
     this.name = name;

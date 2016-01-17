@@ -29,7 +29,9 @@ public class CompetitionService {
     return this.competitionManager.createCompetition(name);
   }
   
-  
+  /**
+   * Adds a new division for the competition.
+   */
   @RequestMapping(
       path = "/{competitionId}/divisions.add",
       method = RequestMethod.POST)
@@ -42,6 +44,9 @@ public class CompetitionService {
     return division;
   }
   
+  /**
+   * Registers a new competition for the event.
+   */
   @RequestMapping(
       path = "/{competitionId}/register",
       method = RequestMethod.POST)
@@ -51,7 +56,8 @@ public class CompetitionService {
       @RequestParam("name") String name) {
     
     Competition competition = this.competitionManager.findOne(competitionId);
-    Division division = competition.getDivisions().stream().filter((d) -> d.getId().equals(divisionId)).findFirst().get();
+    Division division = competition.getDivisions().stream().filter(
+        (div) -> div.getId().equals(divisionId)).findFirst().get();
     this.competitionManager.register(competition, division, name);
   }
   

@@ -31,6 +31,9 @@ public class CompetitionManager {
     return this.findOne(oldCompetition.getId());
   }
  
+  /**
+   * Creates a new division for the competition.
+   */
   public Division createDivision(Competition competition, String divisionName) {
     Division division = new Division(divisionName);
     
@@ -49,6 +52,9 @@ public class CompetitionManager {
     return this.competitionRepository.save(new Competition(name));
   }
 
+  /**
+   * Registers a new competitor for the competition with the given division and name.
+   */
   public void register(Competition competition, Division division, String name) {
     CompetitionRegistration registration = new CompetitionRegistration(name, division);
     this.registrationRepository.save(registration);
@@ -57,6 +63,9 @@ public class CompetitionManager {
     this.competitionRepository.save(competition);
   }
 
+  /**
+   * Adds a new event to the competition.
+   */
   public Event addEvent(Competition competition, String eventName) {
     Event event = new Event(eventName);
     event = this.eventRepository.save(event);

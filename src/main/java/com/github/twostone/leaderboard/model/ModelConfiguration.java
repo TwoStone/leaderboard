@@ -23,6 +23,9 @@ import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType
 @EnableHypermediaSupport(type = HypermediaType.HAL)
 public class ModelConfiguration {
   
+  /**
+   * Configure the spring data rest repositories.
+   */
   @Bean
   public RepositoryRestConfigurerAdapter configureRestRepository() {
     return new RepositoryRestConfigurerAdapter() {
