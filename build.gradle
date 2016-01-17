@@ -59,9 +59,13 @@ node {
   download = true
 
   workDir = file("${project.buildDir}/nodejs")
+  
+  nodeModulesDir = file('src/main/webapp/node_modules')
 }
 
+
 task assembleClient(type: NpmTask) {
+	description 'Assembles the web client resources'
     workingDir = file('src/main/webapp')
     args = ['build']
     dependsOn 'npmInstall'

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 
 @RestController
-@RequestMapping("/competitions/")
+@RequestMapping("api/competitions/")
 public class CompetitionService {
   
   private CompetitionManager competitionManager;
