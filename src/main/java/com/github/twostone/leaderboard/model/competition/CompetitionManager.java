@@ -74,4 +74,8 @@ public class CompetitionManager {
     this.competitionRepository.save(competition);
     return event;
   }
+
+  public Iterable<Competition> findAll() {
+    return this.competitionRepository.findAll();
+  }
 }

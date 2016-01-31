@@ -1,23 +1,39 @@
 import {Injectable} from 'angular2/core';
-import {Http, HTTP_PROVIDERS} from 'angular2/http';
+import {Http, Headers} from 'angular2/http';
 import {Competition} from './competition';
+import {Observable} from 'rxjs/observable';
+
+export interface NewCompetition {
+    name: string;
+}
 
 @Injectable()
 export class CompetitionService {
+
+    private baseUrl = '/api/competitions';
 
     constructor(private http: Http) {
         this.http = http;
     }
 
-    getCompetitions() {
-        return this.http.get('api/competitions')
-            .map(res => res.json()._embedded.competitions)
+    create(competition: NewCompetition) {
+        let body = `name=${competition.name}`;
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this.http.post('api/competitions/create', body, {
+            headers: headers
+        });
     }
 
-    get(id: string) {
-        return this.http.get('api/competitions/' + id)
+    getAll(): Observable<Array<Competition>> {
+        return this.http.get('api/competitions')
             .map(res => res.json());
     }
 
-
+    get(id: string): Observable<Competition> {
+        return this.http.get('api/competitions/' + id)
+            .map(res => res.json());
+    }
 }

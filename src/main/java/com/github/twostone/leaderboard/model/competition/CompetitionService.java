@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 
 @RestController
-@RequestMapping("api/competitions/")
+@RequestMapping("api/competitions")
 public class CompetitionService {
   
   private CompetitionManager competitionManager;
@@ -27,6 +27,16 @@ public class CompetitionService {
       method = RequestMethod.POST)
   public Competition create(@RequestParam("name") String name) {
     return this.competitionManager.createCompetition(name);
+  }
+  
+  @RequestMapping(path = "", method = RequestMethod.GET)
+  public Iterable<Competition> findAll() {
+    return this.competitionManager.findAll();
+  }
+  
+  @RequestMapping(path = "/{id}")
+  public Competition findById(@PathVariable("id") long id) {
+    return this.competitionManager.findOne(id);
   }
   
   /**

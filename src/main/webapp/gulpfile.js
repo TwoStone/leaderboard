@@ -3,53 +3,51 @@ var ts = require('gulp-typescript');
 var del = require('del');
 
 var paths = {
-	index : ['./index.html'],
-	scripts : ['app/**/*.ts']
-}	
+    index : ['./index.html'],
+    scripts : ['app/**/*.ts']
+}
+
+var tsConfig = require('./tsconfig.json').compilerOptions;
 
 var targetDir = '../resources/public/';
 
 gulp.task('ts', function () {
-	return gulp.src(paths.scripts)
-		.pipe(ts({
-			"target": "ES5",
-		    "module": "system",
-		    "moduleResolution": "node",
-		    "sourceMap": true,
-		    "emitDecoratorMetadata": true,
-		    "experimentalDecorators": true,
-		    "removeComments": false,
-		    "noImplicitAny": false
-		}))
-		.pipe(gulp.dest(targetDir + 'app'));
+    return gulp.src(paths.scripts)
+        .pipe(ts(tsConfig))
+        .pipe(gulp.dest(targetDir + 'app'));
 });
 
 gulp.task('copy-index', function () {
-	gulp.src(paths.index)
-		.pipe(gulp.dest(targetDir));
+    return gulp.src(paths.index)
+        .pipe(gulp.dest(targetDir));
+});
+
+gulp.task('copy-templates' ,function() {
+    return gulp.src('app/**/*.html')
+        .pipe(gulp.dest(targetDir + 'app'));
 });
 
 gulp.task('copy-modules', function (cb) {
-	var dependencies = require('./package.json').dependencies;
-	
-	for(var module in dependencies){
-		gulp.src('./node_modules/' + module + '/**')
-			.pipe(gulp.dest(targetDir + "node_modules/" + module))
-	}
-	
-	cb();
+    var dependencies = require('./package.json').dependencies;
+
+    for(var module in dependencies){
+        gulp.src('./node_modules/' + module + '/**')
+            .pipe(gulp.dest(targetDir + "node_modules/" + module))
+    }
+
+    cb();
 })
 
 gulp.task('clean', function () {
-	return del([
-	     targetDir
-	   ], {
-		force: true
-	});
+    return del([
+         targetDir
+       ], {
+        force: true
+    });
 });
 
-gulp.task('build', ['ts', 'copy-index', 'copy-modules'], function () {
-	
+gulp.task('build', ['ts', 'copy-index', 'copy-modules', 'copy-templates'], function () {
+
 });
 
 gulp.task('default', function() {

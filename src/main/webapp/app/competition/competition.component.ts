@@ -1,6 +1,5 @@
 import {Component, OnInit, Output} from 'angular2/core';
 import {RouteParams} from 'angular2/router';
-import {HTTP_PROVIDERS} from 'angular2/http';
 
 import {Competition} from './competition';
 import {CompetitionService} from './competition.service';
@@ -9,7 +8,7 @@ import {CompetitionService} from './competition.service';
     template: `
         <h1 *ngIf="competition">{{competition.name}}</h1>
     `,
-    providers: [HTTP_PROVIDERS]
+    providers: []
 })
 export class CompetitionComponent implements OnInit {
 
@@ -18,7 +17,6 @@ export class CompetitionComponent implements OnInit {
     constructor(
         private routeParams: RouteParams,
         private competitionService: CompetitionService) {
-
     }
 
     ngOnInit () {
