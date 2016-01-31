@@ -6,6 +6,7 @@ import {CompetitionList} from './competition/competition-list.component';
 import {CompetitionComponent} from './competition/competition.component';
 import {CreateCompetitionComponent} from './create-competition/create-competition.component';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/publishLast';
 
 @Component({
     selector: 'leaderboard-app',
@@ -18,7 +19,7 @@ import 'rxjs/add/operator/map';
 })
 @RouteConfig([
     { path: '/', name: 'Competitions', component: CompetitionList },
-    { path: 'competition/:id', name: 'Competition', component: CompetitionComponent },
+    { path: 'competition/:id/...', name: 'Competition', component: CompetitionComponent },
     { path: 'create-competition', name: 'CreateCompetition', component: CreateCompetitionComponent}
 ])
 export class AppComponent {

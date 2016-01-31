@@ -39,6 +39,12 @@ public class CompetitionService {
     return this.competitionManager.findOne(id);
   }
   
+  @RequestMapping(path = "/{id}/divisions")
+  public Iterable<Division> getDivisions(@PathVariable("id") long id) {
+    Competition competition = this.findById(id);
+    return competition.getDivisions();
+  }
+  
   /**
    * Adds a new division for the competition.
    */

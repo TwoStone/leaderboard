@@ -1,6 +1,6 @@
 import {Injectable} from 'angular2/core';
 import {Http, Headers} from 'angular2/http';
-import {Competition} from './competition';
+import {Competition, Division} from '../model/model';
 import {Observable} from 'rxjs/observable';
 
 export interface NewCompetition {
@@ -34,6 +34,11 @@ export class CompetitionService {
 
     get(id: string): Observable<Competition> {
         return this.http.get('api/competitions/' + id)
+            .map(res => res.json());
+    }
+
+    getDivisions(competitionId: string): Observable<Array<Division>> {
+        return this.http.get(`api/competitions/${competitionId}/divisions`)
             .map(res => res.json());
     }
 }
