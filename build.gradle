@@ -60,7 +60,7 @@ node {
 
   workDir = file("${project.buildDir}/nodejs")
   
-  nodeModulesDir = file('src/main/webapp/node_modules')
+  nodeModulesDir = file('src/main/webapp')
 }
 
 
