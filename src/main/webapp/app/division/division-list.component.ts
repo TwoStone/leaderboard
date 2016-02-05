@@ -2,7 +2,7 @@ import {Component, Input, Host, OnInit} from 'angular2/core';
 import {ROUTER_DIRECTIVES, RouteParams} from 'angular2/router';
 
 import {Division, Competition, Model} from '../model/model';
-import {CompetitionComponent} from '../competition/competition.component';
+import {CompetitionComponent, CompetitionSubComponent} from '../competition/competition.component';
 import {CompetitionService} from '../competition/competition.service';
 
 @Component({
@@ -22,7 +22,7 @@ class DivisionListItem {
     selector: 'division-list',
     template: `
         <ul>
-            <li *ngFor="#division of divisions">
+            <li *ngFor="#division of competition.divisions">
                 <division-item [division]="division">
                 </division-item>
             </li>
@@ -30,15 +30,12 @@ class DivisionListItem {
     `,
     directives: [DivisionListItem]
 })
-export class DivisionListComponent implements OnInit {
-    divisions: Division[];
+export class DivisionListComponent extends CompetitionSubComponent implements OnInit {
 
-    constructor(private _service: CompetitionService, private _params: RouteParams, private model: Model) {
+    constructor(private _service: CompetitionService, private _params: RouteParams) {
+        super()
     }
 
     ngOnInit() {
-        this.model.onCompetition.subscribe(comp => {
-            this.divisions = comp.divisions;
-        });
     }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, ViewChild} from 'angular2/core';
 import {RouteParams, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {Competition, Model} from '../model/model';
@@ -21,19 +21,29 @@ import {CompetitionDashboardComponent} from './competition-dashboard.component';
 ])
 export class CompetitionComponent implements OnInit {
 
+    @ViewChild(CompetitionSubComponent) view: CompetitionSubComponent;
+
     competition: Competition;
 
     constructor(
         private routeParams: RouteParams,
-        private competitionService: CompetitionService,
-        private model: Model) {
+        private competitionService: CompetitionService) {
+    }
+
+    ngAfterViewInit() {
+        this.view.competition = this.competition;
     }
 
     ngOnInit () {
         let competitionId = this.routeParams.get('id');
         this.competitionService.get(competitionId).subscribe((competition: Competition) => {
             this.competition = competition
-            this.model.competition = competition;
         });
     }
+}
+
+export abstract class CompetitionSubComponent {
+
+    competition: Competition;
+
 }
