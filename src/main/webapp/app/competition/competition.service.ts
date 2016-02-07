@@ -1,6 +1,11 @@
 import {Injectable} from 'angular2/core';
 import {Http, Headers} from 'angular2/http';
-import {Competition, Division} from '../model/model';
+import {
+    Competition,
+    Division,
+    Competitor
+} from '../model/model';
+
 import * as Rx from 'rxjs';
 
 export interface NewCompetition {
@@ -9,6 +14,11 @@ export interface NewCompetition {
 
 export interface NewDivision {
     name: string;
+}
+
+export interface NewCompetitor {
+    name: string;
+    division: Division;
 }
 
 @Injectable()
@@ -48,6 +58,17 @@ export class CompetitionService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         return this.http.post(`api/competitions/${comp.id}/divisions.add`, body, {
+            headers: headers
+        }).map(res => res.json());
+    }
+
+    addCompetitor(comp: Competition, newCompetitor: NewCompetitor): Rx.Observable<Competitor> {
+        let body = JSON.stringify(newCompetitor);
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.post(`api/competitions/${comp.id}/competitors.add`, body, {
             headers: headers
         }).map(res => res.json());
     }

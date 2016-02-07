@@ -11,11 +11,18 @@ export interface Competition {
     name: string;
     id: number;
     divisions: Division[];
+    competitors: Competitor[];
 }
 
 export interface Division {
     name: string;
     id: number;
+}
+
+export interface Competitor {
+    name: string;
+    id: number;
+    division: Division;
 }
 
 @Injectable()

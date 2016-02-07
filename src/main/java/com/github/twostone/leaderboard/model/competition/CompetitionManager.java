@@ -56,7 +56,7 @@ public class CompetitionManager {
    * Registers a new competitor for the competition with the given division and name.
    */
   public void register(Competition competition, Division division, String name) {
-    CompetitionRegistration registration = new CompetitionRegistration(name, division);
+    Competitor registration = new Competitor(name, division);
     this.registrationRepository.save(registration);
     competition.addRegistration(registration);
     

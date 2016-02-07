@@ -7,20 +7,20 @@ import javax.persistence.ManyToOne;
 
 @SuppressWarnings("serial")
 @Entity
-public class CompetitionRegistration extends AbstractEntity {
+public class Competitor extends AbstractEntity {
 
   private String name;
   @ManyToOne
   private Division division;
   
-  CompetitionRegistration() {
+  Competitor() {
     super();
   }
   
   /**
-   * Constructs a new {@link CompetitionRegistration}.
+   * Constructs a new {@link Competitor}.
    */
-  public CompetitionRegistration(String name, Division division) {
+  public Competitor(String name, Division division) {
     this();
     this.name = name;
     this.division = division;

@@ -20,7 +20,7 @@ public class Competition extends AbstractEntity {
   private List<Division> divisions;
   
   @OneToMany(fetch = FetchType.EAGER)
-  private List<CompetitionRegistration> registrations;
+  private List<Competitor> competitors;
   
   @OneToMany
   private List<Event> events;
@@ -28,7 +28,7 @@ public class Competition extends AbstractEntity {
   Competition() {
     super();
     this.divisions = new ArrayList<>();
-    this.registrations = new ArrayList<>();
+    this.competitors = new ArrayList<>();
     this.events = new ArrayList<>();
   }
   
@@ -53,12 +53,12 @@ public class Competition extends AbstractEntity {
     return this.divisions;
   }
 
-  public void addRegistration(CompetitionRegistration registration) {
-    this.registrations.add(registration);
+  public void addRegistration(Competitor registration) {
+    this.competitors.add(registration);
   }
   
-  public List<CompetitionRegistration> getRegistrations() {
-    return this.registrations;
+  public List<Competitor> getCompetitors() {
+    return this.competitors;
   }
   
   public void addEvent(Event event) {

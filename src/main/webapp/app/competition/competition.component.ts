@@ -7,6 +7,7 @@ import {DivisionComponent} from '../division/division.component';
 import {DivisionListComponent} from '../division/division-list.component';
 import {CreateDivisionComponent} from '../division/create-division.component';
 import {CompetitionDashboardComponent} from './competition-dashboard.component';
+import {CompetitorsList} from '../competitor/competitor-list.component';
 
 @Component({
     template: `
@@ -16,7 +17,7 @@ import {CompetitionDashboardComponent} from './competition-dashboard.component';
                     <div *ngIf="model.competition">{{model.competition.name}}</div >
                     <ul>
                         <li><a [routerLink]="['Divisions']">Divisions</a></li>
-                        <li><a>Competitors</a></li>
+                        <li><a [routerLink]="['CompetitorList']">Competitors</a></li>
                         <li><a>Events</a></li>
                     </ul>
                 </div>
@@ -32,7 +33,8 @@ import {CompetitionDashboardComponent} from './competition-dashboard.component';
     { path: '/', name: 'CompetitionDashboard', component: CompetitionDashboardComponent, useAsDefault: true },
     { path: '/divisions', name: 'Divisions', component: DivisionListComponent },
     { path: '/divisions/{divisionId}', name: 'Division', component: DivisionComponent },
-    { path: '/divisions.create', name: 'CreateDivision', component: CreateDivisionComponent }
+    { path: '/divisions.create', name: 'CreateDivision', component: CreateDivisionComponent },
+    { path: '/competitors', name: 'CompetitorList', component: CompetitorsList}
 ])
 export class CompetitionComponent implements OnInit {
 
