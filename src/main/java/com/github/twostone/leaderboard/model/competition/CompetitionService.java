@@ -53,7 +53,7 @@ public class CompetitionService {
       method = RequestMethod.POST)
   public Division addDivision(
       @PathVariable("competitionId") Long competitionId, 
-      @RequestParam("divisionName") String divisionName) {
+      @RequestParam("name") String divisionName) {
     Competition competition = this.competitionManager.findOne(competitionId);
     Division division = this.competitionManager.createDivision(competition, divisionName);
     

@@ -1,6 +1,11 @@
 import {Injectable} from 'angular2/core';
+
 import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 import {ReplaySubject} from 'rxjs/subject/ReplaySubject';
+
+
+import {CompetitionService} from '../competition/competition.service';
 
 export interface Competition {
     name: string;
@@ -8,35 +13,41 @@ export interface Competition {
     divisions: Division[];
 }
 
-
 export interface Division {
     name: string;
     id: number;
 }
 
-
 @Injectable()
-export class Model {
+export class ModelService {
 
+    private _competitionId: number;
     private _competition: Competition;
+    private _competitionUpdated: Subject<Competition>;
 
-    private _onCompetition: ReplaySubject<Competition>;
-
-    constructor() {
-        this._onCompetition = new ReplaySubject(1);
+    constructor(private service: CompetitionService) {
+        this._competitionUpdated = new ReplaySubject();
     }
 
-    set competition(competition: Competition) {
-        this._competition = competition;
-        this._onCompetition.next(competition);
+    set competitionId(id: number) {
+        this._competitionId = id;
+        this.updateModel();
     }
 
     get competition() {
         return this._competition;
     }
 
-    get onCompetition(): Observable<Competition> {
-        return this._onCompetition;
+    get onCompetitionUpdate(): Observable<Competition> {
+        return this._competitionUpdated;
+    }
+
+    updateModel() {
+        if (this._competitionId) {
+            this.service.get(this._competitionId).subscribe(comp => {
+                this._competition = comp;
+                this._competitionUpdated.next(comp);
+            });
+        }
     }
 }
-

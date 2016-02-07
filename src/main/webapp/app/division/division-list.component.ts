@@ -1,14 +1,13 @@
 import {Component, Input, Host, OnInit} from 'angular2/core';
 import {ROUTER_DIRECTIVES, RouteParams} from 'angular2/router';
 
-import {Division, Competition, Model} from '../model/model';
-import {CompetitionComponent, CompetitionSubComponent} from '../competition/competition.component';
+import {Division, Competition, ModelService} from '../model/model';
 import {CompetitionService} from '../competition/competition.service';
 
 @Component({
     selector: 'division-item',
     template: `
-        <a [routerLink]="['Divisions', {divisionId: division.id}]">
+        <a *ngIf="division" [routerLink]="['Division', {divisionId: division.id}]">
             {{ division.name }}
         </a>
     `,
@@ -21,21 +20,27 @@ class DivisionListItem {
 @Component({
     selector: 'division-list',
     template: `
-        <ul>
-            <li *ngFor="#division of competition.divisions">
+        <a [routerLink]="['CreateDivision']">Create Division</a>
+        <ul *ngIf="divisions">
+            <li *ngFor="#division of divisions">
                 <division-item [division]="division">
                 </division-item>
             </li>
         </ul>
     `,
-    directives: [DivisionListItem]
+    directives: [DivisionListItem, ROUTER_DIRECTIVES]
 })
-export class DivisionListComponent extends CompetitionSubComponent implements OnInit {
+export class DivisionListComponent implements OnInit {
 
-    constructor(private _service: CompetitionService, private _params: RouteParams) {
-        super()
+    divisions: Array<Division>;
+
+    constructor(private model: ModelService) {
     }
 
     ngOnInit() {
+        this.model.onCompetitionUpdate.subscribe(comp => {
+            this.divisions = comp.divisions
+        });
     }
+
 }
