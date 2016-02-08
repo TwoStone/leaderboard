@@ -1,6 +1,0 @@
-bin/
-.tmp/
-dist
-build
-node_modules/
-src/main/web/lib/

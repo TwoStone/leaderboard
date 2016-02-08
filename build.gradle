@@ -1,20 +1,27 @@
 buildscript {
-    ext {
-        springBootVersion = '1.3.0.RELEASE'
+  ext {
+    springBootVersion = '1.3.0.RELEASE'
+  }
+  repositories {
+    jcenter()
+    maven {
+      url "https://plugins.gradle.org/m2/"
     }
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}" 
-    }
+  }
+  dependencies {
+    classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    classpath 'com.moowork.gradle:gradle-node-plugin:0.11'
+  }
 }
 
 defaultTasks 'build'
 
-apply plugin: 'java'
+apply from: file('gradle/java.gradle')
+apply from: file('gradle/codeQuality.gradle')
 apply plugin: 'application'
 apply plugin: 'spring-boot'
+apply plugin: 'eclipse'
+apply plugin: 'com.moowork.node'
 
 archivesBaseName = 'leaderboard'
 mainClassName = 'com.github.twostone.leaderboard.LeaderboardMain'
@@ -22,64 +29,59 @@ mainClassName = 'com.github.twostone.leaderboard.LeaderboardMain'
 version = "1.0.0"
 group = 'com.github.twostone.leaderboard'
 
-ext {
-    if (project.hasProperty('useBintrayVersion')) {
-        project.useBintrayVersion = true
-    } else {
-        ext.useBintrayVersion = false
-    }
-}
-
-allprojects {
-	repositories {
-		jcenter()
-		maven {
-			url 'http://maven.vaadin.com/vaadin-addons'
-		}
-	}
-	
-/*	configurations.all {
-  		resolutionStrategy {
-  			failOnVersionConflict()
-  		
-  			force 'commons-logging:commons-logging:1.2',
-  				'org.eclipse.jetty.websocket:websocket-client:9.3.0.v20150612',
-  				'org.eclipse.jetty.websocket:websocket-common:9.3.0.v20150612',
-  				'org.eclipse.jetty.websocket:websocket-servlet:9.3.0.v20150612'
-  		}
-	}*/
-	
-	apply from: rootProject.file('gradle/java.gradle')
-    apply from: rootProject.file('gradle/codeQuality.gradle')
-	
-	repositories {
-		jcenter()
-	}
-	
-	dependencies {
-		compile 'org.springframework:spring-core'
-		compile 'javax.inject:javax.inject:1'
-		compile 'com.google.guava:guava:19.0'
-	}
-}
-
-subprojects {
-
-    version = rootProject.version
-    group = rootProject.group
+repositories {
+  jcenter()
 }
 
 dependencies {
-    compile project(':core')
-    compile project(':webapp')
-    
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    
-    runtime 'com.h2database:h2'
+  compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+  compile 'org.springframework.boot:spring-boot-starter-data-rest'
+  compile 'org.springframework.boot:spring-boot-starter-web'
+  compile 'org.springframework.boot:spring-boot-devtools'
+
+  compile 'org.springframework:spring-core'
+  compile 'javax.inject:javax.inject:1'
+  compile 'com.google.guava:guava:19.0'
+
+  compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.4'
+  
+  testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+  runtime 'com.h2database:h2'
 }
 
+node {
+  // Version of node to use.
+  version = '5.4.1'
+
+  // Version of npm to use.
+  npmVersion = '3.5.3'
+
+  download = true
+
+  workDir = file("${project.buildDir}/nodejs")
+
+  nodeModulesDir = file('src/main/webapp')
+}
+
+
+task assembleClient(type: NpmTask) {
+  description 'Assembles the web client resources'
+  workingDir = file('src/main/webapp')
+  args = ['build']
+  dependsOn 'npmInstall'
+}
+
+task cleanClient(type: NpmTask) {
+  workingDir = file('src/main/webapp')
+  args = ['clean']
+}
+
+processResources.dependsOn 'assembleClient'
+clean.dependsOn 'cleanClient'
+
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.10-rc-1'
+  gradleVersion = '2.10'
 }
 
 task stage { }
