@@ -15,7 +15,7 @@ import {
 
 class CompetitorModel implements NewCompetitor {
     name: string;
-    division: Division;
+    divisionId: number;
 }
 
 
@@ -38,11 +38,11 @@ class CompetitorModel implements NewCompetitor {
             <div class="form-group">
                 <label for="division">Division</label>
                 <select class="form-control"
-                    [(ngModel)]="model.division"
+                    [(ngModel)]="model.divisionId"
                     ngControl="division"
                     #division="ngForm"
                     required>
-                    <option *ngFor="#division of divisions" [value]="division">
+                    <option *ngFor="#division of divisions" [value]="division.id">
                         {{ division.name }}
                     </option>
                 </select>

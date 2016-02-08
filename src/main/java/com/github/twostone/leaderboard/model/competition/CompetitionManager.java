@@ -55,12 +55,13 @@ public class CompetitionManager {
   /**
    * Registers a new competitor for the competition with the given division and name.
    */
-  public void register(Competition competition, Division division, String name) {
+  public Competitor register(Competition competition, Division division, String name) {
     Competitor registration = new Competitor(name, division);
     this.registrationRepository.save(registration);
     competition.addRegistration(registration);
     
     this.competitionRepository.save(competition);
+    return registration;
   }
 
   /**

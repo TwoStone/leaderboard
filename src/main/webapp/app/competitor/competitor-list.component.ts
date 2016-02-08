@@ -17,16 +17,14 @@ import {
 
 
 @Component({
-    selector: 'competitor-list-item',
+    selector: '[competitorListItem]',
     template: `
-        <tr>
-            <td>{{ competitor.name }}</td>
-            <td>{{ competitor.division.name }}</td>
-        </tr>
+        <td>{{ competitor.name }}</td>
+        <td>{{ competitor.division.name }}</td>
     `
 })
 export class CompetitorListItem {
-    @Input() competitor: Competitor;
+    @Input('competitorListItem') competitor: Competitor;
 }
 
 @Component({
@@ -42,8 +40,8 @@ export class CompetitorListItem {
                 </tr>
             </thead>
             <tbody>
-                <competitor-list-item *ngFor="#competitor of competitors" [competitor]="competitor">
-                </competitor-list-item>
+                <tr *ngFor="#competitor of competitors" [competitorListItem]="competitor">
+                </tr>
             </tbody>
         </table>
     `,

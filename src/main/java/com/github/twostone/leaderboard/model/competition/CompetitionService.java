@@ -3,10 +3,14 @@ package com.github.twostone.leaderboard.model.competition;
 import com.github.twostone.leaderboard.model.event.Event;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.MessageFormat;
+import java.util.NoSuchElementException;
 
 import javax.inject.Inject;
 
@@ -14,6 +18,30 @@ import javax.inject.Inject;
 @RequestMapping("api/competitions")
 public class CompetitionService {
   
+  public static class CompetitorRegistrationRequest {
+    private long divisionId;
+    private String name;
+    
+    public CompetitorRegistrationRequest() {
+    }
+
+    public long getDivisionId() {
+      return divisionId;
+    }
+
+    public void setDivisionId(long division) {
+      this.divisionId = division;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+  }
+
   private CompetitionManager competitionManager;
 
   @Inject
@@ -60,21 +88,22 @@ public class CompetitionService {
     return division;
   }
   
-  /**
-   * Registers a new competition for the event.
-   */
   @RequestMapping(
-      path = "/{competitionId}/register",
+      path = "/{competitionId}/competitors.add",
       method = RequestMethod.POST)
-  public void register(
-      @PathVariable("competitionId") Long competitionId,
-      @RequestParam("divisionId") final Long divisionId,
-      @RequestParam("name") String name) {
-    
+  public Competitor registerCompetitor(
+      @PathVariable("competitionId") Long competitionId, 
+      @RequestBody(required = true) CompetitorRegistrationRequest request) {
     Competition competition = this.competitionManager.findOne(competitionId);
-    Division division = competition.getDivisions().stream().filter(
-        (div) -> div.getId().equals(divisionId)).findFirst().get();
-    this.competitionManager.register(competition, division, name);
+    Division division = competition.getDivisions()
+        .stream()
+        .filter(cur -> cur.getId().equals(request.getDivisionId()))
+        .findFirst()
+        .orElseThrow(() -> {
+          return new NoSuchElementException(MessageFormat.format("division id:{0}", request.getDivisionId()));
+        });
+    
+    return this.competitionManager.register(competition, division, request.getName());
   }
   
   @RequestMapping(

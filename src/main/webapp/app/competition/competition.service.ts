@@ -18,7 +18,7 @@ export interface NewDivision {
 
 export interface NewCompetitor {
     name: string;
-    division: Division;
+    divisionId: number;
 }
 
 @Injectable()

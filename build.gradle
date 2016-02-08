@@ -10,7 +10,7 @@ buildscript {
   }
   dependencies {
     classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-    classpath "com.moowork.gradle:gradle-node-plugin:0.11"
+    classpath 'com.moowork.gradle:gradle-node-plugin:0.11'
   }
 }
 
@@ -29,21 +29,22 @@ mainClassName = 'com.github.twostone.leaderboard.LeaderboardMain'
 version = "1.0.0"
 group = 'com.github.twostone.leaderboard'
 
-
 repositories {
-	jcenter()
+  jcenter()
 }
 
 dependencies {
   compile 'org.springframework.boot:spring-boot-starter-data-jpa'
   compile 'org.springframework.boot:spring-boot-starter-data-rest'
   compile 'org.springframework.boot:spring-boot-starter-web'
+  compile 'org.springframework.boot:spring-boot-devtools'
 
   compile 'org.springframework:spring-core'
   compile 'javax.inject:javax.inject:1'
   compile 'com.google.guava:guava:19.0'
 
   compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.4'
+  
   testCompile 'org.springframework.boot:spring-boot-starter-test'
 
   runtime 'com.h2database:h2'
@@ -80,7 +81,7 @@ processResources.dependsOn 'assembleClient'
 clean.dependsOn 'cleanClient'
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.10'
+  gradleVersion = '2.10'
 }
 
 task stage { }

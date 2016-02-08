@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 public class Competitor extends AbstractEntity {
 
   private String name;
+  
   @ManyToOne
   private Division division;
   
