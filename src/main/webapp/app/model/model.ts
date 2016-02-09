@@ -12,6 +12,7 @@ export interface Competition {
     id: number;
     divisions: Division[];
     competitors: Competitor[];
+    events: Event[];
 }
 
 export interface Division {
@@ -23,6 +24,11 @@ export interface Competitor {
     name: string;
     id: number;
     division: Division;
+}
+
+export interface Event {
+    name: string;
+    id: number;
 }
 
 @Injectable()
