@@ -47,7 +47,7 @@ class CompetitorModel implements NewCompetitor {
                     </option>
                 </select>
             </div>
-            <button type="submit">Register</button>
+            <button class="btn btn-primary" type="submit">Register</button>
         </form>
     `
 

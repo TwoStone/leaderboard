@@ -32,18 +32,20 @@ export class CompetitorListItem {
     template: `
         <create-competitor>
         </create-competitor>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Division</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="#competitor of competitors" [competitorListItem]="competitor">
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Division</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="#competitor of competitors" [competitorListItem]="competitor">
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     `,
     directives: [CompetitorListItem, CreateCompetitorComponent]
 })

@@ -22,9 +22,6 @@ public class CompetitionService {
     private long divisionId;
     private String name;
     
-    public CompetitorRegistrationRequest() {
-    }
-
     public long getDivisionId() {
       return divisionId;
     }
@@ -32,6 +29,18 @@ public class CompetitionService {
     public void setDivisionId(long division) {
       this.divisionId = division;
     }
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+  }
+  
+  public static class NewEventRequest {
+    private String name;
 
     public String getName() {
       return name;
@@ -110,8 +119,8 @@ public class CompetitionService {
       path = "/{competitionId}/events.add")
   public Event addEvent(
       @PathVariable("competitionId") Long competitionId,
-      @RequestParam("name") String eventName) {
+      @RequestBody NewEventRequest newEvent) {
     Competition competition = this.competitionManager.findOne(competitionId);
-    return this.competitionManager.addEvent(competition, eventName);
+    return this.competitionManager.addEvent(competition, newEvent.name);
   }
 }

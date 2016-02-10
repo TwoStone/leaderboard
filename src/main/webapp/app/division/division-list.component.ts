@@ -4,6 +4,8 @@ import {ROUTER_DIRECTIVES, RouteParams} from 'angular2/router';
 import {Division, Competition, ModelService} from '../model/model';
 import {CompetitionService} from '../competition/competition.service';
 
+import {CreateDivisionComponent} from './create-division.component';
+
 @Component({
     selector: 'division-item',
     template: `
@@ -20,15 +22,26 @@ class DivisionListItem {
 @Component({
     selector: 'division-list',
     template: `
-        <a [routerLink]="['CreateDivision']">Create Division</a>
-        <ul *ngIf="divisions">
-            <li *ngFor="#division of divisions">
-                <division-item [division]="division">
-                </division-item>
-            </li>
-        </ul>
+        <create-division></create-division>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Division</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="#division of divisions">
+                        <td>
+                            <division-item [division]="division">
+                            </division-item>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     `,
-    directives: [DivisionListItem, ROUTER_DIRECTIVES]
+    directives: [DivisionListItem, ROUTER_DIRECTIVES, CreateDivisionComponent]
 })
 export class DivisionListComponent implements OnInit {
 

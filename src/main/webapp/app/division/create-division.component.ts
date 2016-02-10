@@ -9,6 +9,7 @@ class DivisionModel implements NewDivision {
 }
 
 @Component({
+    selector: 'create-division',
     template: `
         <h1>Create new Division</h1>
         <form (ngSubmit)="onSubmit()">
@@ -20,7 +21,7 @@ class DivisionModel implements NewDivision {
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-default">Create</button>
+            <button type="submit" class="btn btn-primary">Add</button>
         </form>
     `
 })

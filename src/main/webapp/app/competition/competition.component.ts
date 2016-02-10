@@ -14,16 +14,21 @@ import {EventList} from '../event/event-list.component';
     template: `
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-4">
-                    <div *ngIf="model.competition">{{model.competition.name}}</div >
-                    <ul>
+                <div class="col-xs-6 col-sm-3">
+                    <div *ngIf="competition">
+                        <a [routerLink]="['CompetitionDashboard']">
+                            {{ competition.name }}
+                        </a>
+                    </div >
+                    <ul class="nav">
                         <li><a [routerLink]="['Divisions']">Divisions</a></li>
                         <li><a [routerLink]="['CompetitorList']">Competitors</a></li>
                         <li><a [routerLink]="['EventList']">Events</a></li>
                     </ul>
                 </div>
-                <router-outlet class="col-lg-8">
-                </router-outlet>
+                <div class="col-xs-12 col-sm-9">
+                    <router-outlet class="col-lg-8"></router-outlet>
+                </div>
             </div>
         </div>
     `,
