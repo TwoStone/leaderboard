@@ -3,21 +3,22 @@ var ts = require('gulp-typescript');
 var del = require('del');
 var sourcemaps = require('gulp-sourcemaps');
 
-var paths = {
-    index : ['./index.html'],
-    scripts : ['app/**/*.ts']
-}
 
 var tsConfig = require('./tsconfig.json').compilerOptions;
 
-var targetDir = '../resources/public/';
+var targetDir = './dist/public';
+
+var paths = {
+    index : ['./src/index.html'],
+    scripts : ['./src/**/*.ts']
+}
 
 gulp.task('ts', ['clean'], function () {
     return gulp.src(paths.scripts)
         .pipe(sourcemaps.init())
         .pipe(ts(tsConfig))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest(targetDir + 'app'));
+        .pipe(gulp.dest(targetDir));
 });
 
 gulp.task('copy-index', ['clean'], function () {
@@ -26,8 +27,8 @@ gulp.task('copy-index', ['clean'], function () {
 });
 
 gulp.task('copy-templates', ['clean'], function() {
-    return gulp.src('app/**/*.html')
-        .pipe(gulp.dest(targetDir + 'app'));
+    return gulp.src('./src/**/*.html')
+        .pipe(gulp.dest(targetDir));
 });
 
 gulp.task('copy-modules', ['clean'], function (cb) {
@@ -35,7 +36,7 @@ gulp.task('copy-modules', ['clean'], function (cb) {
 
     for(var module in dependencies){
         gulp.src('./node_modules/' + module + '/**')
-            .pipe(gulp.dest(targetDir + "node_modules/" + module))
+            .pipe(gulp.dest(targetDir + "/node_modules/" + module))
     }
 
     cb();
@@ -53,6 +54,4 @@ gulp.task('build', ['ts', 'copy-index', 'copy-modules', 'copy-templates'], funct
 
 });
 
-gulp.task('default', function() {
-  // place code for your default task here
-});
+gulp.task('default', ['build']);

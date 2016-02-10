@@ -14,7 +14,7 @@ import {CreateCompetitionComponent} from './competition/create-competition.compo
 @Component({
     selector: 'leaderboard-app',
     template: `
-        <div class="navbar navbar-inverted navbar-static-top">
+        <div class="navbar navbar-inverse navbar-static-top">
           <div class="container-fluid">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
