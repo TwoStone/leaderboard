@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var ts = require('gulp-typescript');
 var del = require('del');
 var sourcemaps = require('gulp-sourcemaps');
+var tslint = require("gulp-tslint");
 
 
 var tsConfig = require('./tsconfig.json').compilerOptions;
@@ -40,7 +41,13 @@ gulp.task('copy-modules', ['clean'], function (cb) {
     }
 
     cb();
-})
+});
+
+gulp.task("tslint", function () {
+    return gulp.src(paths.scripts)
+        .pipe(tslint())
+        .pipe(tslint.report("verbose"));
+});
 
 gulp.task('clean', function () {
     return del([
@@ -50,8 +57,8 @@ gulp.task('clean', function () {
     });
 });
 
-gulp.task('build', ['ts', 'copy-index', 'copy-modules', 'copy-templates'], function () {
+gulp.task('check', ['tslint']);
 
-});
+gulp.task('build', ['ts', 'copy-index', 'copy-modules', 'copy-templates']);
 
 gulp.task('default', ['build']);
