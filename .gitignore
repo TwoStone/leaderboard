@@ -20,3 +20,4 @@ src/main/webapp/node_modules/
 src/main/resources/public/
 subprojects/webapp/node_modules/
 subprojects/webapp/dist/
+subprojects/webapp/typings/

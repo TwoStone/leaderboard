@@ -45,4 +45,4 @@ clean.dependsOn gulp_clean
 
 check.dependsOn gulp_check
 
-assemble.dependsOn gulp_build
+jar.dependsOn gulp_build
