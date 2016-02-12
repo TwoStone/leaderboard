@@ -11,7 +11,6 @@ class DivisionModel implements NewDivision {
 @Component({
     selector: 'create-division',
     template: `
-        <h1>Create new Division</h1>
         <form (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="name">Name</label>
@@ -39,7 +38,6 @@ export class CreateDivisionComponent {
     onSubmit() {
         this._competitionService.addDivision(this._model.competition, this.model).subscribe(d => {
             this._model.updateModel();
-            this._router.navigate(['Divisions']);
         });
     }
 }
