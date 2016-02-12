@@ -21,3 +21,5 @@ src/main/resources/public/
 subprojects/webapp/node_modules/
 subprojects/webapp/dist/
 subprojects/webapp/typings/
+.settings/gradle.prefs
+subprojects/webapp/.settings/gradle.prefs
