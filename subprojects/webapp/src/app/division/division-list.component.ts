@@ -1,6 +1,8 @@
 import {Component, Input, Host, OnInit} from 'angular2/core';
 import {ROUTER_DIRECTIVES, RouteParams} from 'angular2/router';
 
+import {MODAL_DIRECTIVES} from '../tools/tools';
+
 import {Division, Competition, ModelService} from '../model/model';
 import {CompetitionService} from '../competition/competition.service';
 
@@ -9,9 +11,7 @@ import {CreateDivisionComponent} from './create-division.component';
 @Component({
     selector: 'division-item',
     template: `
-        <a *ngIf="division" [routerLink]="['Division', {divisionId: division.id}]">
-            {{ division.name }}
-        </a>
+        {{ division.name }}
     `,
     directives: [ROUTER_DIRECTIVES]
 })
@@ -22,7 +22,15 @@ class DivisionListItem {
 @Component({
     selector: 'division-list',
     template: `
-        <create-division></create-division>
+        <modal #modal>
+            <modal-header>
+                <h4>Create Divsion</h4>
+            </modal-header>
+            <modal-body>
+                <create-division (onCreated)="modal.hide()"></create-division>
+            </modal-body>
+        </modal>
+        <button (click)="modal.open()" class="btn btn-default">Add division</button>
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
@@ -41,7 +49,7 @@ class DivisionListItem {
             </table>
         </div>
     `,
-    directives: [DivisionListItem, ROUTER_DIRECTIVES, CreateDivisionComponent]
+    directives: [DivisionListItem, ROUTER_DIRECTIVES, CreateDivisionComponent, MODAL_DIRECTIVES]
 })
 export class DivisionListComponent implements OnInit {
 

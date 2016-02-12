@@ -1,4 +1,8 @@
-import {Component} from 'angular2/core';
+import {
+    Component,
+    Output,
+    EventEmitter
+} from 'angular2/core';
 import {Router} from 'angular2/router';
 
 import {CompetitionService, NewDivision} from '../competition/competition.service';
@@ -28,6 +32,8 @@ export class CreateDivisionComponent {
 
     model: DivisionModel;
 
+    @Output() onCreated = new EventEmitter();
+
     constructor(
         private _competitionService: CompetitionService,
         private _router: Router,
@@ -38,6 +44,7 @@ export class CreateDivisionComponent {
     onSubmit() {
         this._competitionService.addDivision(this._model.competition, this.model).subscribe(d => {
             this._model.updateModel();
+            this.onCreated.emit(d);
         });
     }
 }
