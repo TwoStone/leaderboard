@@ -31,6 +31,13 @@ export interface Event {
     id: number;
 }
 
+export interface Score {
+    id?: number;
+    event: Event;
+    competitor: Competitor;
+    value: number;
+}
+
 @Injectable()
 export class ModelService {
 
