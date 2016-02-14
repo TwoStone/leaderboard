@@ -23,7 +23,7 @@ public class CompetitionService {
     private String name;
     
     public long getDivisionId() {
-      return divisionId;
+      return this.divisionId;
     }
 
     public void setDivisionId(long division) {
@@ -31,7 +31,7 @@ public class CompetitionService {
     }
 
     public String getName() {
-      return name;
+      return this.name;
     }
 
     public void setName(String name) {
@@ -43,7 +43,7 @@ public class CompetitionService {
     private String name;
 
     public String getName() {
-      return name;
+      return this.name;
     }
 
     public void setName(String name) {
@@ -97,6 +97,9 @@ public class CompetitionService {
     return division;
   }
   
+  /**
+   * Registers a new Competitor.
+   */
   @RequestMapping(
       path = "/{competitionId}/competitors.add",
       method = RequestMethod.POST)
@@ -109,7 +112,8 @@ public class CompetitionService {
         .filter(cur -> cur.getId().equals(request.getDivisionId()))
         .findFirst()
         .orElseThrow(() -> {
-          return new NoSuchElementException(MessageFormat.format("division id:{0}", request.getDivisionId()));
+          return new NoSuchElementException(
+              MessageFormat.format("division id:{0}", request.getDivisionId()));
         });
     
     return this.competitionManager.register(competition, division, request.getName());

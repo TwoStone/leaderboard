@@ -1,7 +1,7 @@
 import {Component, Input, Host, OnInit} from 'angular2/core';
 import {ROUTER_DIRECTIVES, RouteParams} from 'angular2/router';
 
-import {MODAL_DIRECTIVES} from '../tools/tools';
+import {MODAL_DIRECTIVES, ModalComponent} from '../tools/tools';
 
 import {Division, Competition, ModelService} from '../model/model';
 import {CompetitionService} from '../competition/competition.service';

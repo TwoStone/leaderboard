@@ -9,6 +9,7 @@ import {CreateDivisionComponent} from '../division/create-division.component';
 import {CompetitionDashboardComponent} from './competition-dashboard.component';
 import {CompetitorsList} from '../competitor/competitor-list.component';
 import {EventList} from '../event/event-list.component';
+import {ScoreComponent} from '../score/score.component';
 
 @Component({
     template: `
@@ -24,10 +25,11 @@ import {EventList} from '../event/event-list.component';
                         <li><a [routerLink]="['Divisions']">Divisions</a></li>
                         <li><a [routerLink]="['CompetitorList']">Competitors</a></li>
                         <li><a [routerLink]="['EventList']">Events</a></li>
+                        <li><a [routerLink]="['Scores']">Scores</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-12 col-sm-9">
-                    <router-outlet class="col-lg-8"></router-outlet>
+                    <router-outlet></router-outlet>
                 </div>
             </div>
         </div>
@@ -41,7 +43,8 @@ import {EventList} from '../event/event-list.component';
     { path: '/divisions/{divisionId}', name: 'Division', component: DivisionComponent },
     { path: '/divisions.create', name: 'CreateDivision', component: CreateDivisionComponent },
     { path: '/competitors', name: 'CompetitorList', component: CompetitorsList},
-    { path: '/events', name: 'EventList', component: EventList }
+    { path: '/events', name: 'EventList', component: EventList },
+    { path: '/scores', name: 'Scores', component: ScoreComponent }
 ])
 export class CompetitionComponent implements OnInit {
 

@@ -24,6 +24,9 @@ public class Score extends AbstractEntity {
     super();
   }
   
+  /**
+   * Creates a new score.
+   */
   public Score(Event event, Competitor competitor, long value) {
     super();
     this.event = event;

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-
 import javax.inject.Inject;
 
 @RestController
@@ -34,6 +32,9 @@ public class ScoreService {
     this.registrationRepository = registrationRepository;
   }
 
+  /**
+   * Adds a new score or updates an existing score.
+   */
   @RequestMapping(path = "/", method = RequestMethod.POST)
   public Score addScore(@RequestBody Score score) {
     Event event = this.eventRepository.findOne(score.getEvent().getId());
@@ -44,6 +45,7 @@ public class ScoreService {
   @RequestMapping("/event/{eventId}")
   public Iterable<Score> getScoresForEvent(
       @PathVariable("eventId") long eventId) {
-    return Collections.emptyList();
+    Event event = this.eventRepository.findOne(eventId);
+    return this.scoreManager.findScoreByEvent(event);
   }
 }

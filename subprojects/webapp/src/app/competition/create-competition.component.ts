@@ -14,7 +14,7 @@ class CompetitionModel implements NewCompetition {
 
 @Component({
     selector: 'create-competition',
-    templateUrl: 'app/create-competition/create-competition.html'
+    templateUrl: 'app/competition/create-competition.html'
 })
 export class CreateCompetitionComponent {
 

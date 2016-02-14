@@ -18,7 +18,7 @@ class DivisionModel implements NewDivision {
         <form (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" [(ngModel)]="model.name" ngControl="name" #name="ngForm" required>
+                <input type="text" class="form-control" [(ngModel)]="model.name" ngControl="name" #name="ngForm" required autofocus>
                 <div [hidden]="name || name.valid" class="alert alert-danger">
                     Name is required
                 </div>
@@ -44,6 +44,7 @@ export class CreateDivisionComponent {
     onSubmit() {
         this._competitionService.addDivision(this._model.competition, this.model).subscribe(d => {
             this._model.updateModel();
+            this.model = new DivisionModel();
             this.onCreated.emit(d);
         });
     }

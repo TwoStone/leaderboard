@@ -16,8 +16,8 @@ export class ScoreService {
 
      constructor(private http: Http) { }
 
-     getScoresForEvent(competition: Competition, event: Event): Rx.Observable<Array<Score>> {
-         let url = `api/scores/event/${event.id}`;
+     getScoresForEvent(eventId: number): Rx.Observable<Array<Score>> {
+         let url = `api/scores/event/${eventId}`;
          return this.http.get(url).map(res => res.json());
      }
 
