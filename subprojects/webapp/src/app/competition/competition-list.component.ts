@@ -1,8 +1,8 @@
 import {Component, Input} from 'angular2/core';
-import {CompetitionService} from './competition.service';
 import {Competition} from '../model/model';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 
+import {CompetitionService} from '../services';
 
 @Component({
     selector: 'competition-list-item',

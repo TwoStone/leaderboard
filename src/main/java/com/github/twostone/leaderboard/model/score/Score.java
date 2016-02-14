@@ -5,14 +5,17 @@ import com.github.twostone.leaderboard.model.competition.Competitor;
 import com.github.twostone.leaderboard.model.event.Event;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 @Entity
 @SuppressWarnings("serial")
 public class Score extends AbstractEntity {
   
+  @ManyToOne
   private Event event;
   
+  @ManyToOne
   private Competitor competitor;
   
   private long value;

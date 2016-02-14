@@ -4,7 +4,8 @@ import {
     Competition,
     Division,
     Competitor,
-    Event
+    Event,
+    EventType
 } from '../model/model';
 
 import * as Rx from 'rxjs';
@@ -24,6 +25,8 @@ export interface NewCompetitor {
 
 export interface NewEvent {
     name: string;
+    description: string;
+    typeId: number;
 }
 
 @Injectable()

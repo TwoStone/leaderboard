@@ -1,21 +1,26 @@
 import {
     Component,
-    OnInit
+    OnInit,
+    Output,
+    EventEmitter
 } from 'angular2/core';
 
 import {
     ModelService,
-    Event
+    Event,
+    EventType
 } from '../model/model';
 
 import {
     CompetitionService,
-    NewEvent
-} from '../competition/competition.service';
-
+    NewEvent,
+    EventTypeService
+} from '../services';
 
 class EventModel implements NewEvent {
     name: string;
+    description: string = '';
+    typeId: number;
 }
 
 
@@ -35,23 +40,52 @@ class EventModel implements NewEvent {
                     Name is required
                 </div>
             </div>
+            <div class="form-group">
+                <label for="type">Type</label>
+                <select class="form-control"
+                    [(ngModel)]="model.typeId"
+                    #type="ngForm"
+                    ngControl="type">
+                    <option *ngFor="#t of types" [value]="t.id">
+                        {{ t.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea 
+                    class="form-control" 
+                    [(ngModel)]="model.description" 
+                    #description="ngForm" 
+                    ngControl="description">
+                </textarea>
+            </div>
             <button class="btn btn-primary" type="submit">Add</button>
         </form>
     `
 })
-export class CreateEvent {
+export class CreateEvent implements OnInit {
 
     model: EventModel = new EventModel();
+    types: EventType[] = [];
+
+    @Output() onCreated = new EventEmitter();
 
     constructor(
         private service: ModelService,
-        private competitionService: CompetitionService) {
+        private competitionService: CompetitionService,
+        private eventTypeService: EventTypeService) {
+    }
+
+    ngOnInit() {
+        this.eventTypeService.getAll().subscribe(types => this.types = types);
     }
 
     onSubmit() {
         this.competitionService.addEvent(this.service.competition, this.model).subscribe(e => {
             this.service.updateModel();
             this.model = new EventModel();
+            this.onCreated.emit(e);
         });
     }
 }

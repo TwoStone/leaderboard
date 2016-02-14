@@ -11,7 +11,7 @@ import {
 import {
     CompetitionService,
     NewCompetitor
-} from '../competition/competition.service';
+} from '../services';
 
 class CompetitorModel implements NewCompetitor {
     name: string;

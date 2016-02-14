@@ -22,5 +22,4 @@ public class ModelConfiguration {
   public Module installJsr310Module() {
     return new JavaTimeModule();
   }
-  
 }

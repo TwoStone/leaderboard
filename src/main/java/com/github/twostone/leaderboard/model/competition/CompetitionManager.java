@@ -2,6 +2,7 @@ package com.github.twostone.leaderboard.model.competition;
 
 import com.github.twostone.leaderboard.model.event.Event;
 import com.github.twostone.leaderboard.model.event.EventRepository;
+import com.github.twostone.leaderboard.model.event.EventType;
 
 import org.springframework.stereotype.Service;
 
@@ -67,8 +68,11 @@ public class CompetitionManager {
   /**
    * Adds a new event to the competition.
    */
-  public Event addEvent(Competition competition, String eventName) {
-    Event event = new Event(eventName);
+  public Event addEvent(Competition competition, 
+      String eventName, 
+      String description, 
+      EventType eventType) {
+    Event event = new Event(eventName, description, eventType);
     event = this.eventRepository.save(event);
     competition.addEvent(event);
     

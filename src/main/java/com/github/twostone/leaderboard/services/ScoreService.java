@@ -1,9 +1,11 @@
-package com.github.twostone.leaderboard.model.score;
+package com.github.twostone.leaderboard.services;
 
 import com.github.twostone.leaderboard.model.competition.Competitor;
 import com.github.twostone.leaderboard.model.competition.RegistrationRepository;
 import com.github.twostone.leaderboard.model.event.Event;
 import com.github.twostone.leaderboard.model.event.EventRepository;
+import com.github.twostone.leaderboard.model.score.Score;
+import com.github.twostone.leaderboard.model.score.ScoreManager;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

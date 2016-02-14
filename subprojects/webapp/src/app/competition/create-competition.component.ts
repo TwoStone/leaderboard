@@ -1,7 +1,8 @@
 import {Component} from 'angular2/core';
 import {Router} from 'angular2/router';
 import {NgForm} from 'angular2/common';
-import {CompetitionService, NewCompetition} from '../competition/competition.service';
+
+import {CompetitionService, NewCompetition} from '../services';
 
 
 class CompetitionModel implements NewCompetition {

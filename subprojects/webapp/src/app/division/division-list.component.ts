@@ -4,7 +4,7 @@ import {ROUTER_DIRECTIVES, RouteParams} from 'angular2/router';
 import {MODAL_DIRECTIVES, ModalComponent} from '../tools/tools';
 
 import {Division, Competition, ModelService} from '../model/model';
-import {CompetitionService} from '../competition/competition.service';
+import {CompetitionService} from '../services';
 
 import {CreateDivisionComponent} from './create-division.component';
 

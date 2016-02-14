@@ -30,12 +30,16 @@ export class ModalComponent implements AfterViewInit {
     $modal: JQuery;
 
     @Output() onHide = new EventEmitter();
+    @Output() onShown = new EventEmitter();
 
     ngAfterViewInit() {
         this.$modal = jQuery('#' + this.id);
         this.$modal.appendTo('body').modal({ show: false });
         this.$modal.on('hide.bs.modal', (e) => {
-            this.onHide.next(e);
+            this.onHide.emit(e);
+        });
+        this.$modal.on('shown.bs.modal', (e) => {
+            this.onShown.emit(e);
         });
     }
 

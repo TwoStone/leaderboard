@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from 'angular2/core';
 import {RouteParams, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {Competition, ModelService} from '../model/model';
-import {CompetitionService} from './competition.service';
 import {DivisionComponent} from '../division/division.component';
 import {DivisionListComponent} from '../division/division-list.component';
 import {CreateDivisionComponent} from '../division/create-division.component';
@@ -11,15 +10,19 @@ import {CompetitorsList} from '../competitor/competitor-list.component';
 import {EventList} from '../event/event-list.component';
 import {ScoreComponent} from '../score/score.component';
 
+import {CompetitionService} from '../services';
+
 @Component({
     template: `
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-6 col-sm-3">
                     <div *ngIf="competition">
-                        <a [routerLink]="['CompetitionDashboard']">
-                            {{ competition.name }}
-                        </a>
+                        <h4>
+                            <a [routerLink]="['CompetitionDashboard']">
+                                {{ competition.name }}
+                            </a>
+                        </h4>
                     </div >
                     <ul class="nav">
                         <li><a [routerLink]="['Divisions']">Divisions</a></li>

@@ -4,39 +4,15 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {ReplaySubject} from 'rxjs/subject/ReplaySubject';
 
+import {CompetitionService} from '../services';
 
-import {CompetitionService} from '../competition/competition.service';
+import {Competition} from './competition';
 
-export interface Competition {
-    name: string;
-    id: number;
-    divisions: Division[];
-    competitors: Competitor[];
-    events: Event[];
-}
-
-export interface Division {
-    name: string;
-    id: number;
-}
-
-export interface Competitor {
-    name: string;
-    id: number;
-    division: Division;
-}
-
-export interface Event {
-    name: string;
-    id: number;
-}
-
-export interface Score {
-    id?: number;
-    event: Event;
-    competitor: Competitor;
-    value: number;
-}
+export * from './competition';
+export * from './competitor';
+export * from './event';
+export * from './score';
+export * from './division';
 
 @Injectable()
 export class ModelService {

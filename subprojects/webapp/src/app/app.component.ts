@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publishLast';
 
 
-import {CompetitionService} from './competition/competition.service';
+import {SERVICE_PROVIDERS} from './services';
 import {CompetitionList} from './competition/competition-list.component';
 import {CompetitionComponent} from './competition/competition.component';
 import {CreateCompetitionComponent} from './competition/create-competition.component';
@@ -30,7 +30,7 @@ import {CreateCompetitionComponent} from './competition/create-competition.compo
 
         <router-outlet></router-outlet>
     `,
-    providers: [CompetitionService],
+    providers: [SERVICE_PROVIDERS],
     directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([

@@ -2,8 +2,14 @@ import {
     Component,
     OnInit,
     Pipe,
-    PipeTransform
+    PipeTransform,
+    ViewChild
 } from 'angular2/core';
+
+import {
+    MODAL_DIRECTIVES,
+    ModalComponent
+} from '../tools/tools';
 
 import {
     ModelService,
@@ -13,8 +19,13 @@ import {
 } from '../model/model';
 
 import {
-    ScoreService
-} from './score.service';
+    ScoreEditComponent
+} from './score-edit.component';
+
+import {
+    ScoreService,
+    EventBus
+} from '../services';
 
 @Pipe({ name: 'score' })
 class ScorePipe implements PipeTransform {
@@ -23,8 +34,8 @@ class ScorePipe implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'scoresFilter'})
-class ScoresFilterPipe implements PipeTransform {
+@Pipe({ name: 'scoringQueryFilter'})
+class ScoringQueryFilterPipe implements PipeTransform {
     transform(values: Score[], args: string[]) {
         let query = args[0];
         if (query.length === 0) {
@@ -41,25 +52,44 @@ class ScoresFilterPipe implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'inDivision' })
-class DivisionScoreFilter implements PipeTransform {
+@Pipe({ name: 'scoreFilter' })
+class ScoreFilterPipe implements PipeTransform {
     transform(scores: Score[], args: string[]) {
-        if (args.length === 0) {
-            return scores;
-        }
         let divisionId = args[0];
-        if (divisionId.length === 0) {
-            return scores;
+        let onlyUnset = !!args[1];
+
+        let result: Score[];
+
+        if (divisionId.length === 0 || divisionId === 'all') {
+            result = scores;
+        } else {
+            result = scores.filter((score, index, args) => {
+                return score.competitor.division.id === +divisionId;
+            });
         }
 
-        return scores.filter((score, index, args) => {
-            return score.competitor.division.id === +divisionId;
-        });
+        if (onlyUnset) {
+            result = result.filter((score, index, array) => {
+                 return score.id == null;
+            });
+        }
+        return result;
     }
 }
 
 @Component({
     template: `
+        <modal #modal>
+            <modal-header>
+                <h3>
+                    Edit score
+                </h3>
+            </modal-header>
+            <modal-body>
+                <score-edit [score]="selectedScore" (onSubmitted)="modal.hide()">
+                </score-edit>
+            </modal-body>
+        </modal>
         <div class="form-inline">
             <div class="form-group">
                 <label for="query">Search</label>
@@ -68,6 +98,7 @@ class DivisionScoreFilter implements PipeTransform {
             <div class="form-group">
                 <label for="division">Division</label>
                 <select class="form-control" [(ngModel)]="division">
+                    <option value="all">All</option>
                     <option *ngFor="#division of divisions" [value]="division.id">
                         {{ division.name }}
                     </option>
@@ -75,9 +106,13 @@ class DivisionScoreFilter implements PipeTransform {
             </div>
             <div class="form-group">
                 <label for="event">Event</label>
-                <select class="form-control" [ngModel]="event" (ngModelChange)="eventChanged($event)">
+                <select class="form-control" [(ngModel)]="event" (ngModelChange)="eventChanged($event)">
                     <option *ngFor="#e of events" [value]="e.id">{{ e.name }}</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="onlyUnset">only unset</label>
+                <input type="checkbox" class="form-control" [(ngModel)]="onlyUnset"/>
             </div>
         </div>
         <div class="table-responsive">
@@ -90,7 +125,8 @@ class DivisionScoreFilter implements PipeTransform {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="#score of scores | inDivision:division | scoresFilter:query">
+                    <tr *ngFor="#score of scores | scoreFilter:division:onlyUnset | scoringQueryFilter:query" 
+                        (click)="selectScore(score)">
                         <td>{{ score.competitor.name }}</td>
                         <td>{{ score.competitor.division.name }}</td>
                         <td>{{ score.value | score }}</td>
@@ -102,8 +138,9 @@ class DivisionScoreFilter implements PipeTransform {
             </div>
         </div>
     `,
+    directives: [ScoreEditComponent, MODAL_DIRECTIVES],
     providers : [ScoreService],
-    pipes: [ScorePipe, ScoresFilterPipe, DivisionScoreFilter]
+    pipes: [ScorePipe, ScoringQueryFilterPipe, ScoreFilterPipe]
 })
 export class ScoreComponent implements OnInit {
 
@@ -113,10 +150,24 @@ export class ScoreComponent implements OnInit {
     scores: Score[] = [];
     query: string = '';
     division: string = '';
+    onlyUnset: boolean = false;
+
+    @ViewChild(ModalComponent) $modal: ModalComponent;
+    @ViewChild(ScoreEditComponent) $edit: ScoreEditComponent;
 
     constructor(
         private modelService: ModelService,
-        private scoreService: ScoreService) { }
+        private scoreService: ScoreService,
+        private eventBus: EventBus) {
+        this.eventBus.on('score.updated').subscribe(score => {
+            this.updateScores(score.event.id);
+        });
+    }
+
+    selectScore(score: Score) {
+        this.$edit.score = score;
+        this.$modal.open();
+    }
 
     ngOnInit() {
         this.modelService.onCompetitionUpdate.subscribe(competition => {
@@ -126,7 +177,11 @@ export class ScoreComponent implements OnInit {
     }
 
     eventChanged(e: number) {
-        this.scoreService.getScoresForEvent(e).subscribe(scores => {
+        this.updateScores(e);
+    }
+
+    updateScores(eventId: number) {
+        this.scoreService.getScoresForEvent(eventId).subscribe(scores => {
             this.scores = scores;
         });
     }

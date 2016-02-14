@@ -5,7 +5,10 @@ import {
 } from 'angular2/core';
 import {Router} from 'angular2/router';
 
-import {CompetitionService, NewDivision} from '../competition/competition.service';
+import {
+    CompetitionService, 
+    NewDivision
+} from '../services';
 import {ModelService} from '../model/model';
 
 class DivisionModel implements NewDivision {
@@ -15,7 +18,7 @@ class DivisionModel implements NewDivision {
 @Component({
     selector: 'create-division',
     template: `
-        <form (ngSubmit)="onSubmit()">
+        <form class="form" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" [(ngModel)]="model.name" ngControl="name" #name="ngForm" required autofocus>
