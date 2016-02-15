@@ -6,7 +6,7 @@ import {
 import {Router} from 'angular2/router';
 
 import {
-    CompetitionService, 
+    CompetitionService,
     NewDivision
 } from '../services';
 import {ModelService} from '../model/model';
