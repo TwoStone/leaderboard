@@ -1,6 +1,7 @@
 package com.github.twostone.leaderboard.model;
 
 import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.eventbus.EventBus;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -21,5 +22,9 @@ public class ModelConfiguration {
   @Bean
   public Module installJsr310Module() {
     return new JavaTimeModule();
+  }
+  
+  public Module installGuavaModule() {
+    return new GuavaModule();
   }
 }

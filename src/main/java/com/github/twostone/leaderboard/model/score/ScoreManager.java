@@ -24,8 +24,12 @@ public class ScoreManager {
   private ScoreRepository scoreRepository;
   private CompetitionRepository competitionRepository;
 
+  /**
+   * Creates a ScoreManager.
+   */
   @Inject
-  ScoreManager(ScoreRepository scoreRepository, CompetitionRepository competitionRepository) {
+  public ScoreManager(ScoreRepository scoreRepository, 
+      CompetitionRepository competitionRepository) {
     super();
     this.scoreRepository = scoreRepository;
     this.competitionRepository = competitionRepository;

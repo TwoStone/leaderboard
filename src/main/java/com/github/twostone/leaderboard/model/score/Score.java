@@ -10,7 +10,7 @@ import javax.persistence.Version;
 
 @Entity
 @SuppressWarnings("serial")
-public class Score extends AbstractEntity {
+public class Score extends AbstractEntity implements Comparable<Score> {
   
   @ManyToOne
   private Event event;
@@ -57,6 +57,11 @@ public class Score extends AbstractEntity {
   
   public void setValue(long value) {
     this.value = value;
+  }
+
+  @Override
+  public int compareTo(Score other) {
+    return (int) (this.value - other.value);
   }
   
   

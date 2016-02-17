@@ -1,6 +1,7 @@
 package com.github.twostone.leaderboard.model.event;
 
 import com.github.twostone.leaderboard.model.base.AbstractEntity;
+import com.github.twostone.leaderboard.model.score.Score;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -15,8 +16,20 @@ public class EventType extends AbstractEntity {
   
   @JsonFormat(shape = Shape.STRING)
   public enum Ordering {
-    ASCENDING,
-    DESCENDING;
+    ASCENDING {
+      @Override
+      public com.google.common.collect.Ordering<Score> getComparator() {
+        return com.google.common.collect.Ordering.natural();
+      }
+    },
+    DESCENDING {
+      @Override
+      public com.google.common.collect.Ordering<Score> getComparator() {
+        return com.google.common.collect.Ordering.natural().reverse();
+      }
+    };
+    
+    public abstract com.google.common.collect.Ordering<Score> getComparator();
   }
   
   private String name;
