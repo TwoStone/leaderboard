@@ -1,6 +1,7 @@
 package com.github.twostone.leaderboard.model.score;
 
 import com.github.twostone.leaderboard.model.competition.Competitor;
+import com.github.twostone.leaderboard.model.competition.Division;
 import com.github.twostone.leaderboard.model.event.Event;
 
 import org.springframework.data.repository.CrudRepository;
@@ -14,4 +15,6 @@ public interface ScoreRepository extends CrudRepository<Score, Long> {
   Iterable<Score> findByCompetitor(Competitor competitor);
   
   Iterable<Score> findByEventAndCompetitor(Event event, Competitor competitor);
+  
+  Iterable<Score> findByEventAndCompetitorDivision(Event event, Division division);
 }

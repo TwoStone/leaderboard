@@ -9,6 +9,7 @@ import {CompetitionDashboardComponent} from './competition-dashboard.component';
 import {CompetitorsList} from '../competitor/competitor-list.component';
 import {EventList} from '../event/event-list.component';
 import {ScoreComponent} from '../score/score.component';
+import {ScoreboardComponent} from '../scoreboard/scoreboard.component';
 
 import {CompetitionService} from '../services';
 
@@ -29,6 +30,7 @@ import {CompetitionService} from '../services';
                         <li><a [routerLink]="['CompetitorList']">Competitors</a></li>
                         <li><a [routerLink]="['EventList']">Events</a></li>
                         <li><a [routerLink]="['Scores']">Scores</a></li>
+                        <li><a [routerLink]="['Scoreboard']">Scoreboard</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-12 col-sm-9">
@@ -47,7 +49,8 @@ import {CompetitionService} from '../services';
     { path: '/divisions.create', name: 'CreateDivision', component: CreateDivisionComponent },
     { path: '/competitors', name: 'CompetitorList', component: CompetitorsList},
     { path: '/events', name: 'EventList', component: EventList },
-    { path: '/scores', name: 'Scores', component: ScoreComponent }
+    { path: '/scores', name: 'Scores', component: ScoreComponent },
+    { path: '/scoreboard', name: 'Scoreboard', component: ScoreboardComponent}
 ])
 export class CompetitionComponent implements OnInit {
 

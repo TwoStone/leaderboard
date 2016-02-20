@@ -74,7 +74,7 @@ public class RankingManagerTest {
         new Score(this.event, third, 120)
     ));
     
-    EventScoreBoard scoreBoard = this.rankingManager.getScoreEventScoreBoard(this.event);
+    EventScoreBoard scoreBoard = this.rankingManager.getEventScoreBoard(this.event);
     List<RankedEventScore> ranks = scoreBoard.getScores().get(this.division);
     assertThat(ranks, hasSize(5));
   }

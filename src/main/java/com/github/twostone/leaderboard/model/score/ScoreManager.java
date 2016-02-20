@@ -5,14 +5,13 @@ import static java.util.stream.Collectors.toList;
 import com.github.twostone.leaderboard.model.competition.Competition;
 import com.github.twostone.leaderboard.model.competition.CompetitionRepository;
 import com.github.twostone.leaderboard.model.competition.Competitor;
+import com.github.twostone.leaderboard.model.competition.Division;
 import com.github.twostone.leaderboard.model.event.Event;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,18 +47,31 @@ public class ScoreManager {
    * Includes a score for every competitor in the competition.
    */
   public Iterable<Score> findScoreByEvent(Event event) {
-    Collection<Score> scores = Lists.newArrayList(this.scoreRepository.findByEvent(event));
     Competition competition = this.competitionRepository.findCompetitionByEvents(event);
-    List<Competitor> competitorsWithScore = scores.stream().map(
+    Iterable<Score> scores = this.scoreRepository.findByEvent(event);
+    return complete(event, scores, competition.getCompetitors());
+  }
+  
+  public Iterable<Score> findScoreByEventAndDivision(Event event, Division division) {
+    Competition competition = this.competitionRepository.findCompetitionByEvents(event);
+    Iterable<Score> scores = this.scoreRepository.findByEventAndCompetitorDivision(event, division);
+    return complete(event, scores, competition.getCompetitors().stream().filter(competitor -> {
+      return competitor.getDivision().equals(division);
+    }).collect(toList()));
+  }
+
+  private Iterable<Score> complete(Event event, Iterable<Score> scores, Iterable<Competitor> competitors) {
+    List<Score> result = Lists.newArrayList(scores);
+    List<Competitor> competitorsWithScore = result.stream().map(
         s -> s.getCompetitor()).collect(Collectors.toList());
-    List<Competitor> competitorsWithoutScore = new ArrayList<>(competition.getCompetitors());
+    List<Competitor> competitorsWithoutScore = Lists.newArrayList(competitors);
     competitorsWithoutScore.removeAll(competitorsWithScore);
-    scores.addAll(competitorsWithoutScore.stream().map(
+    result.addAll(competitorsWithoutScore.stream().map(
         competitor -> {
           return new Score(event, competitor, -1);
         }).collect(toList()));
     
-    return scores;
+    return result;
   }
   
   public Iterable<Score> findScoreByCompetitor(Competitor competitor) {

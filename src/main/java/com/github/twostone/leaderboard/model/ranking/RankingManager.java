@@ -32,7 +32,7 @@ public class RankingManager {
   /**
    * Return a score board for the event with the ranked scores.
    */
-  public EventScoreBoard getScoreEventScoreBoard(Event event) {
+  public EventScoreBoard getEventScoreBoard(Event event) {
     Ordering<Score> eventOrdering = event.getType().getOrdering().getComparator();
     Ordering<Score> ordering = Ordering.from(sortOutUnset(eventOrdering));
     List<Score> scores = Lists.newArrayList(this.scoreManager.findScoreByEvent(event));
@@ -85,5 +85,10 @@ public class RankingManager {
       }
       return eventOrdering.compare(left, right);
     };
+  }
+
+  public List<RankedEventScore> getEventScore(Event event, Division division) {
+    List<Score> scores = Lists.newArrayList(this.scoreManager.findScoreByEventAndDivision(event, division));
+    return rank(event.getType().getOrdering().getComparator(), scores);
   }
 }
