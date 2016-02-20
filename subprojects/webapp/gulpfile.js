@@ -3,6 +3,8 @@ var ts = require('gulp-typescript');
 var del = require('del');
 var sourcemaps = require('gulp-sourcemaps');
 var tslint = require("gulp-tslint");
+var watch = require('gulp-watch');
+var batch = require('gulp-batch');
 
 
 var tsConfig = require('./tsconfig.json').compilerOptions;
@@ -55,6 +57,12 @@ gulp.task('clean', function () {
        ], {
         force: true
     });
+});
+
+gulp.task('watch', function() {
+    watch(paths.scripts, batch(function (events, cb) {
+       gulp.start('ts', cb); 
+    }));
 });
 
 gulp.task('check', ['tslint']);
