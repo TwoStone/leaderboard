@@ -4,5 +4,9 @@
     "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#6697d6f7dadbf5773cb40ecda35a76027e0783b2",
     "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c",
     "string_score": "github:DefinitelyTyped/DefinitelyTyped/string_score/string_score.d.ts#e78260ef9b39498a6a1bb513eeb4e0ba37203c25"
+  },
+  "ambientDependencies": {
+    "moment": "github:DefinitelyTyped/DefinitelyTyped/moment/moment.d.ts#b090bcf9ba9f756ec8ff53e7707269729172a325",
+    "moment-node": "github:DefinitelyTyped/DefinitelyTyped/moment/moment-node.d.ts#5b0c38ab2bd59980a095c025b11ebb6cc6cbf947"
   }
 }

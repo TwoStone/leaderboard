@@ -2,7 +2,11 @@ import {
      Component,
      Input,
      Output,
-     EventEmitter
+     EventEmitter,
+     ElementRef,
+     ComponentRef,
+     DynamicComponentLoader,
+     Type
 } from 'angular2/core';
 
 import {
@@ -11,30 +15,32 @@ import {
 } from '../services';
 
 import {
-    Score
+    Score,
+    EventType
 } from '../model/model';
+
+import {
+    ScoreInputFactory
+} from './score-input.component';
 
 @Component({
     selector: 'score-edit',
     template: `
         <div>
-            <form (ngSubmit)="onSubmit()" class="form" *ngIf="_score">
-                <div class="form-group">
+            <form (ngSubmit)="onSubmit()" class="form">
+                <div class="form-group"  *ngIf="_score">
                     <label for="name">Name</label>
                     <div #name>{{ _score.competitor.name }}</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group"  *ngIf="_score">
                     <label for="division">Division</label>
-                    <div #division>{{ _score.competitor.name}}</div>
+                    <div #division>{{ _score.competitor.division.name }}</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group"  *ngIf="_score">
                     <label for="event">Event</label>
                     <div #event>{{ _score.event.name}}</div>
                 </div>
-                <div class="form-group">
-                    <label for="score">Score</label>
-                    <input type="number" class="form-control" [(ngModel)]="scoreValue"/>
-                </div>
+                <div #scoreInput></div>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>            
         </div>
@@ -46,13 +52,31 @@ export class ScoreEditComponent {
 
     @Output() onSubmitted: EventEmitter<Score> = new EventEmitter();
 
-    constructor(private scoreService: ScoreService,
-        private eventBus: EventBus) { }
+    private inputComponent: ComponentRef;
+
+    constructor(
+        private scoreService: ScoreService,
+        private componentLoader: DynamicComponentLoader,
+        private elementRef: ElementRef,
+        private eventBus: EventBus) {
+    }
 
     @Input()
     set score(score: Score) {
         if (score) {
             this._score = jQuery.extend({}, score);
+
+            if (this.inputComponent) {
+                this.inputComponent.dispose();
+            }
+
+            this.componentLoader.loadIntoLocation(
+                ScoreInputFactory.getComponentForType(score.event),
+                this.elementRef,
+                'scoreInput').then(ref => {
+                    this.inputComponent = ref;
+                    ref.instance.score = this._score;
+                });
         }
     }
 
