@@ -1,9 +1,11 @@
 package com.github.twostone.leaderboard.model.competition;
 
+import com.github.twostone.leaderboard.model.event.EventType;
+
 public class NewEventRequest {
   String name;
   String description;
-  long typeId;
+  EventType type;
 
   public String getName() {
     return this.name;
@@ -21,11 +23,11 @@ public class NewEventRequest {
     this.description = description;
   }
 
-  public long getTypeId() {
-    return this.typeId;
+  public EventType getType() {
+    return this.type;
   }
 
-  public void setTypeId(long id) {
-    this.typeId = id;
+  public void setType(EventType type) {
+    this.type = type;
   }
 }

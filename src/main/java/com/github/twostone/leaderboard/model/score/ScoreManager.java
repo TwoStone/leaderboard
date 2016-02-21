@@ -54,7 +54,7 @@ public class ScoreManager {
             return competitor.getDivision().equals(division);
           }).collect(toList());
     List<Score> scores = this.scoreRepository.findByEventAndCompetitorDivision(event, division, 
-        new Sort(event.getType().getOrdering().getDirection(), "score"));
+        new Sort(event.getType().getDirection(), "score"));
     return this.createUnsetScores(event, competitors, scores);
   }
   

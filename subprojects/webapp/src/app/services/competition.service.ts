@@ -26,7 +26,7 @@ export interface NewCompetitor {
 export interface NewEvent {
     name: string;
     description: string;
-    typeId: number;
+    type: EventType;
 }
 
 @Injectable()

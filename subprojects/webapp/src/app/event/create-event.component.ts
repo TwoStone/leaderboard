@@ -13,14 +13,13 @@ import {
 
 import {
     CompetitionService,
-    NewEvent,
-    EventTypeService
+    NewEvent
 } from '../services';
 
 class EventModel implements NewEvent {
     name: string;
     description: string = '';
-    typeId: number;
+    type: EventType;
 }
 
 
@@ -43,12 +42,11 @@ class EventModel implements NewEvent {
             <div class="form-group">
                 <label for="type">Type</label>
                 <select class="form-control"
-                    [(ngModel)]="model.typeId"
+                    [(ngModel)]="model.type"
                     #type="ngForm"
                     ngControl="type">
-                    <option *ngFor="#t of types" [value]="t.id">
-                        {{ t.name }}
-                    </option>
+                    <option [value]="eventType.FOR_TIME">for time</option>
+                    <option [value]="eventType.FOR_POINTS">for points</option>
                 </select>
             </div>
             <div class="form-group">
@@ -67,18 +65,18 @@ class EventModel implements NewEvent {
 export class CreateEvent implements OnInit {
 
     model: EventModel = new EventModel();
-    types: EventType[] = [];
 
     @Output() onCreated = new EventEmitter();
 
+    eventType = EventType;
+
     constructor(
         private service: ModelService,
-        private competitionService: CompetitionService,
-        private eventTypeService: EventTypeService) {
+        private competitionService: CompetitionService) {
     }
 
     ngOnInit() {
-        this.eventTypeService.getAll().subscribe(types => this.types = types);
+        this.model.type = EventType.FOR_TIME;
     }
 
     onSubmit() {

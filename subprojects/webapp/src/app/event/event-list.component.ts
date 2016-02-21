@@ -1,11 +1,14 @@
 import {
     Component,
-    OnInit
+    OnInit,
+    Pipe,
+    PipeTransform
 } from 'angular2/core';
 
 import {
     ModelService,
-    Event
+    Event,
+    EventType
 } from '../model/model';
 
 import {
@@ -15,6 +18,22 @@ import {
 import {
     CreateEvent
 } from './create-event.component'
+
+@Pipe({name: 'typeName'})
+class TypeNamePipe implements PipeTransform {
+    transform(type: EventType, args: any[]) {
+        switch (type) {
+            case EventType.FOR_TIME:
+                return 'time';
+                break;
+            case EventType.FOR_POINTS:
+                return 'points';
+            default:
+                return 'unknown';
+                break;
+        }
+    }
+}
 
 @Component({
     selector: 'event-list',
@@ -42,14 +61,15 @@ import {
                     <tr *ngFor="#event of events; #i = index">
                         <td width="5%">{{ i + 1 }}</td>
                         <td>{{ event.name }}</td>
-                        <td>{{ event.type.name }}</td>
+                        <td>{{ event.type | typeName }}</td>
                         <td>{{ event.description }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     `,
-    directives: [CreateEvent, MODAL_DIRECTIVES]
+    directives: [CreateEvent, MODAL_DIRECTIVES],
+    pipes: [TypeNamePipe]
 })
 export class EventList implements OnInit {
 

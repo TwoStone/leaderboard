@@ -103,7 +103,7 @@ export class ScoreComponent implements OnInit {
     event: string = '';
     scores: Score[] = [];
     query: string = '';
-    division: string = '';
+    division: string = 'all';
     onlyUnset: boolean = false;
 
     @ViewChild(ModalComponent) $modal: ModalComponent;
@@ -126,7 +126,11 @@ export class ScoreComponent implements OnInit {
     ngOnInit() {
         this.modelService.onCompetitionUpdate.subscribe(competition => {
             this.events = competition.events
-            this.divisions = competition.divisions;
+            if (this.events.length > 0) {
+                this.event = competition.events[0].id.toString();
+                this.divisions = competition.divisions;
+                this.updateScores(+this.event);
+            }
         });
     }
 

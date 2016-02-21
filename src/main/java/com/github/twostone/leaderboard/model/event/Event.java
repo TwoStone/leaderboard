@@ -3,7 +3,8 @@ package com.github.twostone.leaderboard.model.event;
 import com.github.twostone.leaderboard.model.base.AbstractEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Entity
 @SuppressWarnings("serial")
@@ -11,7 +12,8 @@ public class Event extends AbstractEntity {
 
   private String name;
   private String description;
-  @ManyToOne
+  
+  @Enumerated(EnumType.STRING)
   private EventType type;
   
   Event() {

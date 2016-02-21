@@ -5,8 +5,7 @@ export interface Event {
     id: number;
 }
 
-export interface EventType {
-    id: number;
-    name: string;
-    ordering: string;
+export enum EventType {
+    FOR_TIME,
+    FOR_POINTS
 }

@@ -6,8 +6,6 @@ import com.github.twostone.leaderboard.model.competition.Competitor;
 import com.github.twostone.leaderboard.model.competition.Division;
 import com.github.twostone.leaderboard.model.competition.NewEventRequest;
 import com.github.twostone.leaderboard.model.event.Event;
-import com.github.twostone.leaderboard.model.event.EventType;
-import com.github.twostone.leaderboard.model.event.EventTypeManager;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,15 +45,12 @@ public class CompetitionService {
   }
   
   private CompetitionManager competitionManager;
-  private EventTypeManager eventTypeManager;
 
   @Inject
   CompetitionService(
-      CompetitionManager competitionManager,
-      EventTypeManager eventTypeManager) {
+      CompetitionManager competitionManager) {
     super();
     this.competitionManager = competitionManager;
-    this.eventTypeManager = eventTypeManager;
   }
   
   @RequestMapping(
@@ -127,11 +122,10 @@ public class CompetitionService {
       @PathVariable("competitionId") Long competitionId,
       @RequestBody NewEventRequest newEvent) {
     final Competition competition = this.competitionManager.findOne(competitionId);
-    final EventType type = this.eventTypeManager.findOne(newEvent.getTypeId());
     return this.competitionManager.addEvent(
         competition, 
         newEvent.getName(), 
         newEvent.getDescription(),
-        type);
+        newEvent.getType());
   }
 }

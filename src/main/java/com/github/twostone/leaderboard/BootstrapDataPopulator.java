@@ -3,7 +3,7 @@ package com.github.twostone.leaderboard;
 import com.github.twostone.leaderboard.model.competition.Competition;
 import com.github.twostone.leaderboard.model.competition.Division;
 import com.github.twostone.leaderboard.model.competition.NewEventRequest;
-import com.github.twostone.leaderboard.model.event.EventTypeManager;
+import com.github.twostone.leaderboard.model.event.EventType;
 import com.github.twostone.leaderboard.services.CompetitionService;
 import com.github.twostone.leaderboard.services.CompetitionService.CompetitorRegistrationRequest;
 
@@ -21,21 +21,17 @@ public class BootstrapDataPopulator implements InitializingBean {
   private Logger log = LoggerFactory.getLogger(BootstrapDataPopulator.class);
 
   private CompetitionService competitionService;
-  private EventTypeManager eventTypeManager;
   
   @Inject
-  BootstrapDataPopulator(CompetitionService competitionService,
-      EventTypeManager eventTypeManager) {
+  BootstrapDataPopulator(CompetitionService competitionService) {
     super();
     this.competitionService = competitionService;
-    this.eventTypeManager = eventTypeManager;
   }
 
   @Override
   @Transactional
   public synchronized void afterPropertiesSet() throws Exception {
     this.log.info("Bootstrapping data...");
-    this.createEventTypes();
     this.createDemoCompetition();
     this.log.info("... Bootstrapping complete");
   }
@@ -74,15 +70,17 @@ public class BootstrapDataPopulator implements InitializingBean {
     this.competitionService.registerCompetitor(competition.getId(),
         this.createRegisterRequest(scaledDivision, "Scaled Team 5"));
     
-    this.competitionService.addEvent(competition.getId(), this.createEventRequest("Event 1", 1));
-    this.competitionService.addEvent(competition.getId(), this.createEventRequest("Event 2", 2));
+    this.competitionService.addEvent(competition.getId(), 
+        this.createEventRequest("Event 1", EventType.FOR_TIME));
+    this.competitionService.addEvent(competition.getId(), 
+        this.createEventRequest("Event 2", EventType.FOR_POINTS));
    
   }
   
-  private NewEventRequest createEventRequest(String name, long typeId) {
+  private NewEventRequest createEventRequest(String name, EventType type) {
     NewEventRequest newEvent = new NewEventRequest();
     newEvent.setName(name);
-    newEvent.setTypeId(typeId);
+    newEvent.setType(type);
     return newEvent;
   }
 
@@ -92,9 +90,4 @@ public class BootstrapDataPopulator implements InitializingBean {
     registrationRequest.setName(name);
     return registrationRequest;
   }
-  
-  private void createEventTypes() {
-    this.eventTypeManager.init();
-  }
-
 }

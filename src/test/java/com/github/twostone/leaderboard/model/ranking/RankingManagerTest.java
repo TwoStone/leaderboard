@@ -10,7 +10,6 @@ import com.github.twostone.leaderboard.model.competition.Competitor;
 import com.github.twostone.leaderboard.model.competition.Division;
 import com.github.twostone.leaderboard.model.event.Event;
 import com.github.twostone.leaderboard.model.event.EventType;
-import com.github.twostone.leaderboard.model.event.EventType.Direction;
 import com.github.twostone.leaderboard.model.score.Score;
 import com.github.twostone.leaderboard.model.score.ScoreManager;
 import com.github.twostone.leaderboard.model.score.ScoreRepository;
@@ -41,8 +40,7 @@ public class RankingManagerTest {
     this.scores = new ArrayList<>();
     this.division = new Division("division");
     
-    EventType type = new EventType("ascending", Direction.ASCENDING);
-    this.event = new Event("test-event", "description", type);
+    this.event = new Event("test-event", "description", EventType.FOR_TIME);
     this.competition = new Competition("test-competition");
     this.competition.addEvent(this.event);
     this.competition.addDivision(this.division);
