@@ -13,6 +13,8 @@ export * from './competitor';
 export * from './event';
 export * from './score';
 export * from './division';
+export * from './ranked-event-score';
+export * from './ranked-competition-score';
 
 @Injectable()
 export class ModelService {

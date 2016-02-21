@@ -1,7 +1,5 @@
 package com.github.twostone.leaderboard.model.base;
 
-import com.google.common.eventbus.EventBus;
-
 import javax.persistence.PostUpdate;
 
 public class AbstractEntityListener {
@@ -22,7 +20,7 @@ public class AbstractEntityListener {
 
   @PostUpdate
   public void postUpdate(AbstractEntity entity) {
-    EventBus eventBus = ComponentAccessor.getComponent(EventBus.class);
-    eventBus.post(new EntityUpdateEvent(entity));
+    //EventBus eventBus = ComponentAccessor.getComponent(EventBus.class);
+    //eventBus.post(new EntityUpdateEvent(entity));
   }
 }

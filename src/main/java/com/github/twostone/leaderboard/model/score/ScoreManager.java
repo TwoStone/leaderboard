@@ -10,10 +10,11 @@ import com.github.twostone.leaderboard.model.event.Event;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -41,39 +42,50 @@ public class ScoreManager {
   public Iterable<Score> findAll() {
     return this.scoreRepository.findAll();
   }
+
+  /**
+   * Returns all scores for the event and division.
+   * There is an entry for every competitor in the competition. 
+   */
+  public List<Score> findScoreByEventAndDivision(Event event, Division division) {
+    List<Competitor> competitors = Lists.newArrayList(
+        this.competitionRepository.findCompetitionByEvents(event)
+          .getCompetitors()).stream().filter(competitor -> {
+            return competitor.getDivision().equals(division);
+          }).collect(toList());
+    List<Score> scores = this.scoreRepository.findByEventAndCompetitorDivision(event, division, 
+        new Sort(event.getType().getOrdering().getDirection(), "score"));
+    return this.createUnsetScores(event, competitors, scores);
+  }
   
   /**
-   * Returns the scores for the event.
-   * Includes a score for every competitor in the competition.
+   * Returns all scores for the event.
+   * There is an entry for every competitor in the competition.
    */
-  public Iterable<Score> findScoreByEvent(Event event) {
-    Competition competition = this.competitionRepository.findCompetitionByEvents(event);
+  public Collection<Score> findScoreByEvent(Event event) {
     Iterable<Score> scores = this.scoreRepository.findByEvent(event);
-    return complete(event, scores, competition.getCompetitors());
+    Competition competition = this.competitionRepository.findCompetitionByEvents(event);
+    return this.createUnsetScores(event, competition.getCompetitors(), scores);
   }
   
-  public Iterable<Score> findScoreByEventAndDivision(Event event, Division division) {
-    Competition competition = this.competitionRepository.findCompetitionByEvents(event);
-    Iterable<Score> scores = this.scoreRepository.findByEventAndCompetitorDivision(event, division);
-    return complete(event, scores, competition.getCompetitors().stream().filter(competitor -> {
-      return competitor.getDivision().equals(division);
-    }).collect(toList()));
-  }
-
-  private Iterable<Score> complete(Event event, Iterable<Score> scores, Iterable<Competitor> competitors) {
-    List<Score> result = Lists.newArrayList(scores);
-    List<Competitor> competitorsWithScore = result.stream().map(
-        s -> s.getCompetitor()).collect(Collectors.toList());
-    List<Competitor> competitorsWithoutScore = Lists.newArrayList(competitors);
-    competitorsWithoutScore.removeAll(competitorsWithScore);
-    result.addAll(competitorsWithoutScore.stream().map(
-        competitor -> {
-          return new Score(event, competitor, -1);
-        }).collect(toList()));
+  private List<Score> createUnsetScores(Event event, Collection<Competitor> competitors,
+      Iterable<Score> scores) {
+    competitors.removeAll(
+        Lists.newArrayList(scores)
+          .stream()
+          .map(Score::getCompetitor)
+          .collect(toList()));
     
+    List<Score> unsetScores = competitors.stream().map(competitor -> {
+      return new Score(event, competitor, null);
+    })
+        .collect(toList());
+    
+    List<Score> result = Lists.newArrayList(scores);
+    result.addAll(unsetScores);
     return result;
   }
-  
+
   public Iterable<Score> findScoreByCompetitor(Competitor competitor) {
     return this.scoreRepository.findByCompetitor(competitor);
   }
@@ -86,7 +98,7 @@ public class ScoreManager {
     Score score;
     if (!Iterables.isEmpty(oldScore)) {
       score = oldScore.iterator().next();
-      score.setValue(value);
+      score.setScore(value);
     } else {
       score = new Score(event, competitor, value);
     }

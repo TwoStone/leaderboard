@@ -37,10 +37,9 @@ public class CompetitionManager {
    */
   public Division createDivision(Competition competition, String divisionName) {
     Division division = new Division(divisionName);
-    
-    division = this.divisionRepository.save(division);
+    division = this.divisionRepository.saveAndFlush(division);
     competition.addDivision(division);
-    this.competitionRepository.save(competition);
+    this.competitionRepository.saveAndFlush(competition);
     
     return division;
   }
@@ -50,7 +49,7 @@ public class CompetitionManager {
   }
 
   public Competition createCompetition(String name) {
-    return this.competitionRepository.save(new Competition(name));
+    return this.competitionRepository.saveAndFlush(new Competition(name));
   }
 
   /**
@@ -58,10 +57,9 @@ public class CompetitionManager {
    */
   public Competitor register(Competition competition, Division division, String name) {
     Competitor registration = new Competitor(name, division);
-    this.registrationRepository.save(registration);
+    registration = this.registrationRepository.save(registration);
     competition.addRegistration(registration);
-    
-    this.competitionRepository.save(competition);
+    this.competitionRepository.saveAndFlush(competition);
     return registration;
   }
 
@@ -73,10 +71,11 @@ public class CompetitionManager {
       String description, 
       EventType eventType) {
     Event event = new Event(eventName, description, eventType);
-    event = this.eventRepository.save(event);
+    
+    event = this.eventRepository.saveAndFlush(event);
     competition.addEvent(event);
     
-    this.competitionRepository.save(competition);
+    this.competitionRepository.saveAndFlush(competition);
     return event;
   }
 

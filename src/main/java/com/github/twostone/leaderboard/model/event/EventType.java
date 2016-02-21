@@ -1,7 +1,6 @@
 package com.github.twostone.leaderboard.model.event;
 
 import com.github.twostone.leaderboard.model.base.AbstractEntity;
-import com.github.twostone.leaderboard.model.score.Score;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -15,34 +14,34 @@ import javax.persistence.Enumerated;
 public class EventType extends AbstractEntity {
   
   @JsonFormat(shape = Shape.STRING)
-  public enum Ordering {
+  public enum Direction {
     ASCENDING {
       @Override
-      public com.google.common.collect.Ordering<Score> getComparator() {
-        return com.google.common.collect.Ordering.natural();
+      public org.springframework.data.domain.Sort.Direction getDirection() {
+        return org.springframework.data.domain.Sort.Direction.ASC;
       }
     },
     DESCENDING {
       @Override
-      public com.google.common.collect.Ordering<Score> getComparator() {
-        return com.google.common.collect.Ordering.natural().reverse();
+      public org.springframework.data.domain.Sort.Direction getDirection() {
+        return org.springframework.data.domain.Sort.Direction.DESC;
       }
     };
     
-    public abstract com.google.common.collect.Ordering<Score> getComparator();
+    public abstract org.springframework.data.domain.Sort.Direction getDirection();
   }
   
   private String name;
   @Enumerated(EnumType.ORDINAL)
-  private Ordering ordering;
+  private Direction direction;
 
   /**
    * Creates a new event type.
    */
-  public EventType(String name, Ordering ordering) {
+  public EventType(String name, Direction direction) {
     super();
     this.name = name;
-    this.ordering = ordering;
+    this.direction = direction;
   }
 
   EventType() {
@@ -53,7 +52,7 @@ public class EventType extends AbstractEntity {
     return this.name;
   }
   
-  public Ordering getOrdering() {
-    return this.ordering;
+  public Direction getOrdering() {
+    return this.direction;
   }
 }

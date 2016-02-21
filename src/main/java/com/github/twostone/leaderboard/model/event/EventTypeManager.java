@@ -1,6 +1,6 @@
 package com.github.twostone.leaderboard.model.event;
 
-import com.github.twostone.leaderboard.model.event.EventType.Ordering;
+import com.github.twostone.leaderboard.model.event.EventType.Direction;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -26,8 +26,8 @@ public class EventTypeManager {
     Iterable<EventType> types = this.repository.findAll(Lists.newArrayList(0L, 1L));
     if (Iterables.isEmpty(types)) {
       this.repository.save(Lists.newArrayList(
-            new EventType("Time", Ordering.ASCENDING),
-            new EventType("Points", Ordering.DESCENDING)
+            new EventType("Time", Direction.ASCENDING),
+            new EventType("Points", Direction.DESCENDING)
           ));
     }
   }

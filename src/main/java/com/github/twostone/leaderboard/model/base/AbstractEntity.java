@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.Version;
 
 @MappedSuperclass
 @EntityListeners(AbstractEntityListener.class)
@@ -18,8 +19,11 @@ public abstract class AbstractEntity implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.TABLE)
   private Long id;
+  
+  @Version
+  private Long version;
   
   private Instant createdAt;
   private Instant updatedAt;

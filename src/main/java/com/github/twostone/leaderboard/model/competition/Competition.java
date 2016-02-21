@@ -3,8 +3,8 @@ package com.github.twostone.leaderboard.model.competition;
 import com.github.twostone.leaderboard.model.base.AbstractEntity;
 import com.github.twostone.leaderboard.model.event.Event;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,20 +16,20 @@ public class Competition extends AbstractEntity {
   
   private String name;
   
-  @OneToMany
-  private List<Division> divisions;
+  @OneToMany(fetch = FetchType.EAGER)
+  private Set<Division> divisions;
   
   @OneToMany(fetch = FetchType.EAGER)
-  private List<Competitor> competitors;
+  private Set<Competitor> competitors;
   
-  @OneToMany
-  private List<Event> events;
+  @OneToMany(fetch = FetchType.EAGER)
+  private Set<Event> events;
   
   Competition() {
     super();
-    this.divisions = new ArrayList<>();
-    this.competitors = new ArrayList<>();
-    this.events = new ArrayList<>();
+    this.divisions = new LinkedHashSet<>();
+    this.competitors = new LinkedHashSet<>();
+    this.events = new LinkedHashSet<>();
   }
   
   public Competition(String name) {
@@ -49,7 +49,7 @@ public class Competition extends AbstractEntity {
     this.divisions.add(division);
   }
 
-  public List<Division> getDivisions() {
+  public Set<Division> getDivisions() {
     return this.divisions;
   }
 
@@ -57,7 +57,7 @@ public class Competition extends AbstractEntity {
     this.competitors.add(registration);
   }
   
-  public List<Competitor> getCompetitors() {
+  public Set<Competitor> getCompetitors() {
     return this.competitors;
   }
   
@@ -65,7 +65,7 @@ public class Competition extends AbstractEntity {
     this.events.add(event);
   }
   
-  public List<Event> getEvents() {
+  public Set<Event> getEvents() {
     return this.events;
   }
 }

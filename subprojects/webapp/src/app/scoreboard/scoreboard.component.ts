@@ -1,6 +1,6 @@
 import {
     Component,
-    OnInit
+    OnInit,
 } from 'angular2/core';
 
 import {
@@ -9,9 +9,18 @@ import {
 
 import {
     ModelService,
+    Competition,
     Division,
     Event
 } from '../model/model';
+
+import {
+    EventScoreBoard
+} from './eventscoreboard.component';
+
+import {
+    CompetitionScoreboard
+} from './competitionscoreboard.component';
 
 class ScoreQuery {
     event: number;
@@ -22,7 +31,7 @@ class ScoreQuery {
     selector: 'scoreboard',
     template: `
         <h3>Scoreboard</h3>
-        <form class="form">
+        <div class="form-inline">
             <!-- Division -->
             <div class="form-group">
                 <label for="division">Division</label>
@@ -33,16 +42,32 @@ class ScoreQuery {
             <!-- Event -->
             <div class="form-group">
                 <label for="event">Event</label>
-                <select class="form-control" [(ngModel)]="query.event" (ngModelChange)="filterChnaged($event)">
+                <select class="form-control" [(ngModel)]="query.event" (ngModelChange)="filterChanged($event)">
                     <option value="0">all</option>
                     <option *ngFor="#event of events" [value]="event.id">{{ event.name }}</option>
                 </select>
             </div>
-        </form>
-    `
+        </div>
+        <div *ngIf="competition">
+            <eventScoreBoard *ngIf="query.event != 0"
+                [competitionId]="competition.id" 
+                [eventId]="query.event" 
+                [divisionId]="query.division">
+            </eventScoreBoard>
+            <competitionScoreBoard *ngIf="query.event == 0"
+                [competitionId]="competition.id"
+                [divisionId]="query.division">
+            </competitionScoreBoard>
+        </div>
+        <div *ngIf="!competition">
+            Loading...
+        </div>
+    `,
+    directives: [EventScoreBoard, CompetitionScoreboard]
 })
 export class ScoreboardComponent implements OnInit {
 
+    competition: Competition;
     divisions: Division[];
     events: Event[];
     query: ScoreQuery = new ScoreQuery();
@@ -60,6 +85,7 @@ export class ScoreboardComponent implements OnInit {
 
     ngOnInit() {
         this.modelService.onCompetitionUpdate.subscribe(competition => {
+            this.competition = competition;
             this.divisions = competition.divisions;
             this.query.division = this.divisions[0].id;
             this.events = competition.events;

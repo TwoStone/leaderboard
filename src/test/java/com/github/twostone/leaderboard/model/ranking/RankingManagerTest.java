@@ -1,6 +1,7 @@
 package com.github.twostone.leaderboard.model.ranking;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertThat;
 
 import com.github.twostone.leaderboard.model.competition.Competition;
@@ -9,12 +10,14 @@ import com.github.twostone.leaderboard.model.competition.Competitor;
 import com.github.twostone.leaderboard.model.competition.Division;
 import com.github.twostone.leaderboard.model.event.Event;
 import com.github.twostone.leaderboard.model.event.EventType;
-import com.github.twostone.leaderboard.model.event.EventType.Ordering;
+import com.github.twostone.leaderboard.model.event.EventType.Direction;
 import com.github.twostone.leaderboard.model.score.Score;
 import com.github.twostone.leaderboard.model.score.ScoreManager;
 import com.github.twostone.leaderboard.model.score.ScoreRepository;
 
 import com.google.common.collect.Lists;
+import org.hamcrest.CustomTypeSafeMatcher;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -38,7 +41,7 @@ public class RankingManagerTest {
     this.scores = new ArrayList<>();
     this.division = new Division("division");
     
-    EventType type = new EventType("ascending", Ordering.ASCENDING);
+    EventType type = new EventType("ascending", Direction.ASCENDING);
     this.event = new Event("test-event", "description", type);
     this.competition = new Competition("test-competition");
     this.competition.addEvent(this.event);
@@ -55,6 +58,7 @@ public class RankingManagerTest {
     this.rankingManager = new RankingManager(scoreManager);
   }
   
+  @SuppressWarnings("unchecked")
   @Test
   public void testGetScoreEventScoreBoard() {
     Competitor second = new Competitor("second", this.division);
@@ -69,14 +73,25 @@ public class RankingManagerTest {
     this.competition.addRegistration(fifth);
     
     this.scores.addAll(Lists.newArrayList(
-        new Score(this.event, second, 120),
-        new Score(this.event, first, 118),
-        new Score(this.event, third, 120)
+        new Score(this.event, second, 120L),
+        new Score(this.event, first, 118L),
+        new Score(this.event, third, 120L)
     ));
     
-    EventScoreBoard scoreBoard = this.rankingManager.getEventScoreBoard(this.event);
-    List<RankedEventScore> ranks = scoreBoard.getScores().get(this.division);
-    assertThat(ranks, hasSize(5));
+    List<RankedEventScore> scores = this.rankingManager.getEventScore(this.event, this.division);
+    assertThat(scores, hasSize(5));
+    assertThat(scores.subList(3, 4), hasItems(
+          isUnset(),
+          isUnset()));
   }
+  
+  private static Matcher<RankedEventScore> isUnset() {
+    return new CustomTypeSafeMatcher<RankedEventScore>("score is unset") {
 
+      @Override
+      protected boolean matchesSafely(RankedEventScore item) {
+        return item.getScore().isNotSet();
+      }
+    };
+  }
 }

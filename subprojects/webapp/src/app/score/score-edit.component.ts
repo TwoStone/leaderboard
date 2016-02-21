@@ -57,11 +57,11 @@ export class ScoreEditComponent {
     }
 
     get scoreValue(): string {
-        return this._score.value >= 0 ? this._score.value.toString() : '';
+        return this._score.score ? this._score.score.toString() : '';
     }
 
     set scoreValue(val: string) {
-        this._score.value = val.length === 0 ? -1 : +val;
+        this._score.score = val.length === 0 ? null : +val;
     }
 
     onSubmit() {

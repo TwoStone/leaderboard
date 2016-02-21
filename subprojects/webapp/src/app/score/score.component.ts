@@ -1,8 +1,6 @@
 import {
     Component,
     OnInit,
-    Pipe,
-    PipeTransform,
     ViewChild
 } from 'angular2/core';
 
@@ -27,55 +25,11 @@ import {
     EventBus
 } from '../services';
 
-@Pipe({ name: 'score' })
-class ScorePipe implements PipeTransform {
-    transform(value: number) {
-        return value < 0 ? 'not set' : value;
-    }
-}
-
-@Pipe({ name: 'scoringQueryFilter'})
-class ScoringQueryFilterPipe implements PipeTransform {
-    transform(values: Score[], args: string[]) {
-        let query = args[0];
-        if (query.length === 0) {
-            return values;
-        }
-
-        return values.filter((score, index, arr) => {
-            return score.competitor.name.score(query) > 0;
-        }).sort((a, b) => {
-            let scoreA = a.competitor.name.score(query);
-            let scoreB = b.competitor.name.score(query);
-            return scoreB - scoreA;
-        });
-    }
-}
-
-@Pipe({ name: 'scoreFilter' })
-class ScoreFilterPipe implements PipeTransform {
-    transform(scores: Score[], args: string[]) {
-        let divisionId = args[0];
-        let onlyUnset = !!args[1];
-
-        let result: Score[];
-
-        if (divisionId.length === 0 || divisionId === 'all') {
-            result = scores;
-        } else {
-            result = scores.filter((score, index, args) => {
-                return score.competitor.division.id === +divisionId;
-            });
-        }
-
-        if (onlyUnset) {
-            result = result.filter((score, index, array) => {
-                 return score.id == null;
-            });
-        }
-        return result;
-    }
-}
+import {
+    ScoreFilterPipe,
+    ScoringQueryFilterPipe,
+    NullAsPipe
+} from './pipes';
 
 @Component({
     template: `
@@ -129,7 +83,7 @@ class ScoreFilterPipe implements PipeTransform {
                         (click)="selectScore(score)">
                         <td>{{ score.competitor.name }}</td>
                         <td>{{ score.competitor.division.name }}</td>
-                        <td>{{ score.value | score }}</td>
+                        <td>{{ score.score | nullAs:"not set" }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -140,7 +94,7 @@ class ScoreFilterPipe implements PipeTransform {
     `,
     directives: [ScoreEditComponent, MODAL_DIRECTIVES],
     providers : [ScoreService],
-    pipes: [ScorePipe, ScoringQueryFilterPipe, ScoreFilterPipe]
+    pipes: [NullAsPipe, ScoringQueryFilterPipe, ScoreFilterPipe]
 })
 export class ScoreComponent implements OnInit {
 
