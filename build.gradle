@@ -50,6 +50,7 @@ dependencies {
   testCompile 'org.mockito:mockito-core:2.0.42-beta'
 
   runtime 'com.h2database:h2'
+  runtime 'mysql:mysql-connector-java:5.1.38'
   runtime project(':webapp')
 }
 
