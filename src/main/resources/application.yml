@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: Leaderboard
+  profiles:
+    active: ${profile}
+
+server:
+  port: 8080
+    
+---
+
+spring:
+  profiles: production
+  devtools:
+    livereload:
+      enabled: false
+    restart:
+      enabled: false
+  datasource:
+    url: jdbc:mysql://${leaderboard.db.server}/${leaderboard.db.name}
+    username: ${leaderboard.db.user}
+    password: ${leaderboard.db.pass}
+    driver-class-name: com.mysql.jdbc.Driver
+logging:
+  path: ${leaderboard.log.path}
+    
+  
