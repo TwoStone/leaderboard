@@ -1,8 +1,6 @@
 spring:
   application:
     name: Leaderboard
-  profiles:
-    active: ${profile}
 
 server:
   port: 8080
