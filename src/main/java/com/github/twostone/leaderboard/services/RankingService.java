@@ -60,6 +60,9 @@ public class RankingService {
     return this.rankingManager.getEventScore(event, division);
   }
   
+  /**
+   * Returns the ranked scores for the division of the competition.
+   */
   @RequestMapping("/all/{divisionId}")
   public List<RankedCompetitionScore> getCompetitionScore(
       @PathVariable("competitionId") long competitionId,

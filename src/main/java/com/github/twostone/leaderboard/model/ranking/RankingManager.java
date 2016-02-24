@@ -38,7 +38,11 @@ public class RankingManager {
     return rank(scores);
   }
   
-  public List<RankedCompetitionScore> getCompetitionScore(Competition competition, Division division) {
+  /**
+   * Returns the ranked scores for the competition.
+   */
+  public List<RankedCompetitionScore> getCompetitionScore(
+      Competition competition, Division division) {
     List<List<RankedEventScore>> scores = 
         competition.getEvents().stream().map(event -> this.getEventScore(event, division))
           .collect(Collectors.toList());

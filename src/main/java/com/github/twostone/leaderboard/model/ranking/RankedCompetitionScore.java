@@ -37,8 +37,8 @@ public class RankedCompetitionScore implements Comparable<RankedCompetitionScore
   }
 
   @Override
-  public int compareTo(RankedCompetitionScore o) {
-    return (int) (this.getScore() - o.getScore());
+  public int compareTo(RankedCompetitionScore other) {
+    return (int) (this.getScore() - other.getScore());
   }
   
 }
