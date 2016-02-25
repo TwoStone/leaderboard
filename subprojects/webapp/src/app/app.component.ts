@@ -23,13 +23,35 @@ import {CreateCompetitionComponent} from './competition/create-competition.compo
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Leader<strong>Board</strong></a>
+              <a class="navbar-brand" href="#">
+                <i class="fa fa-trophy"></i>&nbsp;
+                Leader<strong>Board</strong>
+              </a>
             </div>
           </div>
         </div>
-
         <router-outlet></router-outlet>
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted">
+                    <a href="https://github.com/TwoStone/leaderboard">Leader<strong>Board</strong></a> Software by <a href="https://github.com/TwoStone">Niklas Walter</a>
+                </p>
+            </div>
+        </footer>
     `,
+    styles: [`
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            background-color: #f5f5f5;
+        }
+        .container .text-muted {
+            margin: 20px 0;
+        }
+    `],
     providers: [SERVICE_PROVIDERS],
     directives: [ROUTER_DIRECTIVES]
 })

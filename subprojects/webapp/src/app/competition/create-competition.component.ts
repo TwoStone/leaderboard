@@ -1,4 +1,8 @@
-import {Component} from 'angular2/core';
+import {
+    Component,
+    EventEmitter,
+    Output
+} from 'angular2/core';
 import {Router} from 'angular2/router';
 import {NgForm} from 'angular2/common';
 
@@ -21,13 +25,15 @@ export class CreateCompetitionComponent {
 
     model: CompetitionModel;
 
+    @Output() onCreated = new EventEmitter();
+
     constructor(private _competitionService: CompetitionService, private _router: Router) {
         this.model = new CompetitionModel();
     }
 
     onSubmit() {
-        this._competitionService.create(this.model).subscribe(() => {
-            this._router.navigate(['Competitions']);
+        this._competitionService.create(this.model).subscribe(competition => {
+            this.onCreated.emit(competition);
         });
     }
 }

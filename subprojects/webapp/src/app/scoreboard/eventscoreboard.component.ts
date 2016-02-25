@@ -9,7 +9,8 @@ import {
 } from '../services';
 
 import {
-    NullAsPipe
+    NullAsPipe,
+    ScoreDisplayPipe
 } from '../score/pipes';
 
 import {
@@ -31,14 +32,14 @@ import {
                 <tbody>
                     <tr *ngFor="#score of scores">
                         <td>{{ score.score.competitor.name }}</td>
-                        <td>{{ score.score.score | nullAs:"-" }}</td>
+                        <td>{{ score.score | asScore:"-" }}</td>
                         <td>{{ score.rank }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     `,
-    pipes: [NullAsPipe]
+    pipes: [ScoreDisplayPipe]
 })
 export class EventScoreBoard implements OnChanges {
     @Input() eventId: number;

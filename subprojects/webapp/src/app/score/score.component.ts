@@ -28,7 +28,7 @@ import {
 import {
     ScoreFilterPipe,
     ScoringQueryFilterPipe,
-    NullAsPipe
+    ScoreDisplayPipe
 } from './pipes';
 
 @Component({
@@ -79,11 +79,11 @@ import {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="#score of scores | scoreFilter:division:onlyUnset | scoringQueryFilter:query" 
+                    <tr class="clickable" *ngFor="#score of scores | scoreFilter:division:onlyUnset | scoringQueryFilter:query" 
                         (click)="selectScore(score)">
                         <td>{{ score.competitor.name }}</td>
                         <td>{{ score.competitor.division.name }}</td>
-                        <td>{{ score.score | nullAs:"not set" }}</td>
+                        <td>{{ score | asScore:"not set" }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -92,9 +92,14 @@ import {
             </div>
         </div>
     `,
+    styles: [`
+        .clickable {
+            cursor: pointer;
+        }
+    `],
     directives: [ScoreEditComponent, MODAL_DIRECTIVES],
     providers : [ScoreService],
-    pipes: [NullAsPipe, ScoringQueryFilterPipe, ScoreFilterPipe]
+    pipes: [ScoreDisplayPipe, ScoringQueryFilterPipe, ScoreFilterPipe]
 })
 export class ScoreComponent implements OnInit {
 

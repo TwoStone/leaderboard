@@ -21,7 +21,7 @@ import {
 } from '../model/model';
 
 import {
-    NullAsPipe
+    ScoreDisplayPipe
 } from '../score/pipes';
 
 @Component({
@@ -70,7 +70,7 @@ class EventScore {
                     <tr *ngFor="#ranking of rankings">
                         <td>{{ ranking.competitor.name }}</td>
                         <td *ngFor="#score of ranking.eventScores">
-                            {{ score.rank }} ({{ score.score.score | nullAs:"-" }})
+                            {{ score.rank }} ({{ score.score | asScore:"-" }})
                         </td> 
                         <td>{{ ranking.score }}</td>
                         <td>{{ ranking.rank }}</td>
@@ -80,7 +80,7 @@ class EventScore {
         </div>
     `,
     directives: [EventScore, EventHeader],
-    pipes: [NullAsPipe]
+    pipes: [ScoreDisplayPipe]
 })
 export class CompetitionScoreboard implements OnChanges {
 

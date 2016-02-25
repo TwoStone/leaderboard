@@ -13,6 +13,7 @@ var targetDir = './dist/public';
 
 var paths = {
     index : ['./src/index.html'],
+    favicon: ['./src/favicon.ico'],
     scripts : ['./src/**/*.ts']
 }
 
@@ -27,6 +28,19 @@ gulp.task('ts', ['clean'], function () {
 gulp.task('copy-index', ['clean'], function () {
     return gulp.src(paths.index)
         .pipe(gulp.dest(targetDir));
+});
+
+gulp.task('copy-favicon', ['clean'], function () {
+    return gulp.src(paths.favicon)
+        .pipe(gulp.dest(targetDir)); 
+});
+
+gulp.task('copy-fonts', ['clean'], function () {
+    return gulp.src([
+        './node_modules/font-awesome/fonts/*',
+        './node_modules/bootstrap/dist/fonts/*'
+        ])
+        .pipe(gulp.dest(targetDir + '/fonts'));
 });
 
 gulp.task('copy-templates', ['clean'], function() {
@@ -67,6 +81,12 @@ gulp.task('watch', function() {
 
 gulp.task('check', ['tslint']);
 
-gulp.task('build', ['ts', 'copy-index', 'copy-modules', 'copy-templates']);
+gulp.task('build', [
+    'ts', 
+    'copy-index',
+    'copy-favicon', 
+    'copy-modules', 
+    'copy-templates', 
+    'copy-fonts']);
 
 gulp.task('default', ['build']);

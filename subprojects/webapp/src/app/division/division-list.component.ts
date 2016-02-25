@@ -30,7 +30,10 @@ class DivisionListItem {
                 <create-division (onCreated)="modal.hide()"></create-division>
             </modal-body>
         </modal>
-        <button (click)="modal.open()" class="btn btn-default">Add division</button>
+        <button (click)="modal.open()" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            Create division
+        </button>
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>

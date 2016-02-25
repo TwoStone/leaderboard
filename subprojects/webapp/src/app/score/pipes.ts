@@ -1,3 +1,5 @@
+/// <reference path="../../../typings/moment-duration-format.d.ts" />
+
 import {
     Pipe,
     PipeTransform
@@ -6,6 +8,7 @@ import {
 import {
     ModelService,
     Event,
+    EventType,
     Score,
     Division
 } from '../model/model';
@@ -67,5 +70,23 @@ export class NullAsPipe implements PipeTransform {
             throw new Error('nullAs pipe needs one argument');
         }
         return args[0];
+    }
+}
+
+@Pipe({
+    name: 'asScore'
+})
+export class ScoreDisplayPipe implements PipeTransform {
+    transform(value: Score, args: any[]): string {
+        if (!value.score) {
+            return args[0];
+        }
+
+        switch (value.event.type) {
+            case EventType.FOR_TIME:
+                return moment.duration(value.score, 'seconds').format('mm:ss');
+            default:
+                return value.score.toString();
+        }
     }
 }

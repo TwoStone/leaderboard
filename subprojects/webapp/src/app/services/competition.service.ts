@@ -38,7 +38,7 @@ export class CompetitionService {
         this.http = http;
     }
 
-    create(competition: NewCompetition) {
+    create(competition: NewCompetition): Rx.Observable<Competition> {
         let body = `name=${competition.name}`;
 
         let headers = new Headers();
@@ -46,7 +46,7 @@ export class CompetitionService {
 
         return this.http.post('api/competitions/create', body, {
             headers: headers
-        });
+        }).map(res => res.json());
     }
 
     getAll(): Rx.Observable<Array<Competition>> {

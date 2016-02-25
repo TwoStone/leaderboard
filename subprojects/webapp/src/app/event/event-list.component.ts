@@ -46,7 +46,10 @@ class TypeNamePipe implements PipeTransform {
                 <create-event (onCreated)="modal.hide()"></create-event>
             </modal-body>
         </modal>
-        <button class="btn btn-default" (click)="modal.open()">Create new</button>
+        <button class="btn btn-primary" (click)="modal.open()">
+            <i class="fa fa-plus"></i>
+            Create event
+        </button>
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>

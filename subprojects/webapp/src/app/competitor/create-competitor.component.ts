@@ -1,6 +1,8 @@
 import {
     Component,
-    OnInit
+    OnInit,
+    Output,
+    EventEmitter
 } from 'angular2/core';
 
 import {
@@ -57,6 +59,8 @@ export class CreateCompetitorComponent implements OnInit {
     divisions: Array<Division>;
     model: CompetitorModel;
 
+    @Output() onCreated = new EventEmitter();
+
     constructor(
         private service: ModelService,
         private competitionService: CompetitionService) {
@@ -72,6 +76,7 @@ export class CreateCompetitorComponent implements OnInit {
     onSubmit() {
         this.competitionService.addCompetitor(this.service.competition, this.model).subscribe(competitor => {
             this.service.updateModel();
+            this.onCreated.emit(competitor);
             this.model = new CompetitorModel();
         });
     }

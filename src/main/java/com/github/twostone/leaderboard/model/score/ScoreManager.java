@@ -93,8 +93,14 @@ public class ScoreManager {
   /**
    * Adds a new score or updates an existing score.
    */
-  public Score addScore(Event event, Competitor competitor, long value) {
+  public Score addScore(Event event, Competitor competitor, Long value) {
     Iterable<Score> oldScore = this.scoreRepository.findByEventAndCompetitor(event, competitor);
+    
+    if (value == null && !Iterables.isEmpty(oldScore)) {
+      this.scoreRepository.delete(oldScore.iterator().next());
+      return new Score(event, competitor, value);
+    }
+    
     Score score;
     if (!Iterables.isEmpty(oldScore)) {
       score = oldScore.iterator().next();

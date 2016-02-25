@@ -8,18 +8,11 @@ server:
 ---
 
 spring:
-  profiles: production
+  profiles: prod
   devtools:
     livereload:
       enabled: false
     restart:
       enabled: false
-  datasource:
-    url: jdbc:mysql://${leaderboard.db.server}/${leaderboard.db.name}
-    username: ${leaderboard.db.user}
-    password: ${leaderboard.db.pass}
-    driver-class-name: com.mysql.jdbc.Driver
 logging:
-  path: ${leaderboard.log.path}
-    
-  
+  path: ./logs    

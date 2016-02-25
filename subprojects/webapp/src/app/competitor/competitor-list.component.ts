@@ -15,6 +15,10 @@ import {
     CreateCompetitorComponent
 } from './create-competitor.component';
 
+import {
+    MODAL_DIRECTIVES
+} from '../tools/tools';
+
 
 @Component({
     selector: '[competitorListItem]',
@@ -30,8 +34,19 @@ export class CompetitorListItem {
 @Component({
     selector: 'competitor-list',
     template: `
-        <create-competitor>
-        </create-competitor>
+        <modal #modal>
+            <modal-header>
+                <h3>Register competitor</h3>
+            </modal-header>
+            <modal-body>
+                <create-competitor (onCreated)="modal.hide()">
+                </create-competitor>
+            </modal-body>
+        </modal>
+        <button class="btn btn-primary" (click)="modal.open()">
+            <i class="fa fa-plus"></i>
+            Register competitor
+        </button>
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -47,7 +62,7 @@ export class CompetitorListItem {
             </table>
         </div>
     `,
-    directives: [CompetitorListItem, CreateCompetitorComponent]
+    directives: [CompetitorListItem, CreateCompetitorComponent, MODAL_DIRECTIVES]
 })
 export class CompetitorsList implements OnInit {
     competitors: Array<Competitor>;
