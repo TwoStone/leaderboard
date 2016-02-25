@@ -87,7 +87,7 @@ export class ScoreboardComponent implements OnInit {
         this.modelService.onCompetitionUpdate.subscribe(competition => {
             this.competition = competition;
             this.divisions = competition.divisions;
-            this.query.division = this.divisions[0].id;
+            this.query.division = this.divisions ? this.divisions[0].id : 0;
             this.events = competition.events;
             this.query.event = 0;
         })
