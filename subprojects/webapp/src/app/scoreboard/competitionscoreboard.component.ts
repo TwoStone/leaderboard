@@ -98,8 +98,10 @@ export class CompetitionScoreboard implements OnChanges {
     }
 
     ngOnChanges() {
-        this.rankingService.getRankingForCompetition(this.competitionId, this.divisionId).subscribe(rankings => {
-            this.rankings = rankings;
-        })
+        if (this.competitionId && this.divisionId) {
+            this.rankingService.getRankingForCompetition(this.competitionId, this.divisionId).subscribe(rankings => {
+                this.rankings = rankings;
+            });
+        }
     }
 }
