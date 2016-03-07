@@ -7,7 +7,6 @@ import {Competition} from '../model/competition';
 
 @Component({
     template: `
-
     `,
     directives: [ROUTER_DIRECTIVES]
 })

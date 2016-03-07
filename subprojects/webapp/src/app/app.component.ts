@@ -10,6 +10,7 @@ import {SERVICE_PROVIDERS} from './services';
 import {CompetitionList} from './competition/competition-list.component';
 import {CompetitionComponent} from './competition/competition.component';
 import {CreateCompetitionComponent} from './competition/create-competition.component';
+import {StandaloneScoreboardComponent} from './scoreboard/scoreboard-standalone.component';
 
 @Component({
     selector: 'leaderboard-app',
@@ -34,7 +35,7 @@ import {CreateCompetitionComponent} from './competition/create-competition.compo
         <footer class="footer">
             <div class="container">
                 <p class="text-muted">
-                    <a href="https://github.com/TwoStone/leaderboard">Leader<strong>Board</strong></a> Software by <a href="https://github.com/TwoStone">Niklas Walter</a>
+                    Powered by <a href="https://github.com/TwoStone/leaderboard">Leader<strong>Board</strong></a>
                 </p>
             </div>
         </footer>
@@ -58,7 +59,8 @@ import {CreateCompetitionComponent} from './competition/create-competition.compo
 @RouteConfig([
     { path: '/', name: 'Competitions', component: CompetitionList, useAsDefault: true },
     { path: 'competition/:id/...', name: 'Competition', component: CompetitionComponent },
-    { path: 'competition.create', name: 'CreateCompetition', component: CreateCompetitionComponent}
+    { path: 'competition.create', name: 'CreateCompetition', component: CreateCompetitionComponent},
+    { path: 'scores/:competitionId', name: 'ScoreboardStandalone', component: StandaloneScoreboardComponent}
 ])
 export class AppComponent {
 
