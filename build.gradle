@@ -56,6 +56,10 @@ dependencies {
   runtime project(':webapp')
 }
 
+test {
+    reports.junitXml.enabled = true
+}
+
 jacocoTestReport {
     reports {
         xml.enabled = true
