@@ -21,6 +21,7 @@ apply from: file('gradle/codeQuality.gradle')
 apply plugin: 'spring-boot'
 apply plugin: 'eclipse'
 apply plugin: 'com.moowork.node'
+apply plugin: 'jacoco'
 
 
 archivesBaseName = 'leaderboard'
@@ -55,8 +56,17 @@ dependencies {
   runtime project(':webapp')
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
+
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.10'
+  gradleVersion = '2.11'
 }
 
 task stage { }
