@@ -1,3 +1,12 @@
 machine:
   java:
     version: oraclejdk8
+test:
+  override:
+    - export TERM="dumb"
+    - if [ -e ./gradlew ]; then ./gradlew build;else gradle build;fi
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+    - cp build/libs/*.jar $CIRCLE_ARTIFACTS
+
