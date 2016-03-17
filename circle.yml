@@ -9,7 +9,7 @@ test:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
     - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
     - mkdir -p $CIRCLE_TEST_REPORTS/jacoco/
-    - cp build/reports/jacoco/test/html/ $CIRCLE_TEST_REPORTS/jacoco/
+    - cp -R build/reports/jacoco/test/html/ $CIRCLE_TEST_REPORTS/jacoco/
     - mkdir -p $CIRCLE_TEST_REPORTS/checkstyle/
     - cp build/reports/checkstyle/*.html $CIRCLE_TEST_REPORTS/checkstyle/
     - cp build/libs/*.jar $CIRCLE_ARTIFACTS
