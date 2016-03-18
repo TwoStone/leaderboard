@@ -40,6 +40,11 @@ import {
                     <label for="event">Event</label>
                     <div #event>{{ _score.event.name}}</div>
                 </div>
+                <div class="checkbox" *ngIf="_score && _score.event.scalable">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="_score.scaled"> Scaled
+                    </label>
+                </div>
                 <div #scoreInput></div>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>            

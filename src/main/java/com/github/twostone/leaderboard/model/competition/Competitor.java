@@ -42,4 +42,14 @@ public class Competitor extends AbstractEntity {
   public void setDivision(Division division) {
     this.division = division;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("Competitor [name=").append(name)
+      .append(", division=").append(division)
+      .append(", getId()=").append(getId())
+      .append("]");
+    return builder.toString();
+  }
 }

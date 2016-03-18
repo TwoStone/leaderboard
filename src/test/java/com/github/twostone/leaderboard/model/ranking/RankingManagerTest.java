@@ -7,8 +7,8 @@ import static com.github.twostone.leaderboard.utils.ScoreMatchers.notSet;
 import static com.github.twostone.leaderboard.utils.ScoreMatchers.value;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.AllOf.allOf;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -22,7 +22,6 @@ import com.github.twostone.leaderboard.model.score.Score;
 import com.github.twostone.leaderboard.model.score.ScoreManager;
 import com.github.twostone.leaderboard.model.score.ScoreRepository;
 
-import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,12 +29,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import org.mockito.stubbing.Answer;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class RankingManagerTest {
@@ -68,7 +63,7 @@ public class RankingManagerTest {
     this.competition.addEvent(this.event);
     this.competition.addDivision(this.division);
     
-    when(this.scoreRepository.findByEventAndCompetitorDivision(Mockito.any(), Mockito.any(), Mockito.any())).then(sortedScored());
+    when(this.scoreRepository.findByEventAndCompetitorDivision(Mockito.any(), Mockito.any())).thenReturn(scores);
     
     this.competitionRepository = Mockito.mock(CompetitionRepository.class);
     Mockito.when(competitionRepository.findCompetitionByEvents(this.event))
@@ -78,7 +73,6 @@ public class RankingManagerTest {
     this.rankingManager = new RankingManager(scoreManager);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testGetScoreEventScoreBoard() {
     Competitor second = new Competitor("second", this.division);
@@ -93,35 +87,57 @@ public class RankingManagerTest {
     this.competition.addRegistration(fifth);
     
     this.scores.addAll(newArrayList(
-        new Score(this.event, second, 120L),
-        new Score(this.event, first, 118L),
-        new Score(this.event, third, 120L)
+        new Score(this.event, second, 120L, false),
+        new Score(this.event, first, 118L, false),
+        new Score(this.event, third, 120L, false)
     ));
     
     List<RankedEventScore> scores = this.rankingManager.getEventScore(this.event, this.division);
-    assertThat(scores, hasItems(
-        is(allOf(rank(1), score(is(allOf(value(118), competitor(is(first))))))),
-        is(allOf(rank(2), score(is(allOf(value(120), competitor(is(second))))))),
-        is(allOf(rank(2), score(is(allOf(value(120), competitor(is(third))))))),
-        is(allOf(rank(4), score(is(allOf(notSet(), competitor(is(fourth))))))),
-        is(allOf(rank(4), score(is(allOf(notSet(), competitor(is(fifth)))))))));
+    assertThat(scores, hasSize(5));
+    assertThat(scores.get(0), is(allOf(rank(1), score(is(allOf(value(118), competitor(is(first))))))));
+    assertThat(scores.get(1), is(allOf(rank(2), score(is(allOf(value(120), competitor(is(second))))))));
+    assertThat(scores.get(2), is(allOf(rank(2), score(is(allOf(value(120), competitor(is(third))))))));
+    assertThat(scores.get(3), is(allOf(rank(4), score(is(allOf(notSet(), competitor(is(fourth))))))));
+    assertThat(scores.get(4),is(allOf(rank(4), score(is(allOf(notSet(), competitor(is(fifth))))))));
   }
   
-  private Answer<?> sortedScored() {
-    return (invocation) -> {
-      List<Score> result = Lists.newArrayList(scores);
-      result.sort(new Comparator<Score>() {
-
-        @Override
-        public int compare(Score o1, Score o2) {
-          Sort sort = invocation.getArgumentAt(2, Sort.class);
-          Direction direction = sort.getOrderFor("score").getDirection();
-          return 
-              (direction == Direction.ASC ? 1 : -1) * 
-              (int) (o1.getScore() - o2.getScore());
-        }
-      });
-      return result;
-    };
+  @Test
+  public void scaledRankAlwaysBelow() {
+    Competitor elite1 = new Competitor("elite1", this.division);
+    Competitor elite2 = new Competitor("elite2", this.division);
+    Competitor scaled = new Competitor("scaled", this.division);
+    this.competition.addRegistration(scaled);
+    this.competition.addRegistration(elite1);
+    this.competition.addRegistration(elite2);
+    
+    this.scores.addAll(newArrayList(
+        new Score(this.event, elite1, 100L, false),
+        new Score(this.event, elite2, 120L, false),
+        new Score(this.event, scaled, 110L, true)
+    ));
+    
+    List<RankedEventScore> scores = this.rankingManager.getEventScore(this.event, this.division);
+    assertThat(scores, hasSize(3));
+    assertThat(scores.get(0), is(allOf(rank(1), score(is(allOf(value(100), competitor(is(elite1))))))));
+    assertThat(scores.get(1), is(allOf(rank(2), score(is(allOf(value(120), competitor(is(elite2))))))));
+    assertThat(scores.get(2), is(allOf(rank(3), score(is(allOf(value(110), competitor(is(scaled))))))));
+  }
+  
+  @Test
+  public void scaledWithSameScoreRankAlwaysBelow() {
+    Competitor elite = new Competitor("elite", this.division);
+    Competitor scaled = new Competitor("scaled", this.division);
+    this.competition.addRegistration(scaled);
+    this.competition.addRegistration(elite);
+    
+    this.scores.addAll(newArrayList(
+        new Score(this.event, elite, 110L, false),
+        new Score(this.event, scaled, 110L, true)
+    ));
+    
+    List<RankedEventScore> scores = this.rankingManager.getEventScore(this.event, this.division);
+    assertThat(scores, hasSize(2));
+    assertThat(scores.get(0), is(allOf(rank(1), score(is(allOf(value(110), competitor(is(elite))))))));
+    assertThat(scores.get(1), is(allOf(rank(2), score(is(allOf(value(110), competitor(is(scaled))))))));
   }
 }

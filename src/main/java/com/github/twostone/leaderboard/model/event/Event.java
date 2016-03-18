@@ -55,4 +55,13 @@ public class Event extends AbstractEntity {
   public boolean isScalable() {
     return scalable;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("Event [name=").append(name).append(", description=").append(description)
+        .append(", scalable=").append(scalable).append(", type=").append(type).append(", getId()=")
+        .append(getId()).append("]");
+    return builder.toString();
+  }
 }

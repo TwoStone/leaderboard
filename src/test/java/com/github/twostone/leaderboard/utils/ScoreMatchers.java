@@ -16,7 +16,7 @@ public abstract class ScoreMatchers {
   private ScoreMatchers() { }
 
   public static Matcher<Score> value(int score) {
-    return new CustomTypeSafeMatcher<Score>("") {
+    return new CustomTypeSafeMatcher<Score>("score = "+ score) {
 
       @Override
       protected boolean matchesSafely(Score item) {
