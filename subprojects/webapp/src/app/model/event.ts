@@ -3,6 +3,7 @@ export interface Event {
     description: string;
     type: EventType;
     id: number;
+    scalable: boolean;
 }
 
 export enum EventType {

@@ -19,7 +19,5 @@ public interface ScoreRepository extends CrudRepository<Score, Long> {
   
   Iterable<Score> findByEventAndCompetitor(Event event, Competitor competitor);
   
-  Iterable<Score> findByEventAndCompetitorDivision(Event event, Division division);
-  
   List<Score> findByEventAndCompetitorDivision(Event event, Division division, Sort sort);
 }

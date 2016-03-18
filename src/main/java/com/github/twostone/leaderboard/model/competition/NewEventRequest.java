@@ -6,6 +6,7 @@ public class NewEventRequest {
   String name;
   String description;
   EventType type;
+  boolean scalable;
 
   public String getName() {
     return this.name;
@@ -29,5 +30,13 @@ public class NewEventRequest {
 
   public void setType(EventType type) {
     this.type = type;
+  }
+  
+  public boolean isScalable() {
+    return scalable;
+  }
+  
+  public void setScalable(boolean scalable) {
+    this.scalable = scalable;
   }
 }

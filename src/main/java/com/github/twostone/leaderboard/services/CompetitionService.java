@@ -126,6 +126,7 @@ public class CompetitionService {
         competition, 
         newEvent.getName(), 
         newEvent.getDescription(),
-        newEvent.getType());
+        newEvent.getType(),
+        newEvent.isScalable());
   }
 }

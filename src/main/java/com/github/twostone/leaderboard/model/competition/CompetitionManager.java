@@ -69,8 +69,9 @@ public class CompetitionManager {
   public Event addEvent(Competition competition, 
       String eventName, 
       String description, 
-      EventType eventType) {
-    Event event = new Event(eventName, description, eventType);
+      EventType eventType, 
+      boolean scalable) {
+    Event event = new Event(eventName, description, eventType, scalable);
     
     event = this.eventRepository.saveAndFlush(event);
     competition.addEvent(event);
