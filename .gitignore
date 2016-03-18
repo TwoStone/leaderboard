@@ -22,3 +22,4 @@ subprojects/webapp/node_modules/
 subprojects/webapp/dist/
 .settings/gradle.prefs
 subprojects/webapp/.settings/gradle.prefs
+subprojects/webapp/typings/

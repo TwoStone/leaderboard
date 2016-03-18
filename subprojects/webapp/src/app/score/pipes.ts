@@ -82,11 +82,21 @@ export class ScoreDisplayPipe implements PipeTransform {
             return args[0];
         }
 
+        let result = '';
+
         switch (value.event.type) {
             case EventType.FOR_TIME:
-                return moment.duration(value.score, 'seconds').format('mm:ss');
+                result += moment.duration(value.score, 'seconds').format('mm:ss');
+                break;
             default:
-                return value.score.toString();
+                result += value.score.toString();
+                break;
         }
+
+        if (value.scaled) {
+            result += '-s';
+        }
+
+        return result;
     }
 }

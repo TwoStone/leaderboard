@@ -10,10 +10,11 @@ import com.github.twostone.leaderboard.model.event.Event;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import org.springframework.data.domain.Sort;
+import com.google.common.collect.Ordering;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -53,11 +54,28 @@ public class ScoreManager {
           .getCompetitors()).stream().filter(competitor -> {
             return competitor.getDivision().equals(division);
           }).collect(toList());
-    List<Score> scores = this.scoreRepository.findByEventAndCompetitorDivision(event, division, 
-        new Sort(event.getType().getDirection(), "score"));
+    
+    
+    List<Score> scores = this.scoreRepository.findByEventAndCompetitorDivision(event, division);
+    scores.sort(createSorter(event));
     return this.createUnsetScores(event, competitors, scores);
   }
   
+
+  private Comparator<Score> createSorter(Event event) {
+    Ordering<Score> natural = event.getType().getOrdering();
+    
+    return Ordering.from((Score s1, Score s2) -> {
+      if (!s1.isScaled() && s2.isScaled()) {
+        return -1;
+      }
+      if (s1.isScaled() && !s2.isScaled()) {
+        return 1;
+      }
+      return 0;
+    }).compound(natural);
+  }
+
   /**
    * Returns all scores for the event.
    * There is an entry for every competitor in the competition.
@@ -77,7 +95,7 @@ public class ScoreManager {
           .collect(toList()));
     
     List<Score> unsetScores = competitors.stream().map(competitor -> {
-      return new Score(event, competitor, null);
+      return new Score(event, competitor, null, false);
     })
         .collect(toList());
     
@@ -93,20 +111,21 @@ public class ScoreManager {
   /**
    * Adds a new score or updates an existing score.
    */
-  public Score addScore(Event event, Competitor competitor, Long value) {
+  public Score addScore(Event event, Competitor competitor, Long value, boolean scaled) {
     Iterable<Score> oldScore = this.scoreRepository.findByEventAndCompetitor(event, competitor);
     
     if (value == null && !Iterables.isEmpty(oldScore)) {
       this.scoreRepository.delete(oldScore.iterator().next());
-      return new Score(event, competitor, value);
+      return new Score(event, competitor, value, scaled);
     }
     
     Score score;
     if (!Iterables.isEmpty(oldScore)) {
       score = oldScore.iterator().next();
       score.setScore(value);
+      score.setScaled(scaled);
     } else {
-      score = new Score(event, competitor, value);
+      score = new Score(event, competitor, value, scaled);
     }
     
     return this.scoreRepository.save(score);

@@ -16,13 +16,17 @@ buildscript {
 
 defaultTasks 'build'
 
-apply from: file('gradle/java.gradle')
-apply from: file('gradle/codeQuality.gradle')
-apply plugin: 'spring-boot'
-apply plugin: 'eclipse'
-apply plugin: 'com.moowork.node'
+apply plugin: 'java'
 apply plugin: 'jacoco'
+apply plugin: 'checkstyle'
+apply plugin: 'spring-boot'
 
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(AbstractCompile) {
+    options.encoding = 'UTF-8'
+}
 
 archivesBaseName = 'leaderboard'
 
@@ -48,8 +52,11 @@ dependencies {
   
   compile 'org.yaml:snakeyaml:1.17'
 
+  testCompile 'junit:junit:4.12'
   testCompile 'org.springframework.boot:spring-boot-starter-test'
   testCompile 'org.mockito:mockito-core:2.0.42-beta'
+  testCompile 'com.spencerwi:hamcrest-jdk8-time:0.7.1'
+  testCompile 'org.exparity:hamcrest-date:2.0.1'
 
   runtime 'com.h2database:h2'
   runtime 'mysql:mysql-connector-java:5.1.38'
@@ -58,6 +65,10 @@ dependencies {
 
 test {
     reports.junitXml.enabled = true
+}
+
+checkstyle {
+  toolVersion = '6.12.1'
 }
 
 jacocoTestReport {
@@ -72,5 +83,3 @@ check.dependsOn jacocoTestReport
 task wrapper(type: Wrapper) {
   gradleVersion = '2.11'
 }
-
-task stage { }

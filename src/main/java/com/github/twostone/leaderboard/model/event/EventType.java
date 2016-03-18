@@ -1,23 +1,26 @@
 package com.github.twostone.leaderboard.model.event;
 
+import com.github.twostone.leaderboard.model.score.Score;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.google.common.collect.Ordering;
 
 @JsonFormat(shape = Shape.NUMBER_INT)
 public enum EventType {
   
   FOR_TIME {
     @Override
-    public org.springframework.data.domain.Sort.Direction getDirection() {
-      return org.springframework.data.domain.Sort.Direction.ASC;
+    public Ordering<Score> getOrdering() {
+      return Ordering.natural();
     }
   },
   FOR_POINTS {
     @Override
-    public org.springframework.data.domain.Sort.Direction getDirection() {
-      return org.springframework.data.domain.Sort.Direction.DESC;
+    public Ordering<Score> getOrdering() {
+      return Ordering.natural().reverse();
     }
   };
       
-  public abstract org.springframework.data.domain.Sort.Direction getDirection();
+  public abstract Ordering<Score> getOrdering();
 }

@@ -26,4 +26,12 @@ public class Division extends AbstractEntity {
   public void setName(String name) {
     this.name = name;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("Division [name=").append(name).append(", getId()=").append(getId()).append("]");
+    return builder.toString();
+  }
+  
 }

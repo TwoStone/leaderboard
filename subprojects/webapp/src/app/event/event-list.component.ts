@@ -25,12 +25,10 @@ class TypeNamePipe implements PipeTransform {
         switch (type) {
             case EventType.FOR_TIME:
                 return 'time';
-                break;
             case EventType.FOR_POINTS:
                 return 'points';
             default:
                 return 'unknown';
-                break;
         }
     }
 }
@@ -58,6 +56,7 @@ class TypeNamePipe implements PipeTransform {
                         <th>Name</th>
                         <th>Type</th>
                         <th>Description</th>
+                        <th>Scalable</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,6 +65,7 @@ class TypeNamePipe implements PipeTransform {
                         <td>{{ event.name }}</td>
                         <td>{{ event.type | typeName }}</td>
                         <td>{{ event.description }}</td>
+                        <td><div *ngIf="event.scalable"><i class="fa fa-check"></i></div></td>
                     </tr>
                 </tbody>
             </table>

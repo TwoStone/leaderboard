@@ -12,6 +12,7 @@ public class Event extends AbstractEntity {
 
   private String name;
   private String description;
+  private boolean scalable;
   
   @Enumerated(EnumType.STRING)
   private EventType type;
@@ -23,11 +24,12 @@ public class Event extends AbstractEntity {
   /**
    * Creates a new {@link Event} object.
    */
-  public Event(String name, String description, EventType type) {
+  public Event(String name, String description, EventType type, boolean scalable) {
     super();
     this.name = name;
     this.description = description;
     this.type = type;
+    this.scalable = scalable;
   }
   
   public String getName() {
@@ -50,7 +52,16 @@ public class Event extends AbstractEntity {
     return this.type;
   }
   
-  public void setType(EventType type) {
-    this.type = type;
+  public boolean isScalable() {
+    return scalable;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("Event [name=").append(name).append(", description=").append(description)
+        .append(", scalable=").append(scalable).append(", type=").append(type).append(", getId()=")
+        .append(getId()).append("]");
+    return builder.toString();
   }
 }

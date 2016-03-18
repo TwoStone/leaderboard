@@ -20,6 +20,7 @@ class EventModel implements NewEvent {
     name: string;
     description: string = '';
     type: EventType;
+    scalable: boolean;
 }
 
 
@@ -48,6 +49,11 @@ class EventModel implements NewEvent {
                     <option [value]="eventType.FOR_TIME">for time</option>
                     <option [value]="eventType.FOR_POINTS">for points</option>
                 </select>
+            </div>
+            <div class="checkbox">
+                <label> 
+                    <input type="checkbox" [(ngModel)]="model.scalable" ngControl="scalable" #scalable="ngForm"> Is scalable
+                </label>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>

@@ -27,6 +27,7 @@ export interface NewEvent {
     name: string;
     description: string;
     type: EventType;
+    scalable: boolean;
 }
 
 @Injectable()

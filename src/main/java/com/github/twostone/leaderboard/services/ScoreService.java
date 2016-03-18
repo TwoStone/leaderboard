@@ -41,7 +41,7 @@ public class ScoreService {
   public Score addScore(@RequestBody Score score) {
     Event event = this.eventRepository.findOne(score.getEvent().getId());
     Competitor competitor = this.registrationRepository.findOne(score.getCompetitor().getId());
-    return this.scoreManager.addScore(event, competitor, score.getScore());
+    return this.scoreManager.addScore(event, competitor, score.getScore(), score.isScaled());
   }
 
   @RequestMapping("/event/{eventId}")

@@ -5,5 +5,6 @@ export interface Score {
     id?: number;
     event: Event;
     competitor: Competitor;
+    scaled: boolean;
     score?: number;
 }
