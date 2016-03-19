@@ -3,12 +3,17 @@ package com.github.twostone.leaderboard.model.competition;
 import com.github.twostone.leaderboard.model.base.AbstractEntity;
 import com.github.twostone.leaderboard.model.event.Event;
 
+import com.google.common.collect.Lists;
+
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @SuppressWarnings("serial")
 @Entity
@@ -23,13 +28,14 @@ public class Competition extends AbstractEntity {
   private Set<Competitor> competitors;
   
   @OneToMany(fetch = FetchType.EAGER)
-  private Set<Event> events;
+  @OrderColumn
+  private List<Event> events;
   
   Competition() {
     super();
     this.divisions = new LinkedHashSet<>();
     this.competitors = new LinkedHashSet<>();
-    this.events = new LinkedHashSet<>();
+    this.events = new ArrayList<>();
   }
   
   public Competition(String name) {
@@ -65,7 +71,7 @@ public class Competition extends AbstractEntity {
     this.events.add(event);
   }
   
-  public Set<Event> getEvents() {
-    return this.events;
+  public List<Event> getEvents() {
+    return Lists.newArrayList(this.events);
   }
 }
