@@ -4,7 +4,7 @@ apply plugin: 'java'
 node {
   version = '5.4.1'
 
-  download = project.findProperty('node.download')
+  download = true
 
   workDir = file("${project.buildDir}/nodejs")
 }
