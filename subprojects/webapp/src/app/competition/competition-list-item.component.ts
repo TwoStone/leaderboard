@@ -11,5 +11,5 @@ import { Competition } from '../model/model';
 })
 export class CompetitionListItemComponent {
 
-    @Input() competition: Competition;
+    @Input() public competition: Competition;
 }

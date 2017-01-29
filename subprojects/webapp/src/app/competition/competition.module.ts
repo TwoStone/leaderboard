@@ -10,8 +10,8 @@ import { DivisionComponent } from '../division/division.component';
 import { DivisionListComponent, DivisionListItemComponent } from '../division/division-list.component';
 import { CreateDivisionComponent } from '../division/create-division.component';
 import { CompetitionDashboardComponent } from './competition-dashboard.component';
-import { CompetitorsList } from '../competitor/competitor-list.component';
-import { CompetitorListItemComponent } from '../competitor/competitor-list.component';
+import { CompetitorsListComponent } from '../competitor/competitor-list.component';
+import { CompetitorListItemComponent } from '../competitor/competitor-list-item.component';
 import { CreateCompetitorComponent } from '../competitor/create-competitor.component';
 import { EventListComponent, TypeNamePipe } from '../event/event-list.component';
 import { CreateEventComponent } from '../event/create-event.component';
@@ -38,7 +38,7 @@ import { CompetitionRoutingModule } from './competition-routing.module';
         DivisionListItemComponent,
         CreateDivisionComponent,
         CompetitionDashboardComponent,
-        CompetitorsList,
+        CompetitorsListComponent,
         CompetitorListItemComponent,
         CreateCompetitorComponent,
         EventListComponent,

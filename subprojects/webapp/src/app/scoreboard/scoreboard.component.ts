@@ -22,7 +22,7 @@ import {
     CompetitionScoreboard
 } from './competitionscoreboard.component';
 
-class ScoreQuery {
+interface ScoreQuery {
     event: number;
     division: number;
 }
@@ -35,14 +35,14 @@ class ScoreQuery {
             <!-- Division -->
             <div class="form-group">
                 <label for="division">Division</label>
-                <select class="form-control" [(ngModel)]="query.division" (ngModelChange)="filterChanged($event)">
+                <select class="form-control" [(ngModel)]="query.division">
                     <option *ngFor="let division of divisions" [value]="division.id">{{ division.name }}</option>
                 </select>
             </div>
             <!-- Event -->
             <div class="form-group">
                 <label for="event">Event</label>
-                <select class="form-control" [(ngModel)]="query.event" (ngModelChange)="filterChanged($event)">
+                <select class="form-control" [(ngModel)]="query.event">
                     <option value="0">all</option>
                     <option *ngFor="let event of events" [value]="event.id">{{ event.name }}</option>
                 </select>
@@ -66,10 +66,13 @@ class ScoreQuery {
 })
 export class ScoreboardComponent implements OnInit {
 
-    competition: Competition;
-    divisions: Division[];
-    events: Event[];
-    query: ScoreQuery = new ScoreQuery();
+    public competition: Competition;
+    public divisions: Division[];
+    public events: Event[];
+    public query: ScoreQuery = {
+        division: 0,
+        event: 0
+    }
 
     constructor(
         private competitionService: CompetitionService,
@@ -82,8 +85,8 @@ export class ScoreboardComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
-        this.modelService.onCompetitionUpdate.subscribe(competition => {
+    public ngOnInit() {
+        this.modelService.onCompetitionUpdate.subscribe((competition) => {
             this.competition = competition;
             this.divisions = competition.divisions;
             this.query.division = this.divisions ? this.divisions[0].id : 0;
@@ -91,9 +94,4 @@ export class ScoreboardComponent implements OnInit {
             this.query.event = 0;
         })
     }
-
-    filterChanged(event: any) {
-        console.log(event);
-    }
-
 }

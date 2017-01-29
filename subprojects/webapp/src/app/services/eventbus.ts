@@ -14,14 +14,14 @@ export class EventBus {
         this.events = {};
     }
 
-    on(event: string): Rx.Observable<any> {
+    public on(event: string): Rx.Observable<any> {
         if (!this.events[event]) {
             this.events[event] = new EventEmitter();
         }
         return this.events[event];
     }
 
-    fire(event: string, arg?: any) {
+    public fire(event: string, arg?: any) {
         if (!this.events[event]) {
             this.events[event] = new EventEmitter();
         }

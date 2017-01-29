@@ -7,7 +7,7 @@ import { BrowserModule }  from '@angular/platform-browser';
 import { ModalModule } from 'ng2-bootstrap/modal';
 
 import { PipesModule } from './pipes/pipes.module';
- 
+
 import { AppComponent } from './app.component';
 import { CompetitionListComponent } from './competition/competition-list.component';
 import { CompetitionListItemComponent } from './competition/competition-list-item.component';

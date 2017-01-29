@@ -11,13 +11,13 @@ import { CompetitionService } from '../services/competition.service';
     templateUrl: './competition-list.component.html'
 })
 export class CompetitionListComponent {
-    competitions: Competition[];
+    public competitions: Competition[];
 
     constructor(private _competitionService: CompetitionService) {
-        this._competitionService.getAll().subscribe(competitions => this.competitions = competitions);
+        this._competitionService.getAll().subscribe((competitions) => this.competitions = competitions);
     }
 
-    onCreated() {
-        this._competitionService.getAll().subscribe(competitions => this.competitions = competitions);
+    public onCreated() {
+        this._competitionService.getAll().subscribe((competitions) => this.competitions = competitions);
     }
 }

@@ -39,57 +39,57 @@ export class CompetitionService {
         this.http = http;
     }
 
-    create(competition: NewCompetition): Rx.Observable<Competition> {
+    public create(competition: NewCompetition): Rx.Observable<Competition> {
         let body = `name=${competition.name}`;
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         return this.http.post('api/competitions/create', body, {
-            headers: headers
-        }).map(res => res.json());
+            headers
+        }).map((res) => res.json());
     }
 
-    getAll(): Rx.Observable<Array<Competition>> {
+    public getAll(): Rx.Observable<Competition[]> {
         return this.http.get('api/competitions')
-            .map(res => res.json());
+            .map((res) => res.json());
     }
 
-    get(id: number): Rx.Observable<Competition> {
+    public get(id: number): Rx.Observable<Competition> {
         return this.http.get(`api/competitions/${id}`)
-            .map(res => res.json());
+            .map((res) => res.json());
     }
 
-    addDivision(comp: Competition, newDivision: NewDivision): Rx.Observable<Division> {
+    public addDivision(comp: Competition, newDivision: NewDivision): Rx.Observable<Division> {
         let body = `name=${newDivision.name}`;
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         return this.http.post(`api/competitions/${comp.id}/divisions.add`, body, {
-            headers: headers
-        }).map(res => res.json());
+            headers
+        }).map((res) => res.json());
     }
 
-    addCompetitor(comp: Competition, newCompetitor: NewCompetitor): Rx.Observable<Competitor> {
+    public addCompetitor(comp: Competition, newCompetitor: NewCompetitor): Rx.Observable<Competitor> {
         let body = JSON.stringify(newCompetitor);
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
         return this.http.post(`api/competitions/${comp.id}/competitors.add`, body, {
-            headers: headers
-        }).map(res => res.json());
+            headers
+        }).map((res) => res.json());
     }
 
-    addEvent(comp: Competition, newEvent: NewEvent): Rx.Observable<Event> {
+    public addEvent(comp: Competition, newEvent: NewEvent): Rx.Observable<Event> {
         let body = JSON.stringify(newEvent);
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
         return this.http.post(`api/competitions/${comp.id}/events.add`, body, {
-            headers: headers
-        }).map(res => res.json());
+            headers
+        }).map((res) => res.json());
     }
 }

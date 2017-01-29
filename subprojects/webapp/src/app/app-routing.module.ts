@@ -11,17 +11,17 @@ const appRoutes: Routes = [
     { path: 'competition.create', component: CreateCompetitionComponent},
     { path: 'scores/:competitionId', component: StandaloneScoreboardComponent},
     { path: 'competitions', component: CompetitionListComponent },
-    { path: '', redirectTo: 'competitions', pathMatch: 'full'}
+    { path: '', redirectTo: 'competitions', pathMatch: 'full'},
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forRoot(appRoutes, {
-            useHash: true
-        })
-    ],
     exports: [
         RouterModule
+    ],
+    imports: [
+        RouterModule.forRoot(appRoutes, {
+            useHash: true,
+        }),
     ]
 })
 export class AppRoutingModule { }

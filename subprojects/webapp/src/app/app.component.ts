@@ -8,5 +8,4 @@ import { isBs3 } from 'ng2-bootstrap';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
 }

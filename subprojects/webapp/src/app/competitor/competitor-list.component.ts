@@ -1,14 +1,14 @@
 import {
     Component,
-    OnInit,
+    EventEmitter,
     Input,
+    OnInit,
     Output,
-    EventEmitter
 } from '@angular/core';
 
 import {
-    ModelService,
-    Competitor
+    Competitor,
+    ModelService
 } from '../model/model';
 
 import {
@@ -16,20 +16,11 @@ import {
 } from './create-competitor.component';
 
 @Component({
-    selector: '[competitorListItem]',
-    template: `
-        <td>{{ competitorItem.name }}</td>
-        <td>{{ competitorItem.division.name }}</td>
-    `
-})
-export class CompetitorListItemComponent {
-    @Input() competitorItem: Competitor;
-}
-
-@Component({
     selector: 'competitor-list',
     template: `
-        <div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div bsModal #modal="bs-modal" 
+            class="modal fade" tabindex="-1" role="dialog" 
+            aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -65,15 +56,15 @@ export class CompetitorListItemComponent {
         </div>
     `
 })
-export class CompetitorsList implements OnInit {
-    competitors: Array<Competitor>;
+export class CompetitorsListComponent implements OnInit {
+    public competitors: Competitor[];
 
     constructor(
         private service: ModelService
         ) {
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.service.onCompetitionUpdate.subscribe(comp => {
             this.competitors = comp.competitors;
         });

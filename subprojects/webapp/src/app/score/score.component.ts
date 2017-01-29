@@ -28,33 +28,33 @@ import { EventBus } from '../services/eventbus';
 })
 export class ScoreComponent implements OnInit {
 
-    events: Event[] = [];
-    divisions: Division[] = [];
-    event: string = '';
-    scores: Score[] = [];
-    query: string = '';
-    division: string = 'all';
-    onlyUnset: boolean = false;
+    public events: Event[] = [];
+    public divisions: Division[] = [];
+    public event: string = '';
+    public scores: Score[] = [];
+    public query: string = '';
+    public division: string = 'all';
+    public onlyUnset: boolean = false;
 
-    @ViewChild(ModalDirective) $modal: ModalDirective;
-    @ViewChild(ScoreEditComponent) $edit: ScoreEditComponent;
+    @ViewChild(ModalDirective) public $modal: ModalDirective;
+    @ViewChild(ScoreEditComponent) public $edit: ScoreEditComponent;
 
     constructor(
         private modelService: ModelService,
         private scoreService: ScoreService,
         private eventBus: EventBus) {
-        this.eventBus.on('score.updated').subscribe(score => {
+        this.eventBus.on('score.updated').subscribe((score) => {
             this.updateScores(score.event.id);
         });
     }
 
-    selectScore(score: Score) {
+    public selectScore(score: Score) {
         this.$edit.score = score;
         this.$modal.show();
     }
 
-    ngOnInit() {
-        this.modelService.onCompetitionUpdate.subscribe(competition => {
+    public ngOnInit() {
+        this.modelService.onCompetitionUpdate.subscribe((competition) => {
             this.events = competition.events
             if (this.events.length > 0) {
                 this.event = competition.events[0].id.toString();
@@ -64,12 +64,12 @@ export class ScoreComponent implements OnInit {
         });
     }
 
-    eventChanged(e: number) {
+    public eventChanged(e: number) {
         this.updateScores(e);
     }
 
-    updateScores(eventId: number) {
-        this.scoreService.getScoresForEvent(eventId).subscribe(scores => {
+    public updateScores(eventId: number) {
+        this.scoreService.getScoresForEvent(eventId).subscribe((scores) => {
             this.scores = scores;
         });
     }

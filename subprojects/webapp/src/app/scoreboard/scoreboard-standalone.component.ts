@@ -19,33 +19,6 @@ import { CompetitionService } from '../services/competition.service';
 import { RankingService } from '../services/ranking.service';
 
 @Component({
-    selector: 'event-header',
-    template: `
-        <th>{{event.name}} - Score</th>
-        <th>{{event.name}} - Rank</th>
-    `
-})
-class EventHeaderComponent {
-
-    @Input() event: Event;
-}
-
-@Component({
-    selector: 'event-score',
-    template: `
-        <td>
-            {{score.score.score}}
-        </td>
-        <td>
-            {{score.rank}}
-        </td>
-    `
-})
-class EventScoreComponent {
-    @Input() score: RankedEventScore;
-}
-
-@Component({
     template: `
         <div *ngIf="competition">
             <div class="header">
@@ -99,9 +72,10 @@ class EventScoreComponent {
 })
 export class StandaloneScoreboardComponent implements OnInit {
 
+    public competition: Competition;
+
     private competitionId: string;
     private divisionId: string;
-    private competition: Competition;
     private index: number  = 0;
     private rankings: RankedCompetitionScore[];
     private events: Event[];
@@ -111,22 +85,23 @@ export class StandaloneScoreboardComponent implements OnInit {
         private rankingService: RankingService,
         private route: ActivatedRoute) {
 
-        this.route.params.subscribe(params => {
-            this.competitionId = params['competitionId'];
+        this.route.params.subscribe((params) => {
+            let comIdKey = 'competitionId'
+            this.competitionId = params[comIdKey];
         });
     }
 
-    ngOnInit() {
-        this.competitionService.get(+this.competitionId).subscribe(competition => {
+    public ngOnInit() {
+        this.competitionService.get(+this.competitionId).subscribe((competition) => {
             this.competition = competition;
             this.events = this.competition.events;
             this.updateView();
         });
     }
 
-    updateView() {
+    public updateView() {
         let division = this.getNextDivision();
-        this.rankingService.getRankingForCompetition(this.competition.id, division.id).subscribe(ranking => {
+        this.rankingService.getRankingForCompetition(this.competition.id, division.id).subscribe((ranking) => {
             this.rankings = ranking;
             setTimeout(() => {
                 this.updateView();

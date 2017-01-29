@@ -1,6 +1,5 @@
 import { Component, OnInit, Host } from '@angular/core';
 
-
 import { CompetitionService } from '../services/competition.service';
 
 import { Competition } from '../model/competition';
@@ -9,12 +8,5 @@ import { Competition } from '../model/competition';
     template: `
     `
 })
-export class CompetitionDashboardComponent implements OnInit {
-
-    constructor() {
-    }
-
-    ngOnInit() {
-
-    }
+export class CompetitionDashboardComponent {
 }

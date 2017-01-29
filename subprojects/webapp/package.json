@@ -6,6 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --inline --progress --port 9090",
     "test": "karma start",
+    "check": "npm run tslint",
+    "tslint": "tslint -t stylish --force src/**/*.ts",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
   },
   "dependencies": {

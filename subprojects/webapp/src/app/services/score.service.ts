@@ -16,12 +16,12 @@ export class ScoreService {
 
      constructor(private http: Http) { }
 
-     getScoresForEvent(eventId: number): Rx.Observable<Array<Score>> {
+     public getScoresForEvent(eventId: number): Rx.Observable<Score[]> {
          let url = `api/scores/event/${eventId}`;
-         return this.http.get(url).map(res => res.json());
+         return this.http.get(url).map((res) => res.json());
      }
 
-     addScore(score: Score): Rx.Observable<Score> {
+     public addScore(score: Score): Rx.Observable<Score> {
          let url = `api/scores/`;
          let body = JSON.stringify(score);
 
@@ -29,7 +29,7 @@ export class ScoreService {
          headers.append('Content-Type', 'application/json');
 
          return this.http.post(url, body, {
-             headers: headers
-         }).map(res => res.json());
+             headers
+         }).map((res) => res.json());
      }
  }

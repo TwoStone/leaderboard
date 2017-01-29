@@ -8,25 +8,20 @@ import { Router } from '@angular/router';
 
 import { CompetitionService, NewCompetition } from '../services/competition.service';
 
-class CompetitionModel implements NewCompetition {
-    name: string;
-
-    constructor() {
-    }
-}
-
 @Component({
     selector: 'create-competition',
     templateUrl: './create-competition.html'
 })
 export class CreateCompetitionComponent {
 
-    model: CompetitionModel;
+    public model: NewCompetition;
 
-    @Output() onCreated = new EventEmitter();
+    @Output() public onCreated = new EventEmitter();
 
     constructor(private _competitionService: CompetitionService, private _router: Router) {
-        this.model = new CompetitionModel();
+        this.model = {
+            name: ''
+        };
     }
 
     onSubmit() {
