@@ -56,6 +56,6 @@ clean.dependsOn cleanDist
 
 jar.dependsOn npm_run_build
 
-test.dependsOn npm_test
+//test.dependsOn npm_test
 
 check.dependsOn npm_run_check
