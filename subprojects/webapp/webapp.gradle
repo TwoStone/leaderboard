@@ -29,6 +29,29 @@ task cleanDist(type: Delete) {
 	delete distDir
 }
 
+npm_run_build {
+	inputs.dir 'src'
+	inputs.dir 'config'
+	inputs.file 'package.json'
+	inputs.file 'tsconfig.json'
+
+	outputs.dir distDir
+}
+
+npm_test {
+	inputs.dir 'src'
+	inputs.dir 'config'
+	inputs.file 'package.json'
+	inputs.file 'tsconfig.json'
+}
+
+npm_run_check {
+	inputs.dir 'src'
+	inputs.dir 'config'
+	inputs.file 'package.json'
+	inputs.file 'tsconfig.json'
+}
+
 clean.dependsOn cleanDist
 
 jar.dependsOn npm_run_build
