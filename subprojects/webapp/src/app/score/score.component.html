@@ -1,0 +1,62 @@
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="pull-left">Edit Score</h3>
+                <button type="button" class="close pull-right" (click)="modal.hide()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+            </div>
+            <div class="modal-body">
+                <score-edit [score]="selectedScore" (onSubmitted)="modal.hide()">
+                </score-edit>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-inline">
+    <div class="form-group">
+        <label for="query">Search</label>
+        <input class="form-control" type="text" [(ngModel)]="query" />
+    </div>
+    <div class="form-group">
+        <label for="division">Division</label>
+        <select class="form-control" [(ngModel)]="division">
+                    <option value="all">All</option>
+                    <option *ngFor="let division of divisions" [value]="division.id">
+                        {{ division.name }}
+                    </option>
+                </select>
+    </div>
+    <div class="form-group">
+        <label for="event">Event</label>
+        <select class="form-control" [(ngModel)]="event" (ngModelChange)="eventChanged($event)">
+                    <option *ngFor="let e of events" [value]="e.id">{{ e.name }}</option>
+                </select>
+    </div>
+    <div class="form-group">
+        <label for="onlyUnset">only unset</label>
+        <input type="checkbox" class="form-control" [(ngModel)]="onlyUnset" />
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Division</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="clickable" *ngFor="let score of scores | scoreFilter:division:onlyUnset | scoringQueryFilter:query" (click)="selectScore(score)">
+                <td>{{ score.competitor.name }}</td>
+                <td>{{ score.competitor.division.name }}</td>
+                <td>{{ score | asScore:"not set" }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="!scores || scores.length == 0">
+        No scores for selected event.
+    </div>
+</div>

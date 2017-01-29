@@ -3,23 +3,19 @@ import {
     OnInit,
     Output,
     EventEmitter
-} from 'angular2/core';
+} from '@angular/core';
 
 import {
     ModelService,
     Division
 } from '../model/model';
 
-import {
-    CompetitionService,
-    NewCompetitor
-} from '../services';
+import { CompetitionService, NewCompetitor } from '../services/competition.service';
 
 class CompetitorModel implements NewCompetitor {
     name: string;
     divisionId: number;
 }
-
 
 @Component({
     selector: 'create-competitor',
@@ -31,20 +27,17 @@ class CompetitorModel implements NewCompetitor {
                     class="form-control"
                     [(ngModel)]="model.name"
                     ngControl="name"
-                    #name="ngForm"
+                    name="name"
                     required>
-                <div [hidden]="name || name.valid" class="alert alert-danger">
-                    Name is required
-                </div>
             </div>
             <div class="form-group">
                 <label for="division">Division</label>
                 <select class="form-control"
                     [(ngModel)]="model.divisionId"
                     ngControl="division"
-                    #division="ngForm"
+                    name="division"
                     required>
-                    <option *ngFor="#division of divisions" [value]="division.id">
+                    <option *ngFor="let division of divisions" [value]="division.id">
                         {{ division.name }}
                     </option>
                 </select>

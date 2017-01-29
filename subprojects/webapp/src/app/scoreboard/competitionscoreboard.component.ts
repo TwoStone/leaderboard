@@ -3,15 +3,15 @@ import {
     OnChanges,
     Input,
     ViewEncapsulation
-} from 'angular2/core';
+} from '@angular/core';
 
 import {
     NgFor
-} from 'angular2/common';
+} from '@angular/common';
 
 import {
     RankingService
-} from '../services';
+} from '../services/ranking.service';
 
 import {
     RankedCompetitionScore,
@@ -19,10 +19,6 @@ import {
     ModelService,
     Event
 } from '../model/model';
-
-import {
-    ScoreDisplayPipe
-} from '../score/pipes';
 
 @Component({
     selector: 'event-header',
@@ -59,7 +55,7 @@ class EventScore {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th *ngFor="#event of events">
+                        <th *ngFor="let event of events">
                             {{ event. name }} - Rank
                         </th>
                         <th>Score</th>
@@ -67,9 +63,9 @@ class EventScore {
                     </tr>
                 </thead>   
                 <tbody>
-                    <tr *ngFor="#ranking of rankings">
+                    <tr *ngFor="let ranking of rankings">
                         <td>{{ ranking.competitor.name }}</td>
-                        <td *ngFor="#score of ranking.eventScores">
+                        <td *ngFor="let score of ranking.eventScores">
                             {{ score.rank }} ({{ score.score | asScore:"-" }})
                         </td> 
                         <td>{{ ranking.score }}</td>
@@ -78,9 +74,7 @@ class EventScore {
                 </tbody>
             </table>
         </div>
-    `,
-    directives: [EventScore, EventHeader],
-    pipes: [ScoreDisplayPipe]
+    `
 })
 export class CompetitionScoreboard implements OnChanges {
 

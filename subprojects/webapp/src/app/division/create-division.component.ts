@@ -2,14 +2,15 @@ import {
     Component,
     Output,
     EventEmitter
-} from 'angular2/core';
-import {Router} from 'angular2/router';
+} from '@angular/core';
+import { Router } from '@angular/router';
 
 import {
     CompetitionService,
     NewDivision
-} from '../services';
-import {ModelService} from '../model/model';
+} from '../services/competition.service';
+
+import { ModelService } from '../model/model';
 
 class DivisionModel implements NewDivision {
     name: string;
@@ -21,12 +22,8 @@ class DivisionModel implements NewDivision {
         <form class="form" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" [(ngModel)]="model.name" ngControl="name" #name="ngForm" required autofocus>
-                <div [hidden]="name || name.valid" class="alert alert-danger">
-                    Name is required
-                </div>
+                <input type="text" class="form-control" [(ngModel)]="model.name" ngControl="name" name="name" required autofocus>
             </div>
-
             <button type="submit" class="btn btn-primary">Add</button>
         </form>
     `

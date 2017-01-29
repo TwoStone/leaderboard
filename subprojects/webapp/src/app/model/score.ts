@@ -1,5 +1,5 @@
-import {Competitor} from './competitor';
-import {Event} from './event';
+import { Competitor } from './competitor';
+import { Event } from './event';
 
 export interface Score {
     id?: number;

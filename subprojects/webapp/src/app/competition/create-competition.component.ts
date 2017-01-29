@@ -2,12 +2,11 @@ import {
     Component,
     EventEmitter,
     Output
-} from 'angular2/core';
-import {Router} from 'angular2/router';
-import {NgForm} from 'angular2/common';
+} from '@angular/core';
 
-import {CompetitionService, NewCompetition} from '../services';
+import { Router } from '@angular/router';
 
+import { CompetitionService, NewCompetition } from '../services/competition.service';
 
 class CompetitionModel implements NewCompetition {
     name: string;
@@ -16,10 +15,9 @@ class CompetitionModel implements NewCompetition {
     }
 }
 
-
 @Component({
     selector: 'create-competition',
-    templateUrl: 'app/competition/create-competition.html'
+    templateUrl: './create-competition.html'
 })
 export class CreateCompetitionComponent {
 

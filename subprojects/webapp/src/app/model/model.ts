@@ -1,12 +1,12 @@
-import {Injectable} from 'angular2/core';
+import { Injectable } from '@angular/core';
 
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
-import {ReplaySubject} from 'rxjs/subject/ReplaySubject';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
-import {CompetitionService} from '../services';
+import { CompetitionService } from '../services/competition.service';
 
-import {Competition} from './competition';
+import { Competition } from './competition';
 
 export * from './competition';
 export * from './competitor';

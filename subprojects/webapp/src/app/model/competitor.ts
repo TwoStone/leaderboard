@@ -1,4 +1,4 @@
-import {Division} from './division';
+import { Division } from './division';
 
 export interface Competitor {
     name: string;

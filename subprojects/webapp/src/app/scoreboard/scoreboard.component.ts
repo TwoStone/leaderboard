@@ -1,11 +1,11 @@
 import {
     Component,
     OnInit,
-} from 'angular2/core';
+} from '@angular/core';
 
 import {
     CompetitionService,
-} from '../services';
+} from '../services/competition.service';
 
 import {
     ModelService,
@@ -36,7 +36,7 @@ class ScoreQuery {
             <div class="form-group">
                 <label for="division">Division</label>
                 <select class="form-control" [(ngModel)]="query.division" (ngModelChange)="filterChanged($event)">
-                    <option *ngFor="#division of divisions" [value]="division.id">{{ division.name }}</option>
+                    <option *ngFor="let division of divisions" [value]="division.id">{{ division.name }}</option>
                 </select>
             </div>
             <!-- Event -->
@@ -44,7 +44,7 @@ class ScoreQuery {
                 <label for="event">Event</label>
                 <select class="form-control" [(ngModel)]="query.event" (ngModelChange)="filterChanged($event)">
                     <option value="0">all</option>
-                    <option *ngFor="#event of events" [value]="event.id">{{ event.name }}</option>
+                    <option *ngFor="let event of events" [value]="event.id">{{ event.name }}</option>
                 </select>
             </div>
         </div>
@@ -62,8 +62,7 @@ class ScoreQuery {
         <div *ngIf="!competition">
             Loading...
         </div>
-    `,
-    directives: [EventScoreBoard, CompetitionScoreboard]
+    `
 })
 export class ScoreboardComponent implements OnInit {
 

@@ -1,10 +1,10 @@
 import {
     Injectable
-} from 'angular2/core';
+} from '@angular/core';
 
 import {
     Http
-} from 'angular2/http';
+} from '@angular/http';
 
 import {
     RankedEventScore

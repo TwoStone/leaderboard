@@ -1,5 +1,5 @@
-import {Competitor} from './competitor';
-import {RankedEventScore} from './ranked-event-score';
+import { Competitor } from './competitor';
+import { RankedEventScore } from './ranked-event-score';
 
 export class RankedCompetitionScore {
     rank: number;
