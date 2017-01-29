@@ -2,33 +2,37 @@ apply plugin: 'com.moowork.node'
 apply plugin: 'java'
 
 node {
-  // Version of node to use.
   version = '5.4.1'
 
-  // Version of npm to use.
-  npmVersion = '3.5.3'
-
-  download = true
+  download = project.findProperty('node.download')
 
   workDir = file("${project.buildDir}/nodejs")
+}
+
+ext {
+	distDir = project.file('dist')
 }
 
 sourceSets {
 	webapp {
 		resources {
-			srcDir 'dist'
+			srcDir distDir
 		}
 	}
 }
 
 jar {
-	from ('dist') {	}
+	from (distDir) {	}
 }
 
-// gulp_build.dependsOn npm_install
+task cleanDist(type: Delete) {
+	delete distDir
+}
 
-// clean.dependsOn gulp_clean
+clean.dependsOn cleanDist
 
-// check.dependsOn gulp_check
+jar.dependsOn npm_run_build
 
-// jar.dependsOn gulp_build
+test.dependsOn npm_test
+
+check.dependsOn npm_run_check
