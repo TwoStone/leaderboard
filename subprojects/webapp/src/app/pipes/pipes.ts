@@ -1,9 +1,9 @@
-/// <reference path="../../../typings/moment-duration-format.d.ts" />
-
 import {
     Pipe,
     PipeTransform
-} from 'angular2/core';
+} from '@angular/core';
+
+import * as moment from 'moment';
 
 import {
     ModelService,
@@ -15,8 +15,7 @@ import {
 
 @Pipe({ name: 'scoringQueryFilter'})
 export class ScoringQueryFilterPipe implements PipeTransform {
-    transform(values: Score[], args: string[]) {
-        let query = args[0];
+    transform(values: Score[], query: string) {
         if (query.length === 0) {
             return values;
         }
@@ -33,9 +32,7 @@ export class ScoringQueryFilterPipe implements PipeTransform {
 
 @Pipe({ name: 'scoreFilter' })
 export class ScoreFilterPipe implements PipeTransform {
-    transform(scores: Score[], args: string[]) {
-        let divisionId = args[0];
-        let onlyUnset = !!args[1];
+    transform(scores: Score[], divisionId: string, onlyUnset: boolean) {
 
         let result: Score[];
 

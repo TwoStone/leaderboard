@@ -5,14 +5,16 @@ import {
      EventEmitter,
      ElementRef,
      ComponentRef,
-     DynamicComponentLoader,
-     Type
-} from 'angular2/core';
+     ComponentFactoryResolver,
+     Type,
+     ViewChild,
+     ViewContainerRef
+} from '@angular/core';
 
-import {
-    ScoreService,
-    EventBus
-} from '../services';
+import * as jQuery from 'jquery';
+
+import { ScoreService } from '../services/score.service';
+import { EventBus } from '../services/eventbus';
 
 import {
     Score,
@@ -20,7 +22,7 @@ import {
 } from '../model/model';
 
 import {
-    ScoreInputFactory
+    ScoreInputFactory, ScoreInput
 } from './score-input.component';
 
 @Component({
@@ -57,11 +59,14 @@ export class ScoreEditComponent {
 
     @Output() onSubmitted: EventEmitter<Score> = new EventEmitter();
 
-    private inputComponent: ComponentRef;
+    @ViewChild('scoreInput', { read: ViewContainerRef })
+    private element: ViewContainerRef;
+
+    private inputComponent: ComponentRef<ScoreInput>;
 
     constructor(
         private scoreService: ScoreService,
-        private componentLoader: DynamicComponentLoader,
+        private componentLoader: ComponentFactoryResolver,
         private elementRef: ElementRef,
         private eventBus: EventBus) {
     }
@@ -72,16 +77,13 @@ export class ScoreEditComponent {
             this._score = jQuery.extend({}, score);
 
             if (this.inputComponent) {
-                this.inputComponent.dispose();
+                this.inputComponent.destroy();
             }
 
-            this.componentLoader.loadIntoLocation(
-                ScoreInputFactory.getComponentForType(score.event),
-                this.elementRef,
-                'scoreInput').then(ref => {
-                    this.inputComponent = ref;
-                    ref.instance.score = this._score;
-                });
+            let componentFactory = this.componentLoader.resolveComponentFactory(ScoreInputFactory.getComponentForType(score.event));
+            let component = this.element.createComponent(componentFactory);
+            component.instance.score = this._score;
+            this.inputComponent = component;
         }
     }
 

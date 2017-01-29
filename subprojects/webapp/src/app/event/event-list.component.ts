@@ -3,7 +3,7 @@ import {
     OnInit,
     Pipe,
     PipeTransform
-} from 'angular2/core';
+} from '@angular/core';
 
 import {
     ModelService,
@@ -12,15 +12,11 @@ import {
 } from '../model/model';
 
 import {
-    MODAL_DIRECTIVES
-} from '../tools/tools';
-
-import {
-    CreateEvent
+    CreateEventComponent
 } from './create-event.component'
 
 @Pipe({name: 'typeName'})
-class TypeNamePipe implements PipeTransform {
+export class TypeNamePipe implements PipeTransform {
     transform(type: EventType, args: any[]) {
         switch (type) {
             case EventType.FOR_TIME:
@@ -36,15 +32,22 @@ class TypeNamePipe implements PipeTransform {
 @Component({
     selector: 'event-list',
     template: `
-        <modal #modal>
-            <modal-header>
-                <h3>Create event</h3>
-            </modal-header>
-            <modal-body>
-                <create-event (onCreated)="modal.hide()"></create-event>
-            </modal-body>
-        </modal>
-        <button class="btn btn-primary" (click)="modal.open()">
+        <div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="pull-left">Create Event</h3>
+                        <button type="button" class="close pull-right" (click)="modal.hide()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <create-event (onCreated)="modal.hide()"></create-event>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" (click)="modal.show()">
             <i class="fa fa-plus"></i>
             Create event
         </button>
@@ -60,7 +63,7 @@ class TypeNamePipe implements PipeTransform {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="#event of events; #i = index">
+                    <tr *ngFor="let event of events; let i = index">
                         <td width="5%">{{ i + 1 }}</td>
                         <td>{{ event.name }}</td>
                         <td>{{ event.type | typeName }}</td>
@@ -70,11 +73,9 @@ class TypeNamePipe implements PipeTransform {
                 </tbody>
             </table>
         </div>
-    `,
-    directives: [CreateEvent, MODAL_DIRECTIVES],
-    pipes: [TypeNamePipe]
+    `
 })
-export class EventList implements OnInit {
+export class EventListComponent implements OnInit {
 
     events: Event[];
 

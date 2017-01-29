@@ -1,4 +1,3 @@
-/// <reference path="../../../../typings/browser.d.ts" />
 import {
     Component,
     Input,
@@ -6,7 +5,7 @@ import {
     EventEmitter,
     Type,
     AfterViewInit
-} from 'angular2/core';
+} from '@angular/core';
 
 let id: number = 0;
 function uniqueId(prefix: string): string {

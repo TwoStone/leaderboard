@@ -6,7 +6,7 @@ export interface Event {
     scalable: boolean;
 }
 
-export enum EventType {
-    FOR_TIME,
-    FOR_POINTS
+export class EventType {
+    static FOR_TIME: string = 'FOR_TIME';
+    static FOR_POINTS: string = 'FOR_POINTS';
 }

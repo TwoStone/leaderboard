@@ -3,7 +3,7 @@ import {
     OnInit,
     Output,
     EventEmitter
-} from 'angular2/core';
+} from '@angular/core';
 
 import {
     ModelService,
@@ -14,7 +14,7 @@ import {
 import {
     CompetitionService,
     NewEvent
-} from '../services';
+} from '../services/competition.service';
 
 class EventModel implements NewEvent {
     name: string;
@@ -34,7 +34,8 @@ class EventModel implements NewEvent {
                     class="form-control"
                     [(ngModel)]="model.name"
                     ngControl="name"
-                    #name="ngForm"
+                    name="name"
+                    #name
                     required>
                 <div [hidden]="name || name.valid" class="alert alert-danger">
                     Name is required
@@ -44,7 +45,7 @@ class EventModel implements NewEvent {
                 <label for="type">Type</label>
                 <select class="form-control"
                     [(ngModel)]="model.type"
-                    #type="ngForm"
+                    name="type"
                     ngControl="type">
                     <option [value]="eventType.FOR_TIME">for time</option>
                     <option [value]="eventType.FOR_POINTS">for points</option>
@@ -52,7 +53,7 @@ class EventModel implements NewEvent {
             </div>
             <div class="checkbox">
                 <label> 
-                    <input type="checkbox" [(ngModel)]="model.scalable" ngControl="scalable" #scalable="ngForm"> Is scalable
+                    <input type="checkbox" [(ngModel)]="model.scalable" ngControl="scalable" name="scalable"> Is scalable
                 </label>
             </div>
             <div class="form-group">
@@ -60,7 +61,7 @@ class EventModel implements NewEvent {
                 <textarea 
                     class="form-control" 
                     [(ngModel)]="model.description" 
-                    #description="ngForm" 
+                    name="description"
                     ngControl="description">
                 </textarea>
             </div>
@@ -68,7 +69,7 @@ class EventModel implements NewEvent {
         </form>
     `
 })
-export class CreateEvent implements OnInit {
+export class CreateEventComponent implements OnInit {
 
     model: EventModel = new EventModel();
 

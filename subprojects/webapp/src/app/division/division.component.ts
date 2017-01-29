@@ -1,6 +1,6 @@
-import {Component} from 'angular2/core';
-import {RouteParams} from 'angular2/router';
-import {Division} from '../model/model';
+import { Component } from '@angular/core';
+
+import { Division } from '../model/model';
 
 @Component({
     template: `
@@ -11,7 +11,7 @@ export class DivisionComponent {
 
     division: Division;
 
-    constructor(private _params: RouteParams) {
+    constructor() {
     }
 
 }

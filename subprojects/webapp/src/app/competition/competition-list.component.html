@@ -1,0 +1,47 @@
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="pull-left">Create Competition</h3>
+                <button type="button" class="close pull-right" (click)="modal.hide()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+            </div>
+            <div class="modal-body">
+                <create-competition (onCreated)="modal.hide(); onCreated()">
+                </create-competition>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <button class="btn btn-primary" (click)="modal.show()">
+                        <i class="fa fa-plus"></i>
+                        Create competition 
+                    </button>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Competition
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let competition of competitions">
+                            <td>
+                                <competition-list-item [competition]="competition">
+                                </competition-list-item>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>

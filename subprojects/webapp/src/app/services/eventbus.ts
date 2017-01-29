@@ -1,7 +1,7 @@
 import {
     EventEmitter,
     Injectable
- } from 'angular2/core';
+ } from '@angular/core';
 
  import * as Rx from 'rxjs';
 

@@ -1,52 +1,12 @@
 <!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
     <base href="/">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>LeaderBoard</title>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.css">
-    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
-
-
-    <!-- 1. Load libraries -->
-    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="node_modules/systemjs/dist/system.src.js"></script>
-    <script src="node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
-    <script src="node_modules/angular2/bundles/router.js"></script>
-    <script src="node_modules/angular2/bundles/http.js"></script>
-    <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="node_modules/string_score/string_score.js"></script>
-    <script src="node_modules/moment/moment.js"></script>
-    <script src="node_modules/moment-duration-format/lib/moment-duration-format.js"></script>
-
-    <!-- 2. Configure SystemJS -->
-    <script>
-      System.config({
-        packages: {
-          app: {
-            format: 'register',
-            defaultExtension: 'js'
-          }
-        }
-      });
-      System.import('app/boot')
-            .then(null, console.error.bind(console));
-    </script>
-    
-    <style>
-        html {
-            position: relative;
-            min-height: 100%;
-        }
-        body {
-            margin-bottom: 60px;
-        }
-    </style>
+    <title>Angular With Webpack</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <!-- 3. Display the application -->
   <body>
     <leaderboard-app>
         <div class="container">

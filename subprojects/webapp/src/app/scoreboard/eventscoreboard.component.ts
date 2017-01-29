@@ -2,16 +2,9 @@ import {
     Component,
     Input,
     OnChanges
-} from 'angular2/core';
+} from '@angular/core';
 
-import {
-    RankingService
-} from '../services';
-
-import {
-    NullAsPipe,
-    ScoreDisplayPipe
-} from '../score/pipes';
+import { RankingService } from '../services/ranking.service';
 
 import {
     RankedEventScore
@@ -30,7 +23,7 @@ import {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="#score of scores">
+                    <tr *ngFor="let score of scores">
                         <td>{{ score.score.competitor.name }}</td>
                         <td>{{ score.score | asScore:"-" }}</td>
                         <td>{{ score.rank }}</td>
@@ -38,8 +31,7 @@ import {
                 </tbody>
             </table>
         </div>
-    `,
-    pipes: [ScoreDisplayPipe]
+    `
 })
 export class EventScoreBoard implements OnChanges {
     @Input() eventId: number;

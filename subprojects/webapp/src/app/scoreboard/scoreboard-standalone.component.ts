@@ -2,15 +2,9 @@ import {
     Component,
     OnInit,
     Input
-} from 'angular2/core';
+} from '@angular/core';
 
-import {
-    RouteParams
-} from 'angular2/router';
-
-import {
-    ScoreDisplayPipe
-} from '../score/pipes';
+import { ActivatedRoute } from '@angular/router';
 
 import {
     Competition,
@@ -21,10 +15,8 @@ import {
     EventType,
 } from '../model/model';
 
-import {
-    RankingService,
-    CompetitionService
-} from '../services';
+import { CompetitionService } from '../services/competition.service';
+import { RankingService } from '../services/ranking.service';
 
 @Component({
     selector: 'event-header',
@@ -33,7 +25,7 @@ import {
         <th>{{event.name}} - Rank</th>
     `
 })
-class EventHeader {
+class EventHeaderComponent {
 
     @Input() event: Event;
 }
@@ -49,7 +41,7 @@ class EventHeader {
         </td>
     `
 })
-class EventScore {
+class EventScoreComponent {
     @Input() score: RankedEventScore;
 }
 
@@ -67,7 +59,7 @@ class EventScore {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th *ngFor="#event of events">
+                        <th *ngFor="let event of events">
                             {{ event. name }} - Rank
                         </th>
                         <th>Score</th>
@@ -75,9 +67,9 @@ class EventScore {
                     </tr>
                 </thead>   
                 <tbody>
-                    <tr *ngFor="#ranking of rankings">
+                    <tr *ngFor="let ranking of rankings">
                         <td>{{ ranking.competitor.name }}</td>
-                        <td *ngFor="#score of ranking.eventScores">
+                        <td *ngFor="let score of ranking.eventScores">
                             {{ score.rank }} ({{ score.score | asScore:"-" }})
                         </td> 
                         <td>{{ ranking.score }}</td>
@@ -103,9 +95,7 @@ class EventScore {
         text-align: center;   
      }
     `
-    ],
-    directives: [EventScore, EventHeader],
-    pipes: [ScoreDisplayPipe]
+    ]
 })
 export class StandaloneScoreboardComponent implements OnInit {
 
@@ -119,9 +109,11 @@ export class StandaloneScoreboardComponent implements OnInit {
     constructor(
         private competitionService: CompetitionService,
         private rankingService: RankingService,
-        private routeParams: RouteParams) {
+        private route: ActivatedRoute) {
 
-        this.competitionId = this.routeParams.get('competitionId');
+        this.route.params.subscribe(params => {
+            this.competitionId = params['competitionId'];
+        });
     }
 
     ngOnInit() {

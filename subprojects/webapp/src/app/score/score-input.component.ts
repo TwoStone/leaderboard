@@ -3,13 +3,19 @@ import {
     Type,
     Input,
     Output
-} from 'angular2/core';
+} from '@angular/core';
 
 import {
     Event,
     EventType,
     Score
 } from '../model/model';
+
+import * as moment from 'moment';
+
+export interface ScoreInput {
+    score: Score
+}
 
 @Component({
     template: `
@@ -29,7 +35,7 @@ import {
         </div>
     `
 })
-class ForTimeInput {
+export class ForTimeInputComponent implements ScoreInput {
 
     @Input() score: Score;
 
@@ -54,7 +60,7 @@ class ForTimeInput {
         }
     }
 
-    addReps(event, input) {
+    addReps(event: MouseEvent, input: any) {
         event.preventDefault();
         let reps = input.valueAsNumber;
         if (reps > 0) {
@@ -72,17 +78,17 @@ class ForTimeInput {
         </div>
     `
 })
-class ForPointsInput {
+export class ForPointsInputComponent implements ScoreInput {
     @Input() score: Score;
 }
 
 export class ScoreInputFactory {
-    static getComponentForType(event: Event): Type {
+    static getComponentForType(event: Event): Type<ScoreInput> {
         switch (event.type) {
             case EventType.FOR_POINTS:
-                return ForPointsInput;
+                return ForPointsInputComponent;
             case EventType.FOR_TIME:
-                return ForTimeInput;
+                return ForTimeInputComponent;
         }
     }
 }

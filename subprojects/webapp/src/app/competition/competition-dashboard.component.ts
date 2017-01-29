@@ -1,14 +1,13 @@
-import {Component, OnInit, Host} from 'angular2/core';
-import {ROUTER_DIRECTIVES, RouteParams} from 'angular2/router';
+import { Component, OnInit, Host } from '@angular/core';
 
-import {CompetitionService} from '../services';
 
-import {Competition} from '../model/competition';
+import { CompetitionService } from '../services/competition.service';
+
+import { Competition } from '../model/competition';
 
 @Component({
     template: `
-    `,
-    directives: [ROUTER_DIRECTIVES]
+    `
 })
 export class CompetitionDashboardComponent implements OnInit {
 
