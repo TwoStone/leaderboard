@@ -1,6 +1,5 @@
 package com.github.twostone.leaderboard.services;
 
-import com.github.twostone.leaderboard.model.competition.Competitor;
 import com.github.twostone.leaderboard.model.competition.RegistrationRepository;
 import com.github.twostone.leaderboard.model.event.Event;
 import com.github.twostone.leaderboard.model.event.EventRepository;
@@ -18,15 +17,15 @@ import javax.inject.Inject;
 @RestController
 @RequestMapping("api/scores")
 public class ScoreService {
-    
+
   private ScoreManager scoreManager;
   private EventRepository eventRepository;
   private RegistrationRepository registrationRepository;
-  
+
   @Inject
   ScoreService(
-      ScoreManager scoreManager, 
-      EventRepository eventRepository, 
+      ScoreManager scoreManager,
+      EventRepository eventRepository,
       RegistrationRepository registrationRepository) {
     super();
     this.scoreManager = scoreManager;
@@ -39,9 +38,9 @@ public class ScoreService {
    */
   @RequestMapping(path = "/", method = RequestMethod.POST)
   public Score addScore(@RequestBody Score score) {
-    Event event = this.eventRepository.findOne(score.getEvent().getId());
-    Competitor competitor = this.registrationRepository.findOne(score.getCompetitor().getId());
-    return this.scoreManager.addScore(event, competitor, score.getScore(), score.isScaled());
+//    Event event = this.eventRepository.findOne(score.getEvent().getId());
+//    Competitor competitor = this.registrationRepository.findOne(score.getCompetitor().getId());
+    return this.scoreManager.addScore(score);
   }
 
   @RequestMapping("/event/{eventId}")

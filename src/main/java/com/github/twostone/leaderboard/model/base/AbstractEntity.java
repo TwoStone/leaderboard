@@ -1,5 +1,8 @@
 package com.github.twostone.leaderboard.model.base;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -14,6 +17,7 @@ import javax.persistence.Version;
 
 @MappedSuperclass
 @EntityListeners(AbstractEntityListener.class)
+@JsonIdentityInfo(property = "id", generator = ObjectIdGenerators.PropertyGenerator.class)
 public abstract class AbstractEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -21,10 +25,10 @@ public abstract class AbstractEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE)
   private Long id;
-  
+
   @Version
   private Long version;
-  
+
   private Instant createdAt;
   private Instant updatedAt;
 
@@ -71,11 +75,11 @@ public abstract class AbstractEntity implements Serializable {
     if (this.getClass() != obj.getClass()) {
       return false;
     }
-    
+
     AbstractEntity other = (AbstractEntity) obj;
     if (this.id == null) {
       return false;
-    } 
+    }
     return this.id.equals(other.id);
   }
 

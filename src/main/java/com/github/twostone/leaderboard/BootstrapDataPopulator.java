@@ -3,10 +3,13 @@ package com.github.twostone.leaderboard;
 import com.github.twostone.leaderboard.model.competition.Competition;
 import com.github.twostone.leaderboard.model.competition.Division;
 import com.github.twostone.leaderboard.model.competition.NewEventRequest;
-import com.github.twostone.leaderboard.model.event.EventType;
+import com.github.twostone.leaderboard.model.score.receipt.ScoreIngredient;
+import com.github.twostone.leaderboard.model.score.receipt.ScoreIngredientType;
+import com.github.twostone.leaderboard.model.score.receipt.ScoreRecipe;
 import com.github.twostone.leaderboard.services.CompetitionService;
 import com.github.twostone.leaderboard.services.CompetitionService.CompetitorRegistrationRequest;
 
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -17,11 +20,11 @@ import javax.transaction.Transactional;
 
 @Service
 public class BootstrapDataPopulator implements InitializingBean {
-  
+
   private Logger log = LoggerFactory.getLogger(BootstrapDataPopulator.class);
 
   private CompetitionService competitionService;
-  
+
   @Inject
   BootstrapDataPopulator(CompetitionService competitionService) {
     super();
@@ -35,20 +38,20 @@ public class BootstrapDataPopulator implements InitializingBean {
     this.createDemoCompetition();
     this.log.info("... Bootstrapping complete");
   }
-  
+
   private void createDemoCompetition() {
     Competition demoComp = this.competitionService.findById(1L);
     if (demoComp != null) {
       return;
     }
-    
-    this.log.info("... creating demo competition");    
-    
+
+    this.log.info("... creating demo competition");
+
     Competition competition = this.competitionService.create("DEMO Competition");
     Division eliteDivision = this.competitionService.addDivision(competition.getId(), "Elite");
     Division scaledDivision = this.competitionService.addDivision(competition.getId(), "Scaled");
-    
-    this.competitionService.registerCompetitor(competition.getId(), 
+
+    this.competitionService.registerCompetitor(competition.getId(),
         this.createRegisterRequest(eliteDivision, "Elite Team 1"));
     this.competitionService.registerCompetitor(competition.getId(),
         this.createRegisterRequest(eliteDivision, "Elite Team 2"));
@@ -58,8 +61,8 @@ public class BootstrapDataPopulator implements InitializingBean {
         this.createRegisterRequest(eliteDivision, "Elite Team 4"));
     this.competitionService.registerCompetitor(competition.getId(),
         this.createRegisterRequest(eliteDivision, "Elite Team 5"));
-    
-    this.competitionService.registerCompetitor(competition.getId(), 
+
+    this.competitionService.registerCompetitor(competition.getId(),
         this.createRegisterRequest(scaledDivision, "Scaled Team 1"));
     this.competitionService.registerCompetitor(competition.getId(),
         this.createRegisterRequest(scaledDivision, "Scaled Team 2"));
@@ -69,18 +72,25 @@ public class BootstrapDataPopulator implements InitializingBean {
         this.createRegisterRequest(scaledDivision, "Scaled Team 4"));
     this.competitionService.registerCompetitor(competition.getId(),
         this.createRegisterRequest(scaledDivision, "Scaled Team 5"));
-    
-    this.competitionService.addEvent(competition.getId(), 
-        this.createEventRequest("Event 1", EventType.FOR_TIME));
-    this.competitionService.addEvent(competition.getId(), 
-        this.createEventRequest("Event 2", EventType.FOR_POINTS));
-   
+
+    ScoreIngredient forTime =  new ScoreIngredient();
+    forTime.setName("time");
+    forTime.setType(ScoreIngredientType.TIME);
+    this.competitionService.addEvent(competition.getId(),
+        this.createEventRequest("Event 1",  new ScoreRecipe(Lists.newArrayList(forTime))));
+
+    ScoreIngredient forPoints =  new ScoreIngredient();
+    forTime.setName("points");
+    forTime.setType(ScoreIngredientType.POINTS);
+    this.competitionService.addEvent(competition.getId(),
+        this.createEventRequest("Event 2", new ScoreRecipe(Lists.newArrayList(forPoints))));
+
   }
-  
-  private NewEventRequest createEventRequest(String name, EventType type) {
+
+  private NewEventRequest createEventRequest(String name, ScoreRecipe recipe) {
     NewEventRequest newEvent = new NewEventRequest();
     newEvent.setName(name);
-    newEvent.setType(type);
+    newEvent.setRecipe(recipe);
     return newEvent;
   }
 

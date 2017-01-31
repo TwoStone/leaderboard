@@ -1,11 +1,11 @@
 package com.github.twostone.leaderboard.model.competition;
 
-import com.github.twostone.leaderboard.model.event.EventType;
+import com.github.twostone.leaderboard.model.score.receipt.ScoreRecipe;
 
 public class NewEventRequest {
   String name;
   String description;
-  EventType type;
+  ScoreRecipe recipe;
   boolean scalable;
 
   public String getName() {
@@ -24,18 +24,18 @@ public class NewEventRequest {
     this.description = description;
   }
 
-  public EventType getType() {
-    return this.type;
+  public ScoreRecipe getRecipe() {
+    return this.recipe;
   }
 
-  public void setType(EventType type) {
-    this.type = type;
+  public void setRecipe(ScoreRecipe recipe) {
+    this.recipe = recipe;
   }
-  
+
   public boolean isScalable() {
-    return scalable;
+    return this.scalable;
   }
-  
+
   public void setScalable(boolean scalable) {
     this.scalable = scalable;
   }

@@ -22,11 +22,11 @@ import javax.inject.Inject;
 @RestController
 @RequestMapping("api/competitions")
 public class CompetitionService {
-  
+
   public static class CompetitorRegistrationRequest {
     private long divisionId;
     private String name;
-    
+
     public long getDivisionId() {
       return this.divisionId;
     }
@@ -43,7 +43,7 @@ public class CompetitionService {
       this.name = name;
     }
   }
-  
+
   private CompetitionManager competitionManager;
 
   @Inject
@@ -52,30 +52,30 @@ public class CompetitionService {
     super();
     this.competitionManager = competitionManager;
   }
-  
+
   @RequestMapping(
       path = "/create",
       method = RequestMethod.POST)
   public Competition create(@RequestParam("name") String name) {
     return this.competitionManager.createCompetition(name);
   }
-  
+
   @RequestMapping(path = "", method = RequestMethod.GET)
   public Iterable<Competition> findAll() {
     return this.competitionManager.findAll();
   }
-  
+
   @RequestMapping(path = "/{id}")
   public Competition findById(@PathVariable("id") long id) {
     return this.competitionManager.findOne(id);
   }
-  
+
   @RequestMapping(path = "/{id}/divisions")
   public Iterable<Division> getDivisions(@PathVariable("id") long id) {
     Competition competition = this.findById(id);
     return competition.getDivisions();
   }
-  
+
   /**
    * Adds a new division for the competition.
    */
@@ -83,14 +83,14 @@ public class CompetitionService {
       path = "/{competitionId}/divisions.add",
       method = RequestMethod.POST)
   public Division addDivision(
-      @PathVariable("competitionId") Long competitionId, 
+      @PathVariable("competitionId") Long competitionId,
       @RequestParam("name") String divisionName) {
     Competition competition = this.competitionManager.findOne(competitionId);
     Division division = this.competitionManager.createDivision(competition, divisionName);
-    
+
     return division;
   }
-  
+
   /**
    * Registers a new Competitor.
    */
@@ -98,7 +98,7 @@ public class CompetitionService {
       path = "/{competitionId}/competitors.add",
       method = RequestMethod.POST)
   public Competitor registerCompetitor(
-      @PathVariable("competitionId") Long competitionId, 
+      @PathVariable("competitionId") Long competitionId,
       @RequestBody(required = true) CompetitorRegistrationRequest request) {
     Competition competition = this.competitionManager.findOne(competitionId);
     Division division = competition.getDivisions()
@@ -109,10 +109,10 @@ public class CompetitionService {
           return new NoSuchElementException(
               MessageFormat.format("division id:{0}", request.getDivisionId()));
         });
-    
+
     return this.competitionManager.register(competition, division, request.getName());
   }
-  
+
   /**
    * Adds a new event for the competition.
    */
@@ -123,10 +123,10 @@ public class CompetitionService {
       @RequestBody NewEventRequest newEvent) {
     final Competition competition = this.competitionManager.findOne(competitionId);
     return this.competitionManager.addEvent(
-        competition, 
-        newEvent.getName(), 
+        competition,
+        newEvent.getName(),
         newEvent.getDescription(),
-        newEvent.getType(),
+        newEvent.getRecipe(),
         newEvent.isScalable());
   }
 }
