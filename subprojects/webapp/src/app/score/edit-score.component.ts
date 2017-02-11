@@ -16,15 +16,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as jQuery from 'jquery';
 
 import { ScoreService } from '../services/score.service';
-import { EventBus } from '../services/eventbus';
 
 import {
     Score,
 } from '../model/model';
-
-import {
-    //ScoreInputFactory, ScoreInput
-} from './score-input.component';
 
 @Component({
     templateUrl: './edit-score.component.html'
@@ -36,14 +31,11 @@ export class EditScoreComponent implements OnInit {
     @ViewChild('scoreInput', { read: ViewContainerRef })
     private element: ViewContainerRef;
 
-    //private inputComponent: ComponentRef<ScoreInput>;
-
     constructor(
         private scoreService: ScoreService,
         private componentLoader: ComponentFactoryResolver,
         private route: ActivatedRoute,
-        private elementRef: ElementRef,
-        private eventBus: EventBus) {
+        private elementRef: ElementRef) {
     }
 
     get scoreValue(): string {
@@ -65,10 +57,7 @@ export class EditScoreComponent implements OnInit {
         });
     }
 
-    onSubmit() {
-        this.scoreService.addScore(this._score).subscribe(score => {
-            this.onSubmitted.emit(score);
-            this.eventBus.fire('score.updated', score);
-        });
+    public onSubmit() {
+        // TOOD Save score
     }
 }

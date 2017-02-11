@@ -13,9 +13,7 @@ import {
     Division
 } from '../model/model';
 
-import { EditScoreComponent } from './score-edit.component';
 import { ScoreService } from '../services/score.service';
-import { EventBus } from '../services/eventbus';
 
 @Component({
     templateUrl: './score.component.html',
@@ -37,19 +35,13 @@ export class ScoreComponent implements OnInit {
     public onlyUnset: boolean = false;
 
     @ViewChild(ModalDirective) public $modal: ModalDirective;
-    @ViewChild(EditScoreComponent) public $edit: EditScoreComponent;
 
     constructor(
         private modelService: ModelService,
-        private scoreService: ScoreService,
-        private eventBus: EventBus) {
-        this.eventBus.on('score.updated').subscribe((score) => {
-            this.updateScores(score.event.id);
-        });
+        private scoreService: ScoreService) {
     }
 
     public selectScore(score: Score) {
-        this.$edit.score = score;
         this.$modal.show();
     }
 
