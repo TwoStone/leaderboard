@@ -1,6 +1,6 @@
 package com.github.twostone.leaderboard.model.competition;
 
-import com.github.twostone.leaderboard.model.score.receipt.ScoreRecipe;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreRecipe;
 
 public class NewEventRequest {
   String name;

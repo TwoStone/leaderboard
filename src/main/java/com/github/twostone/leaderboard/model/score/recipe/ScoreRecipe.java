@@ -1,4 +1,4 @@
-package com.github.twostone.leaderboard.model.score.receipt;
+package com.github.twostone.leaderboard.model.score.recipe;
 
 import com.github.twostone.leaderboard.model.base.AbstractEntity;
 

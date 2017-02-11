@@ -3,9 +3,9 @@ package com.github.twostone.leaderboard;
 import com.github.twostone.leaderboard.model.competition.Competition;
 import com.github.twostone.leaderboard.model.competition.Division;
 import com.github.twostone.leaderboard.model.competition.NewEventRequest;
-import com.github.twostone.leaderboard.model.score.receipt.ScoreIngredient;
-import com.github.twostone.leaderboard.model.score.receipt.ScoreIngredientType;
-import com.github.twostone.leaderboard.model.score.receipt.ScoreRecipe;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreIngredient;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreIngredientType;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreRecipe;
 import com.github.twostone.leaderboard.services.CompetitionService;
 import com.github.twostone.leaderboard.services.CompetitionService.CompetitorRegistrationRequest;
 

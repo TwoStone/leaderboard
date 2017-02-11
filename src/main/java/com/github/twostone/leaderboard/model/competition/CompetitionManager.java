@@ -2,7 +2,7 @@ package com.github.twostone.leaderboard.model.competition;
 
 import com.github.twostone.leaderboard.model.event.Event;
 import com.github.twostone.leaderboard.model.event.EventRepository;
-import com.github.twostone.leaderboard.model.score.receipt.ScoreRecipe;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreRecipe;
 
 import org.springframework.stereotype.Service;
 

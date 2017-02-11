@@ -21,9 +21,9 @@ import com.github.twostone.leaderboard.model.score.PartialScore;
 import com.github.twostone.leaderboard.model.score.Score;
 import com.github.twostone.leaderboard.model.score.ScoreManager;
 import com.github.twostone.leaderboard.model.score.ScoreRepository;
-import com.github.twostone.leaderboard.model.score.receipt.ScoreIngredient;
-import com.github.twostone.leaderboard.model.score.receipt.ScoreIngredientType;
-import com.github.twostone.leaderboard.model.score.receipt.ScoreRecipe;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreIngredient;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreIngredientType;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreRecipe;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

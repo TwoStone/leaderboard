@@ -1,8 +1,8 @@
 package com.github.twostone.leaderboard.model.score;
 
-import com.github.twostone.leaderboard.model.score.receipt.ScoreIngredient;
-import com.github.twostone.leaderboard.model.score.receipt.ScoreIngredientType;
-import com.github.twostone.leaderboard.model.score.receipt.ScoreRecipe;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreIngredient;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreIngredientType;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreRecipe;
 
 import com.google.common.collect.Ordering;
 

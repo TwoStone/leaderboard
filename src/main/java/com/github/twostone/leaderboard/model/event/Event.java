@@ -1,9 +1,11 @@
 package com.github.twostone.leaderboard.model.event;
 
 import com.github.twostone.leaderboard.model.base.AbstractEntity;
-import com.github.twostone.leaderboard.model.score.receipt.ScoreRecipe;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreRecipe;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 @SuppressWarnings("serial")
@@ -13,6 +15,7 @@ public class Event extends AbstractEntity {
   private String description;
   private boolean scalable;
 
+  @OneToOne(cascade = CascadeType.ALL)
   private ScoreRecipe recipe;
 
   Event() {

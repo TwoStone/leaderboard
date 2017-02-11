@@ -14,7 +14,7 @@ import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @SuppressWarnings("serial")
@@ -28,7 +28,7 @@ public class Score extends AbstractEntity {
   @ManyToOne
   private Competitor competitor;
 
-  @OneToOne
+  @OneToMany
   @MapKey(name = "name")
   private Map<String, PartialScore> parts;
 
