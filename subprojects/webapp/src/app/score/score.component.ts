@@ -13,7 +13,7 @@ import {
     Division
 } from '../model/model';
 
-import { ScoreEditComponent } from './score-edit.component';
+import { EditScoreComponent } from './score-edit.component';
 import { ScoreService } from '../services/score.service';
 import { EventBus } from '../services/eventbus';
 
@@ -37,7 +37,7 @@ export class ScoreComponent implements OnInit {
     public onlyUnset: boolean = false;
 
     @ViewChild(ModalDirective) public $modal: ModalDirective;
-    @ViewChild(ScoreEditComponent) public $edit: ScoreEditComponent;
+    @ViewChild(EditScoreComponent) public $edit: EditScoreComponent;
 
     constructor(
         private modelService: ModelService,

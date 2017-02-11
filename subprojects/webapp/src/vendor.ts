@@ -13,5 +13,7 @@ import 'rxjs';
 import 'moment';
 import 'moment-duration-format';
 
+// Font Awesome
+import 'font-awesome-loader';
 // Other vendors for example jQuery, Lodash or Bootstrap
 // You can import js, ts, css, sass, ...

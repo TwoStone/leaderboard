@@ -1,0 +1,23 @@
+<div>
+    <form (ngSubmit)="onSubmit()" class="form">
+        <div class="form-group" *ngIf="_score">
+            <label for="name">Name</label>
+            <div #name>{{ _score.competitor.name }}</div>
+        </div>
+        <div class="form-group" *ngIf="_score">
+            <label for="division">Division</label>
+            <div #division>{{ _score.competitor.division.name }}</div>
+        </div>
+        <div class="form-group" *ngIf="_score">
+            <label for="event">Event</label>
+            <div #event>{{ _score.event.name}}</div>
+        </div>
+        <div class="checkbox" *ngIf="_score && _score.event.scalable">
+            <label>
+                <input type="checkbox" [(ngModel)]="_score.scaled"> Scaled
+            </label>
+        </div>
+        <div #scoreInput></div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>

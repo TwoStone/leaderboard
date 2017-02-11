@@ -13,15 +13,14 @@ import { CompetitionDashboardComponent } from './competition-dashboard.component
 import { CompetitorsListComponent } from '../competitor/competitor-list.component';
 import { CompetitorListItemComponent } from '../competitor/competitor-list-item.component';
 import { CreateCompetitorComponent } from '../competitor/create-competitor.component';
-import { EventListComponent, TypeNamePipe } from '../event/event-list.component';
-import { CreateEventComponent } from '../event/create-event.component';
 import { ScoreComponent } from '../score/score.component';
-import { ScoreEditComponent } from '../score/score-edit.component';
+import { EditScoreComponent } from '../score/edit-score.component';
 import { ForPointsInputComponent, ForTimeInputComponent } from '../score/score-input.component';
 import { ScoreboardComponent } from '../scoreboard/scoreboard.component';
 import { EventScoreBoard } from '../scoreboard/eventscoreboard.component';
 import { CompetitionScoreboard } from '../scoreboard/competitionscoreboard.component';
 
+import { EventModule } from '../event/event.module';
 import { CompetitionRoutingModule } from './competition-routing.module';
 
 @NgModule({
@@ -30,6 +29,7 @@ import { CompetitionRoutingModule } from './competition-routing.module';
         CommonModule,
         FormsModule,
         PipesModule,
+        EventModule,
         CompetitionRoutingModule
     ],
     declarations: [
@@ -41,16 +41,13 @@ import { CompetitionRoutingModule } from './competition-routing.module';
         CompetitorsListComponent,
         CompetitorListItemComponent,
         CreateCompetitorComponent,
-        EventListComponent,
-        CreateEventComponent,
         ScoreComponent,
-        ScoreEditComponent,
+        EditScoreComponent,
         ForPointsInputComponent,
         ForTimeInputComponent,
         ScoreboardComponent,
         EventScoreBoard,
-        CompetitionScoreboard,
-        TypeNamePipe
+        CompetitionScoreboard
     ], entryComponents: [
         ForTimeInputComponent,
         ForPointsInputComponent

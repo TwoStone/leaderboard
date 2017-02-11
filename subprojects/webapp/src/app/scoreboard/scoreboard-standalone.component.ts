@@ -11,8 +11,7 @@ import {
     Division,
     RankedCompetitionScore,
     RankedEventScore,
-    Event,
-    EventType,
+    Event
 } from '../model/model';
 
 import { CompetitionService } from '../services/competition.service';

@@ -21,6 +21,12 @@ export class ScoreService {
          return this.http.get(url).map((res) => res.json());
      }
 
+     public getScore(eventId: number, competitorId: number) : Rx.Observable<Score> {
+         let url = `api/scores/${eventId}/${competitorId}`;
+
+         return this.http.get(url).map((res) => res.json());
+     }
+
      public addScore(score: Score): Rx.Observable<Score> {
          let url = `api/scores/`;
          let body = JSON.stringify(score);

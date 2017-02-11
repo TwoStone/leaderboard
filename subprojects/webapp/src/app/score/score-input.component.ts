@@ -7,7 +7,6 @@ import {
 
 import {
     Event,
-    EventType,
     Score
 } from '../model/model';
 
@@ -41,7 +40,7 @@ export class ForTimeInputComponent implements ScoreInput {
 
     get time() {
         if (this.score) {
-            return moment.duration(this.score.score, 'seconds').format('mm:ss');
+            //return moment.duration(this.score.score, 'seconds').format('mm:ss');
         } else {
             return '';
         }
@@ -49,14 +48,14 @@ export class ForTimeInputComponent implements ScoreInput {
 
     set time(time: string) {
         if (time.length === 0) {
-            this.score.score = null;
+            //this.score.score = null;
         }
         let parsed = /(\d\d):(\d\d)/.exec(time);
         if (parsed) {
-            this.score.score = moment
-                .duration(+parsed[1], 'minutes')
-                .add(+parsed[2], 'seconds')
-                .asSeconds();
+            // this.score.score = moment
+            //     .duration(+parsed[1], 'minutes')
+            //     .add(+parsed[2], 'seconds')
+            //     .asSeconds();
         }
     }
 
@@ -64,7 +63,7 @@ export class ForTimeInputComponent implements ScoreInput {
         event.preventDefault();
         let reps = input.valueAsNumber;
         if (reps > 0) {
-            this.score.score += reps;
+            //this.score.score += reps;
             input.value = '';
         }
     }
@@ -82,13 +81,13 @@ export class ForPointsInputComponent implements ScoreInput {
     @Input() score: Score;
 }
 
-export class ScoreInputFactory {
-    static getComponentForType(event: Event): Type<ScoreInput> {
-        switch (event.type) {
-            case EventType.FOR_POINTS:
-                return ForPointsInputComponent;
-            case EventType.FOR_TIME:
-                return ForTimeInputComponent;
-        }
-    }
-}
+// export class ScoreInputFactory {
+//     static getComponentForType(event: Event): Type<ScoreInput> {
+//         switch (event.type) {
+//             case EventType.FOR_POINTS:
+//                 return ForPointsInputComponent;
+//             case EventType.FOR_TIME:
+//                 return ForTimeInputComponent;
+//         }
+//     }
+// }

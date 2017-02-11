@@ -4,8 +4,7 @@ import {
     Competition,
     Division,
     Competitor,
-    Event,
-    EventType
+    Event
 } from '../model/model';
 
 import * as Rx from 'rxjs';
@@ -21,13 +20,6 @@ export interface NewDivision {
 export interface NewCompetitor {
     name: string;
     divisionId: number;
-}
-
-export interface NewEvent {
-    name: string;
-    description: string;
-    type: EventType;
-    scalable: boolean;
 }
 
 @Injectable()
@@ -78,17 +70,6 @@ export class CompetitionService {
         headers.append('Content-Type', 'application/json');
 
         return this.http.post(`api/competitions/${comp.id}/competitors.add`, body, {
-            headers
-        }).map((res) => res.json());
-    }
-
-    public addEvent(comp: Competition, newEvent: NewEvent): Rx.Observable<Event> {
-        let body = JSON.stringify(newEvent);
-
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-
-        return this.http.post(`api/competitions/${comp.id}/events.add`, body, {
             headers
         }).map((res) => res.json());
     }
