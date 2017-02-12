@@ -13,23 +13,23 @@ import { CompetitionDashboardComponent } from './competition-dashboard.component
 import { CompetitorsListComponent } from '../competitor/competitor-list.component';
 import { CompetitorListItemComponent } from '../competitor/competitor-list-item.component';
 import { CreateCompetitorComponent } from '../competitor/create-competitor.component';
-import { EventListComponent, TypeNamePipe } from '../event/event-list.component';
-import { CreateEventComponent } from '../event/create-event.component';
-import { ScoreComponent } from '../score/score.component';
-import { ScoreEditComponent } from '../score/score-edit.component';
-import { ForPointsInputComponent, ForTimeInputComponent } from '../score/score-input.component';
-import { ScoreboardComponent } from '../scoreboard/scoreboard.component';
-import { EventScoreBoard } from '../scoreboard/eventscoreboard.component';
-import { CompetitionScoreboard } from '../scoreboard/competitionscoreboard.component';
 
+import { ScoreboardModule } from '../scoreboard/scoreboard.module';
+import { ScoreModule } from '../score/score.module';
+import { EventModule } from '../event/event.module';
 import { CompetitionRoutingModule } from './competition-routing.module';
+
+import { ModelService } from '../model/model';
 
 @NgModule({
     imports: [
+        ScoreboardModule,
         ModalModule,
         CommonModule,
         FormsModule,
         PipesModule,
+        EventModule,
+        ScoreModule,
         CompetitionRoutingModule
     ],
     declarations: [
@@ -40,21 +40,9 @@ import { CompetitionRoutingModule } from './competition-routing.module';
         CompetitionDashboardComponent,
         CompetitorsListComponent,
         CompetitorListItemComponent,
-        CreateCompetitorComponent,
-        EventListComponent,
-        CreateEventComponent,
-        ScoreComponent,
-        ScoreEditComponent,
-        ForPointsInputComponent,
-        ForTimeInputComponent,
-        ScoreboardComponent,
-        EventScoreBoard,
-        CompetitionScoreboard,
-        TypeNamePipe
-    ], entryComponents: [
-        ForTimeInputComponent,
-        ForPointsInputComponent
-    ]
+        CreateCompetitorComponent
+    ],
+    providers: [ ModelService ]
 })
 export class CompetitionModule {
 

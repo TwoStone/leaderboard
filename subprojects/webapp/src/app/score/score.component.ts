@@ -4,7 +4,7 @@ import {
     ViewChild
 } from '@angular/core';
 
-import { ModalDirective } from 'ng2-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import {
     ModelService,
@@ -13,9 +13,7 @@ import {
     Division
 } from '../model/model';
 
-import { ScoreEditComponent } from './score-edit.component';
 import { ScoreService } from '../services/score.service';
-import { EventBus } from '../services/eventbus';
 
 @Component({
     templateUrl: './score.component.html',
@@ -23,8 +21,7 @@ import { EventBus } from '../services/eventbus';
         .clickable {
             cursor: pointer;
         }
-    `],
-    providers : [ScoreService],
+    `]
 })
 export class ScoreComponent implements OnInit {
 
@@ -36,36 +33,44 @@ export class ScoreComponent implements OnInit {
     public division: string = 'all';
     public onlyUnset: boolean = false;
 
-    @ViewChild(ModalDirective) public $modal: ModalDirective;
-    @ViewChild(ScoreEditComponent) public $edit: ScoreEditComponent;
-
     constructor(
+        private router: Router,
+        private route: ActivatedRoute,
         private modelService: ModelService,
-        private scoreService: ScoreService,
-        private eventBus: EventBus) {
-        this.eventBus.on('score.updated').subscribe((score) => {
-            this.updateScores(score.event.id);
+        private scoreService: ScoreService) {
+    }
+
+    public eventChanged($event: string) {
+        this.event = $event;
+        this.router.navigate([], {
+            queryParams: {
+                event: $event
+            },
+            relativeTo: this.route
         });
     }
 
     public selectScore(score: Score) {
-        this.$edit.score = score;
-        this.$modal.show();
+        this.router.navigate(['event', score.event.id, 'competitor', score.competitor.id ], { relativeTo: this.route });
     }
 
     public ngOnInit() {
+        this.route.queryParams.map((params) => params['event'])
+            .subscribe((eventId) => {
+                if (eventId) {
+                    this.updateScores(eventId);
+                }
+            });
+
+        let snapshot = this.route.snapshot;
         this.modelService.onCompetitionUpdate.subscribe((competition) => {
             this.events = competition.events
             if (this.events.length > 0) {
-                this.event = competition.events[0].id.toString();
+                this.event =  snapshot.queryParams['event'] || competition.events[0].id.toString();
                 this.divisions = competition.divisions;
                 this.updateScores(+this.event);
             }
         });
-    }
-
-    public eventChanged(e: number) {
-        this.updateScores(e);
     }
 
     public updateScores(eventId: number) {

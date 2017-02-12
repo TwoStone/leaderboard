@@ -2,7 +2,7 @@ package com.github.twostone.leaderboard.model.competition;
 
 import com.github.twostone.leaderboard.model.event.Event;
 import com.github.twostone.leaderboard.model.event.EventRepository;
-import com.github.twostone.leaderboard.model.event.EventType;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreRecipe;
 
 import org.springframework.stereotype.Service;
 
@@ -10,14 +10,14 @@ import javax.inject.Inject;
 
 @Service
 public class CompetitionManager {
- 
+
   private CompetitionRepository competitionRepository;
   private DivisionRespository divisionRepository;
   private RegistrationRepository registrationRepository;
   private EventRepository eventRepository;
-  
+
   @Inject
-  CompetitionManager(CompetitionRepository competitionRepository, 
+  CompetitionManager(CompetitionRepository competitionRepository,
       DivisionRespository divisionRespository,
       RegistrationRepository registrationRepository,
       EventRepository eventRepository) {
@@ -27,11 +27,11 @@ public class CompetitionManager {
     this.registrationRepository = registrationRepository;
     this.eventRepository = eventRepository;
   }
-  
+
   public Competition refresh(Competition oldCompetition) {
     return this.findOne(oldCompetition.getId());
   }
- 
+
   /**
    * Creates a new division for the competition.
    */
@@ -40,10 +40,10 @@ public class CompetitionManager {
     division = this.divisionRepository.saveAndFlush(division);
     competition.addDivision(division);
     this.competitionRepository.saveAndFlush(competition);
-    
+
     return division;
   }
-  
+
   public Competition findOne(Long id) {
     return this.competitionRepository.findOne(id);
   }
@@ -66,16 +66,16 @@ public class CompetitionManager {
   /**
    * Adds a new event to the competition.
    */
-  public Event addEvent(Competition competition, 
-      String eventName, 
-      String description, 
-      EventType eventType, 
+  public Event addEvent(Competition competition,
+      String eventName,
+      String description,
+      ScoreRecipe recipe,
       boolean scalable) {
-    Event event = new Event(eventName, description, eventType, scalable);
-    
+    Event event = new Event(eventName, description, recipe, scalable);
+
     event = this.eventRepository.saveAndFlush(event);
     competition.addEvent(event);
-    
+
     this.competitionRepository.saveAndFlush(competition);
     return event;
   }

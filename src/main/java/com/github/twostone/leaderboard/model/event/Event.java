@@ -1,10 +1,14 @@
 package com.github.twostone.leaderboard.model.event;
 
-import com.github.twostone.leaderboard.model.base.AbstractEntity;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.twostone.leaderboard.model.base.AbstractEntity;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreRecipe;
 
 @Entity
 @SuppressWarnings("serial")
@@ -13,10 +17,10 @@ public class Event extends AbstractEntity {
   private String name;
   private String description;
   private boolean scalable;
-  
-  @Enumerated(EnumType.STRING)
-  private EventType type;
-  
+
+  @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private ScoreRecipe recipe;
+
   Event() {
     super();
   }
@@ -24,44 +28,49 @@ public class Event extends AbstractEntity {
   /**
    * Creates a new {@link Event} object.
    */
-  public Event(String name, String description, EventType type, boolean scalable) {
+  @JsonCreator
+  public Event(
+      @JsonProperty("name") String name, 
+      @JsonProperty("description") String description, 
+      @JsonProperty("recipe") ScoreRecipe receipt, 
+      @JsonProperty("scalable") boolean scalable) {
     super();
     this.name = name;
     this.description = description;
-    this.type = type;
+    this.recipe = receipt;
     this.scalable = scalable;
   }
-  
+
   public String getName() {
     return this.name;
   }
-  
+
   public void setName(String name) {
     this.name = name;
   }
-  
+
   public String getDescription() {
     return this.description;
   }
-  
+
   public void setDescription(String description) {
     this.description = description;
   }
-  
-  public EventType getType() {
-    return this.type;
+
+  public ScoreRecipe getRecipe() {
+    return this.recipe;
   }
-  
+
   public boolean isScalable() {
-    return scalable;
+    return this.scalable;
   }
 
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
-    builder.append("Event [name=").append(name).append(", description=").append(description)
-        .append(", scalable=").append(scalable).append(", type=").append(type).append(", getId()=")
-        .append(getId()).append("]");
+    builder.append("Event [name=").append(this.name).append(", description=").append(this.description)
+        .append(", scalable=").append(this.scalable).append(", recipe=").append(this.recipe).append(", getId()=")
+        .append(this.getId()).append("]");
     return builder.toString();
   }
 }

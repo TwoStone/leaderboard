@@ -1,6 +1,5 @@
 package com.github.twostone.leaderboard.services;
 
-import com.github.twostone.leaderboard.model.competition.Competitor;
 import com.github.twostone.leaderboard.model.competition.RegistrationRepository;
 import com.github.twostone.leaderboard.model.event.Event;
 import com.github.twostone.leaderboard.model.event.EventRepository;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
@@ -18,20 +18,18 @@ import javax.inject.Inject;
 @RestController
 @RequestMapping("api/scores")
 public class ScoreService {
-    
+
   private ScoreManager scoreManager;
   private EventRepository eventRepository;
-  private RegistrationRepository registrationRepository;
-  
+
   @Inject
   ScoreService(
-      ScoreManager scoreManager, 
-      EventRepository eventRepository, 
+      ScoreManager scoreManager,
+      EventRepository eventRepository,
       RegistrationRepository registrationRepository) {
     super();
     this.scoreManager = scoreManager;
     this.eventRepository = eventRepository;
-    this.registrationRepository = registrationRepository;
   }
 
   /**
@@ -39,9 +37,9 @@ public class ScoreService {
    */
   @RequestMapping(path = "/", method = RequestMethod.POST)
   public Score addScore(@RequestBody Score score) {
-    Event event = this.eventRepository.findOne(score.getEvent().getId());
-    Competitor competitor = this.registrationRepository.findOne(score.getCompetitor().getId());
-    return this.scoreManager.addScore(event, competitor, score.getScore(), score.isScaled());
+//    Event event = this.eventRepository.findOne(score.getEvent().getId());
+//    Competitor competitor = this.registrationRepository.findOne(score.getCompetitor().getId());
+    return this.scoreManager.addScore(score);
   }
 
   @RequestMapping("/event/{eventId}")
@@ -49,5 +47,13 @@ public class ScoreService {
       @PathVariable("eventId") long eventId) {
     Event event = this.eventRepository.findOne(eventId);
     return this.scoreManager.findScoreByEvent(event);
+  }
+  
+  @RequestMapping("")
+  public Score getScore(
+      @RequestParam("competition") Long competitionId,
+      @RequestParam("event") Long eventId, 
+      @RequestParam("competitor") Long competitorId) {
+    return this.scoreManager.findScoreByEventAndCompetitor(competitionId, eventId, competitorId);
   }
 }

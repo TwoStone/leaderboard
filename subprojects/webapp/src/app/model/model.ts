@@ -24,7 +24,7 @@ export class ModelService {
     private _competitionUpdated: Subject<Competition>;
 
     constructor(private service: CompetitionService) {
-        this._competitionUpdated = new ReplaySubject();
+        this._competitionUpdated = new ReplaySubject<Competition>();
     }
 
     set competitionId(id: number) {
@@ -40,9 +40,9 @@ export class ModelService {
         return this._competitionUpdated;
     }
 
-    updateModel() {
+    public updateModel() {
         if (this._competitionId) {
-            this.service.get(this._competitionId).subscribe(comp => {
+            this.service.get(this._competitionId).subscribe((comp) => {
                 this._competition = comp;
                 this._competitionUpdated.next(comp);
             });

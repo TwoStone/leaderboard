@@ -8,7 +8,6 @@ import * as moment from 'moment';
 import {
     ModelService,
     Event,
-    EventType,
     Score,
     Division
 } from '../model/model';
@@ -75,20 +74,20 @@ export class NullAsPipe implements PipeTransform {
 })
 export class ScoreDisplayPipe implements PipeTransform {
     transform(value: Score, args: any[]): string {
-        if (!value.score) {
-            return args[0];
-        }
+        // if (!value.score) {
+        //     return args[0];
+        // }
 
         let result = '';
 
-        switch (value.event.type) {
-            case EventType.FOR_TIME:
-                result += moment.duration(value.score, 'seconds').format('mm:ss');
-                break;
-            default:
-                result += value.score.toString();
-                break;
-        }
+//         switch (value.event.type) {
+// // '            case EventType.FOR_TIME:
+// //                 result += moment.duration(value.score, 'seconds').format('mm:ss');
+// //                 break;
+// //             default:
+// //                 result += value.score.toString();
+// //                 break;
+// '        }
 
         if (value.scaled) {
             result += '-s';

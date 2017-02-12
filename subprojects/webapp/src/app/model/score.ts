@@ -1,10 +1,11 @@
 import { Competitor } from './competitor';
 import { Event } from './event';
+import { Entity } from './entity';
+import { PartialScore } from './partial-score';
 
-export interface Score {
-    id?: number;
+export interface Score extends Entity {
     event: Event;
     competitor: Competitor;
     scaled: boolean;
-    score?: number;
+    parts: Map<string, PartialScore>;
 }

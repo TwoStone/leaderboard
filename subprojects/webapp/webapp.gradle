@@ -2,7 +2,7 @@ apply plugin: 'com.moowork.node'
 apply plugin: 'java'
 
 node {
-  version = '5.4.1'
+  version = '6.9.5'
 
   download = true
 

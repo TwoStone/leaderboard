@@ -1,12 +1,9 @@
-export interface Event {
+import { Entity } from './entity';
+import { ScoreRecipe } from './score-recipe';
+
+export interface Event extends Entity {
     name: string;
     description: string;
-    type: EventType;
-    id: number;
+    recipe: ScoreRecipe;
     scalable: boolean;
-}
-
-export class EventType {
-    static FOR_TIME: string = 'FOR_TIME';
-    static FOR_POINTS: string = 'FOR_POINTS';
 }

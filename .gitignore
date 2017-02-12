@@ -24,3 +24,5 @@ subprojects/webapp/dist/
 subprojects/webapp/.settings/gradle.prefs
 subprojects/webapp/typings/
 /.vscode
+subprojects/webapp/.settings/
+subprojects/webapp/.vscode/

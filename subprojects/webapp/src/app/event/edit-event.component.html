@@ -1,0 +1,59 @@
+<div *ngIf="event">
+    <h3 *ngIf="!event.id">Create new event</h3>
+    <h3 *ngIf="event.id">Edit event (id: {{event.id}})</h3>
+
+    <form role="form" (ngSubmit)="onSubmit()" class="form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="name" required [(ngModel)]="event.name">
+        </div>
+
+        <div class="checkbox">
+            <label>
+            <input
+                name="scalable" 
+                type="checkbox"
+                [(ngModel)]="event.scalable"/>
+            Scalable
+        </label>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" rows="3" class="form-control" name="description" [(ngModel)]="event.description"></textarea>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Scores</h3>
+            </div>
+            <ul class="list-group">
+                <li *ngFor="let ingredient of event.recipe.parts; let i = index" class="list-group-item">
+                    <div class="form-inline">
+                        <i class="fa fa-bars"></i>
+                        <div class="form-group">
+                            <label class="sr-only" for="ingredient-name-{{i}}">Name</label>
+                            <input type="text" class="form-control" placeholder="name" name="ingredient-name-{{i}}" [(ngModel)]="ingredient.name"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="ingredient-type-{{i}}">Type</label>
+                            <select class="form-control" [(ngModel)]="ingredient.type" name="ingredient-type-{{i}}">
+                                <option [value]="ScoreIngredientType.TIME">Time</option>
+                                <option [value]="ScoreIngredientType.POINTS">Points</option>
+                            </select>
+                        </div>
+                        <div class="pull-right">
+                            <i class="fa fa-trash-o"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <button type="button" class="btn btn-default" (click)="addPart()">Add</button>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" (click)="onAbort()" class="btn btn-link">Abort</button>
+    </form>
+</div>

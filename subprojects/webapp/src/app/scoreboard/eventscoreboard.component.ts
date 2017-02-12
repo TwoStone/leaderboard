@@ -4,6 +4,8 @@ import {
     OnChanges
 } from '@angular/core';
 
+import { ScoreToStringPipe } from '../score/score-to-string.pipe';
+
 import { RankingService } from '../services/ranking.service';
 
 import {
@@ -12,6 +14,7 @@ import {
 
 @Component({
     selector: 'eventScoreBoard',
+    viewProviders: [],
     template: `
         <div class="table-responsive">
             <table class="table">
@@ -25,7 +28,7 @@ import {
                 <tbody>
                     <tr *ngFor="let score of scores">
                         <td>{{ score.score.competitor.name }}</td>
-                        <td>{{ score.score | asScore:"-" }}</td>
+                        <td>{{ score.score | scoreToString:"-" }}</td>
                         <td>{{ score.rank }}</td>
                     </tr>
                 </tbody>

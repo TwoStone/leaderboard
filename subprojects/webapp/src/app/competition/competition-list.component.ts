@@ -8,7 +8,8 @@ import {
 import { CompetitionService } from '../services/competition.service';
 
 @Component({
-    templateUrl: './competition-list.component.html'
+    templateUrl: './competition-list.component.html',
+    styleUrls: ['./competition-list.component.css']
 })
 export class CompetitionListComponent {
     public competitions: Competition[];

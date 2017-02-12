@@ -66,7 +66,7 @@ class EventScore {
                     <tr *ngFor="let ranking of rankings">
                         <td>{{ ranking.competitor.name }}</td>
                         <td *ngFor="let score of ranking.eventScores">
-                            {{ score.rank }} ({{ score.score | asScore:"-" }})
+                            {{ score.rank }} ({{ score.score | scoreToString:"-" }})
                         </td> 
                         <td>{{ ranking.score }}</td>
                         <td>{{ ranking.rank }}</td>
