@@ -5,6 +5,8 @@ import { EventService } from './event.service';
 import { Event } from '../model/event';
 import { ScoreIngredientType } from '../model/score-ingredient-type';
 
+import { ModelService } from '../model/model';
+
 @Component({
     templateUrl: './edit-event.component.html'
 })
@@ -16,26 +18,29 @@ export class EditEventComponent implements OnInit {
     constructor(
         private eventService: EventService,
         private route: ActivatedRoute,
-        private router: Router) {
+        private router: Router,
+        private modelService: ModelService) {
     }
 
     public addPart() {
-        this.event.type.parts.push({
+        this.event.recipe.parts.push({
             name: '',
             type: ''
         });
     }
 
     public ngOnInit() {
-        this.route.params.subscribe((params) => {
+        this.modelService.onCompetitionUpdate.map((competition) => {
+            return { id: competition.id }
+        }).zip(this.route.params, Object.assign).subscribe((params) => {
                 let eventId = params['eventId'];
-                this.competitionId = +params['id'];
-                if (eventId == 'new') {
+                this.competitionId = params['id'];
+                if (eventId === 'new') {
                     this.event = {
                         name: '',
                         description: '',
                         scalable: false,
-                        type: {
+                        recipe: {
                             parts: []
                         }
                     };

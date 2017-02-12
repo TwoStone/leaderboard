@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
@@ -20,7 +21,6 @@ public class ScoreService {
 
   private ScoreManager scoreManager;
   private EventRepository eventRepository;
-  private RegistrationRepository registrationRepository;
 
   @Inject
   ScoreService(
@@ -30,7 +30,6 @@ public class ScoreService {
     super();
     this.scoreManager = scoreManager;
     this.eventRepository = eventRepository;
-    this.registrationRepository = registrationRepository;
   }
 
   /**
@@ -48,5 +47,13 @@ public class ScoreService {
       @PathVariable("eventId") long eventId) {
     Event event = this.eventRepository.findOne(eventId);
     return this.scoreManager.findScoreByEvent(event);
+  }
+  
+  @RequestMapping("")
+  public Score getScore(
+      @RequestParam("competition") Long competitionId,
+      @RequestParam("event") Long eventId, 
+      @RequestParam("competitor") Long competitorId) {
+    return this.scoreManager.findScoreByEventAndCompetitor(competitionId, eventId, competitorId);
   }
 }

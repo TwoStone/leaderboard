@@ -4,7 +4,7 @@ import {
     ViewChild
 } from '@angular/core';
 
-import { ModalDirective } from 'ng2-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import {
     ModelService,
@@ -21,8 +21,7 @@ import { ScoreService } from '../services/score.service';
         .clickable {
             cursor: pointer;
         }
-    `],
-    providers : [ScoreService],
+    `]
 })
 export class ScoreComponent implements OnInit {
 
@@ -34,30 +33,44 @@ export class ScoreComponent implements OnInit {
     public division: string = 'all';
     public onlyUnset: boolean = false;
 
-    @ViewChild(ModalDirective) public $modal: ModalDirective;
-
     constructor(
+        private router: Router,
+        private route: ActivatedRoute,
         private modelService: ModelService,
         private scoreService: ScoreService) {
     }
 
+    public eventChanged($event: string) {
+        this.event = $event;
+        this.router.navigate([], {
+            queryParams: {
+                event: $event
+            },
+            relativeTo: this.route
+        });
+    }
+
     public selectScore(score: Score) {
-        this.$modal.show();
+        this.router.navigate(['event', score.event.id, 'competitor', score.competitor.id ], { relativeTo: this.route });
     }
 
     public ngOnInit() {
+        this.route.queryParams.map((params) => params['event'])
+            .subscribe((eventId) => {
+                if (eventId) {
+                    this.updateScores(eventId);
+                }
+            });
+
+        let snapshot = this.route.snapshot;
         this.modelService.onCompetitionUpdate.subscribe((competition) => {
             this.events = competition.events
             if (this.events.length > 0) {
-                this.event = competition.events[0].id.toString();
+                this.event =  snapshot.queryParams['event'] || competition.events[0].id.toString();
                 this.divisions = competition.divisions;
                 this.updateScores(+this.event);
             }
         });
-    }
-
-    public eventChanged(e: number) {
-        this.updateScores(e);
     }
 
     public updateScores(eventId: number) {

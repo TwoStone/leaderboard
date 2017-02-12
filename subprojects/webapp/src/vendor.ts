@@ -13,6 +13,8 @@ import 'rxjs';
 import 'moment';
 import 'moment-duration-format';
 
+import 'string_score';
+
 // Font Awesome
 import 'font-awesome-loader';
 // Other vendors for example jQuery, Lodash or Bootstrap

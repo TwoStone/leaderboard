@@ -13,7 +13,6 @@ import { CompetitionListComponent } from './competition/competition-list.compone
 import { CompetitionListItemComponent } from './competition/competition-list-item.component';
 import { CompetitionComponent } from './competition/competition.component';
 import { CreateCompetitionComponent } from './competition/create-competition.component';
-import { StandaloneScoreboardComponent } from './scoreboard/scoreboard-standalone.component';
 
 import { CompetitionModule } from './competition/competition.module';
 
@@ -22,6 +21,7 @@ import { ServiceModule } from './services/service.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import 'bootstrap/dist/css/bootstrap.css'
+import '../styles/style.css'
 
 @NgModule({
   imports: [
@@ -39,8 +39,7 @@ import 'bootstrap/dist/css/bootstrap.css'
     CompetitionListComponent,
     CompetitionListItemComponent,
     CompetitionComponent,
-    CreateCompetitionComponent,
-    StandaloneScoreboardComponent
+    CreateCompetitionComponent
   ],
   bootstrap: [ AppComponent ]
 })

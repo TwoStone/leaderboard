@@ -51,17 +51,12 @@ public class BootstrapDataPopulator implements InitializingBean {
     Division eliteDivision = this.competitionService.addDivision(competition.getId(), "Elite");
     Division scaledDivision = this.competitionService.addDivision(competition.getId(), "Scaled");
 
-    this.competitionService.registerCompetitor(competition.getId(),
-        this.createRegisterRequest(eliteDivision, "Elite Team 1"));
-    this.competitionService.registerCompetitor(competition.getId(),
-        this.createRegisterRequest(eliteDivision, "Elite Team 2"));
-    this.competitionService.registerCompetitor(competition.getId(),
-        this.createRegisterRequest(eliteDivision, "Elite Team 3"));
-    this.competitionService.registerCompetitor(competition.getId(),
-        this.createRegisterRequest(eliteDivision, "Elite Team 4"));
-    this.competitionService.registerCompetitor(competition.getId(),
-        this.createRegisterRequest(eliteDivision, "Elite Team 5"));
-
+    
+    for (int i = 1; i <= 30; i++) {
+      this.competitionService.registerCompetitor(competition.getId(),
+          this.createRegisterRequest(eliteDivision, "Elite Team " + i));
+    }
+    
     this.competitionService.registerCompetitor(competition.getId(),
         this.createRegisterRequest(scaledDivision, "Scaled Team 1"));
     this.competitionService.registerCompetitor(competition.getId(),
@@ -80,8 +75,8 @@ public class BootstrapDataPopulator implements InitializingBean {
         this.createEventRequest("Event 1",  new ScoreRecipe(Lists.newArrayList(forTime))));
 
     ScoreIngredient forPoints =  new ScoreIngredient();
-    forTime.setName("points");
-    forTime.setType(ScoreIngredientType.POINTS);
+    forPoints.setName("points");
+    forPoints.setType(ScoreIngredientType.POINTS);
     this.competitionService.addEvent(competition.getId(),
         this.createEventRequest("Event 2", new ScoreRecipe(Lists.newArrayList(forPoints))));
 

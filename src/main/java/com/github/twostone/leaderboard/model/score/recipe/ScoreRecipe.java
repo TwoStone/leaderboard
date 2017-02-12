@@ -10,13 +10,16 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @SuppressWarnings("serial")
 @Entity
 public class ScoreRecipe extends AbstractEntity {
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OrderColumn
   private List<ScoreIngredient> parts;
 
   public ScoreRecipe() {
@@ -26,6 +29,7 @@ public class ScoreRecipe extends AbstractEntity {
   @JsonCreator
   public ScoreRecipe(
       @JsonProperty("parts") List<ScoreIngredient> parts) {
+    this();
     this.parts = parts;
   }
 

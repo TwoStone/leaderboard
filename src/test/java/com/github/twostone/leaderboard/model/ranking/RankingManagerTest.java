@@ -16,7 +16,9 @@ import com.github.twostone.leaderboard.model.competition.Competition;
 import com.github.twostone.leaderboard.model.competition.CompetitionRepository;
 import com.github.twostone.leaderboard.model.competition.Competitor;
 import com.github.twostone.leaderboard.model.competition.Division;
+import com.github.twostone.leaderboard.model.competition.RegistrationRepository;
 import com.github.twostone.leaderboard.model.event.Event;
+import com.github.twostone.leaderboard.model.event.EventRepository;
 import com.github.twostone.leaderboard.model.score.PartialScore;
 import com.github.twostone.leaderboard.model.score.Score;
 import com.github.twostone.leaderboard.model.score.ScoreManager;
@@ -61,6 +63,10 @@ public class RankingManagerTest {
   private ScoreRepository scoreRepository;
   @Mock
   private CompetitionRepository competitionRepository;
+  @Mock
+  private RegistrationRepository competitorRepository;
+  @Mock
+  private EventRepository eventRepository;
 
   /**
    * Setup fixtures.
@@ -93,7 +99,11 @@ public class RankingManagerTest {
     Mockito.when(this.competitionRepository.findCompetitionByEvents(this.event))
       .thenReturn(this.competition);
 
-    ScoreManager scoreManager = new ScoreManager(this.scoreRepository, this.competitionRepository);
+    ScoreManager scoreManager = new ScoreManager(
+        this.scoreRepository, 
+        this.competitionRepository, 
+        this.eventRepository, 
+        this.competitorRepository);
     this.rankingManager = new RankingManager(scoreManager);
   }
 

@@ -14,10 +14,11 @@
         </div>
     </div>
 </div>
+<div class="background">
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6 competition-list">
             <button class="btn btn-primary" (click)="modal.show()">
                         <i class="fa fa-plus"></i>
                         Create competition 
@@ -29,6 +30,8 @@
                             <th>
                                 Competition
                             </th>
+                            <th>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,11 +40,15 @@
                                 <competition-list-item [competition]="competition">
                                 </competition-list-item>
                             </td>
+                            <td>
+                                <a [routerLink]="['/scores', competition.id]" target="_blank"><i class="fa fa-television" aria-hidden="true"></i></a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="col-lg-2"></div>
+        <div class="col-lg-3"></div>
     </div>
+</div>
 </div>

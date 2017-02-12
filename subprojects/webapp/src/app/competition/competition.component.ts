@@ -15,7 +15,7 @@ import { CompetitionService } from '../services/competition.service';
 
 @Component({
     templateUrl: './competition.component.html',
-    providers: [ModelService]
+    styleUrls: ['./competition.component.css']
 })
 export class CompetitionComponent implements OnInit {
 

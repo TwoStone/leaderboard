@@ -6,8 +6,10 @@ import com.github.twostone.leaderboard.model.competition.Competition;
 import com.github.twostone.leaderboard.model.competition.CompetitionRepository;
 import com.github.twostone.leaderboard.model.competition.Competitor;
 import com.github.twostone.leaderboard.model.competition.Division;
+import com.github.twostone.leaderboard.model.competition.RegistrationRepository;
 import com.github.twostone.leaderboard.model.event.Event;
-
+import com.github.twostone.leaderboard.model.event.EventRepository;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Component;
 
@@ -21,16 +23,24 @@ public class ScoreManager {
 
   private ScoreRepository scoreRepository;
   private CompetitionRepository competitionRepository;
+  private EventRepository eventRepository;
+  private RegistrationRepository competitorRepository; 
 
   /**
    * Creates a ScoreManager.
    */
   @Inject
-  public ScoreManager(ScoreRepository scoreRepository,
-      CompetitionRepository competitionRepository) {
+  public ScoreManager(
+      ScoreRepository scoreRepository,
+      CompetitionRepository competitionRepository,
+      EventRepository eventRepository,
+      RegistrationRepository competitorRepository
+      ) {
     super();
     this.scoreRepository = scoreRepository;
     this.competitionRepository = competitionRepository;
+    this.eventRepository = eventRepository;
+    this.competitorRepository = competitorRepository;
   }
 
   public Score findOne(long id) {
@@ -111,6 +121,33 @@ public class ScoreManager {
 
   public void deleteScore(Score score) {
     this.scoreRepository.delete(score);
+  }
+
+  public Score findScoreByEventAndCompetitor(Long competitionId, Long eventId, Long competitorId) {
+    Competition competition = this.competitionRepository.findOne(competitionId);
+    Event event = this.eventRepository.findOne(eventId);
+    Competitor competitor = this.competitorRepository.getOne(competitorId);
+    checkEventInCompetition(competition, event);
+    checkCompetitorInCompetition(competition, competitor);
+      
+    Iterable<Score> scores = this.scoreRepository.findByEventAndCompetitor(event, competitor);
+    if (Iterables.isEmpty(scores)) {
+      return new Score(event, competitor, false);
+    }
+    
+    return Iterables.getOnlyElement(scores);
+  }
+  
+  private void checkCompetitorInCompetition(Competition competition, Competitor competitor) {
+    if (!competition.getCompetitors().contains(competitor)) {
+      throw new IllegalArgumentException("The competitor %s is not registered for the competition %s!");
+    }
+  }
+
+  private void checkEventInCompetition(Competition competition, Event event) {
+    if (!competition.getEvents().contains(event)) {
+      throw new IllegalArgumentException(String.format("The event %s is not part of the competition %s!", event, competition));
+    }
   }
 
 }

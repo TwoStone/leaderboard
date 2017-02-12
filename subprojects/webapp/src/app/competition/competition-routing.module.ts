@@ -9,8 +9,9 @@ import { CompetitionDashboardComponent } from './competition-dashboard.component
 import { CompetitorsListComponent } from '../competitor/competitor-list.component';
 import { EventListComponent } from '../event/event-list.component';
 import { EditEventComponent } from '../event/edit-event.component';
-import { ScoreComponent } from '../score/score.component';
 import { ScoreboardComponent } from '../scoreboard/scoreboard.component';
+import { EditScoreComponent } from '../score/edit-score.component';
+import { ScoreComponent } from '../score/score.component';
 
 const routes: Routes = [
     {
@@ -24,8 +25,15 @@ const routes: Routes = [
             { path: 'events', component: EventListComponent },
             { path: 'event/:eventId', component: EditEventComponent },
             { path: 'event', component: EditEventComponent },
+            {
+                path: 'scores',
+                children:
+                    [
+                        { path: '', component: ScoreComponent },
+                        { path: 'event/:eventId/competitor/:competitorId', component: EditScoreComponent }
+                    ]
+            },
             { path: 'competitors', component: CompetitorsListComponent},
-            { path: 'scores', component: ScoreComponent },
             { path: 'scoreboard', component: ScoreboardComponent}
         ]
     }

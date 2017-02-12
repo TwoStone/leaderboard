@@ -1,11 +1,14 @@
 package com.github.twostone.leaderboard.model.event;
 
-import com.github.twostone.leaderboard.model.base.AbstractEntity;
-import com.github.twostone.leaderboard.model.score.recipe.ScoreRecipe;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.twostone.leaderboard.model.base.AbstractEntity;
+import com.github.twostone.leaderboard.model.score.recipe.ScoreRecipe;
 
 @Entity
 @SuppressWarnings("serial")
@@ -15,7 +18,7 @@ public class Event extends AbstractEntity {
   private String description;
   private boolean scalable;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private ScoreRecipe recipe;
 
   Event() {
@@ -25,7 +28,12 @@ public class Event extends AbstractEntity {
   /**
    * Creates a new {@link Event} object.
    */
-  public Event(String name, String description, ScoreRecipe receipt, boolean scalable) {
+  @JsonCreator
+  public Event(
+      @JsonProperty("name") String name, 
+      @JsonProperty("description") String description, 
+      @JsonProperty("recipe") ScoreRecipe receipt, 
+      @JsonProperty("scalable") boolean scalable) {
     super();
     this.name = name;
     this.description = description;

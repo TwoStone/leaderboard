@@ -12,11 +12,18 @@ public class ScoreIngredient extends AbstractEntity {
 
   private String name;
 
+  public ScoreIngredient() {
+  }
+  
   @Enumerated(EnumType.STRING)
   private ScoreIngredientType type;
 
   public String getName() {
     return this.name;
+  }
+  
+  public void setName(String name) {
+    this.name = name;
   }
 
   public ScoreIngredientType getType() {
@@ -25,9 +32,5 @@ public class ScoreIngredient extends AbstractEntity {
 
   public void setType(ScoreIngredientType type) {
     this.type = type;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 }

@@ -1,44 +1,46 @@
 package com.github.twostone.leaderboard.model.score;
 
-import com.github.twostone.leaderboard.model.base.AbstractEntity;
-import com.github.twostone.leaderboard.model.competition.Competitor;
-import com.github.twostone.leaderboard.model.event.Event;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.Maps;
-
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.twostone.leaderboard.model.base.AbstractEntity;
+import com.github.twostone.leaderboard.model.competition.Competitor;
+import com.github.twostone.leaderboard.model.event.Event;
+import com.google.common.collect.Maps;
 
 @Entity
 @SuppressWarnings("serial")
 public class Score extends AbstractEntity {
 
-  @JsonIdentityReference(alwaysAsId = true)
   @ManyToOne
   private Event event;
 
-  @JsonIdentityReference(alwaysAsId = true)
   @ManyToOne
   private Competitor competitor;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @MapKey(name = "name")
   private Map<String, PartialScore> parts;
 
   private boolean scaled;
+  
+  private Score() {
+    super();
+  }
 
   /**
    * Creates a new score.
    */
   public Score(Event event, Competitor competitor, boolean scaled) {
-    super();
+    this();
     this.event = event;
     this.competitor = competitor;
     this.scaled = scaled;

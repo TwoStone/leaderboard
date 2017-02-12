@@ -1,8 +1,5 @@
 package com.github.twostone.leaderboard.model.base;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -13,21 +10,19 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.Version;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
 @EntityListeners(AbstractEntityListener.class)
-@JsonIdentityInfo(property = "id", generator = ObjectIdGenerators.PropertyGenerator.class)
 public abstract class AbstractEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.TABLE)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-
-  @Version
-  private Long version;
 
   private Instant createdAt;
   private Instant updatedAt;
@@ -46,6 +41,12 @@ public abstract class AbstractEntity implements Serializable {
 
   public Instant getUpdatedAt() {
     return this.updatedAt;
+  }
+  
+  @JsonIgnore
+  @Transient
+  public boolean isNew() {
+    return this.id != null;
   }
 
   @PrePersist
@@ -72,15 +73,15 @@ public abstract class AbstractEntity implements Serializable {
     if (obj == null) {
       return false;
     }
-    if (this.getClass() != obj.getClass()) {
+    if (!(this.getClass().isAssignableFrom(obj.getClass()) || obj.getClass().isAssignableFrom(this.getClass()))) {
       return false;
     }
 
     AbstractEntity other = (AbstractEntity) obj;
-    if (this.id == null) {
+    if (this.getId() == null) {
       return false;
     }
-    return this.id.equals(other.id);
+    return this.getId().equals(other.getId());
   }
 
 }

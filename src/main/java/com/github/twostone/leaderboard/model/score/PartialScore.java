@@ -1,5 +1,7 @@
 package com.github.twostone.leaderboard.model.score;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.twostone.leaderboard.model.base.AbstractEntity;
 
 import javax.persistence.Entity;
@@ -10,8 +12,15 @@ public class PartialScore extends AbstractEntity implements Comparable<PartialSc
   private String name;
   private long value;
 
-  public PartialScore(String name, long value) {
+  private PartialScore() {
     super();
+  }
+  
+  @JsonCreator
+  public PartialScore(
+      @JsonProperty("name") String name, 
+      @JsonProperty("value") long value) {
+    this();
     this.name = name;
     this.value = value;
   }

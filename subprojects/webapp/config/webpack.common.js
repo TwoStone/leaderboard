@@ -36,7 +36,7 @@ module.exports = {
       {
         test: /\.css$/,
         include: helpers.root('src', 'app'),
-        loader: 'raw-loader'
+        loaders: ['exports-loader?module.exports.toString()', 'css-loader']
       }
     ]
   },
@@ -55,7 +55,8 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
+      template: 'src/index.html',
+      favicon: 'src/favicon.ico'
     })
   ]
 };
