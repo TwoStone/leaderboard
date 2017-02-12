@@ -1,0 +1,10 @@
+<div class="input-group col-xs-8">
+    <div class="input-group-addon">min</div>
+    <input type="number" name="{{name}}-minutes" class="form-control" [(ngModel)]="minutes" min="0">
+    <div class="input-group-addon">:</div>
+    <input type="number" name="{{name}}-seconds" class="form-control" [(ngModel)]="seconds" min="0">
+    <div class="input-group-addon">sec</div>
+    <span class="input-group-btn">
+        <button class="btn btn-default" (click)="clear()" type="button"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+    </span>
+</div>

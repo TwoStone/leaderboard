@@ -21,4 +21,8 @@ export class ScorePointInputComponent implements ScoreInput {
         this._value = v;
         this.valueChanged.emit(v);
     }
+
+    public clear() {
+        this.value = null;
+    }
 }

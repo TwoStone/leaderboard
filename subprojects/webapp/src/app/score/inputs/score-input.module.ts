@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 
 import { ScoreInputComponent }   from './score-input.component';
 import { ScorePointInputComponent } from './score-point-input.component';
+import { ScoreTimeInputComponent } from './score-time-input.component';
+import { ScoreUnknownInputComponent } from './score-unkown-input.component';
 
 @NgModule({
     imports: [
@@ -13,11 +15,15 @@ import { ScorePointInputComponent } from './score-point-input.component';
     ],
     declarations: [
         ScoreInputComponent,
-        ScorePointInputComponent
+        ScorePointInputComponent,
+        ScoreTimeInputComponent,
+        ScoreUnknownInputComponent
     ],
     providers: [],
     entryComponents: [
-        ScorePointInputComponent
+        ScorePointInputComponent,
+        ScoreTimeInputComponent,
+        ScoreUnknownInputComponent
     ]
 })
 export class ScoreInputModule { }
