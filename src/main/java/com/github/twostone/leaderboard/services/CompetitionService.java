@@ -1,23 +1,25 @@
 package com.github.twostone.leaderboard.services;
 
-import com.github.twostone.leaderboard.model.competition.Competition;
-import com.github.twostone.leaderboard.model.competition.CompetitionManager;
-import com.github.twostone.leaderboard.model.competition.Competitor;
-import com.github.twostone.leaderboard.model.competition.Division;
-import com.github.twostone.leaderboard.model.competition.NewEventRequest;
-import com.github.twostone.leaderboard.model.event.Event;
+import java.text.MessageFormat;
+import java.util.NoSuchElementException;
 
+import javax.inject.Inject;
+
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.MessageFormat;
-import java.util.NoSuchElementException;
-
-import javax.inject.Inject;
+import com.github.twostone.leaderboard.model.competition.Competition;
+import com.github.twostone.leaderboard.model.competition.CompetitionManager;
+import com.github.twostone.leaderboard.model.competition.Competitor;
+import com.github.twostone.leaderboard.model.competition.Division;
+import com.github.twostone.leaderboard.model.competition.NewEventRequest;
+import com.github.twostone.leaderboard.model.event.Event;
 
 @RestController
 @RequestMapping("api/competitions")
@@ -74,6 +76,13 @@ public class CompetitionService {
   public Iterable<Division> getDivisions(@PathVariable("id") long id) {
     Competition competition = this.findById(id);
     return competition.getDivisions();
+  }
+  
+  @PostMapping(path = "",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public Competition saveCompetition(@RequestBody(required = true) Competition competition) {
+      return this.competitionManager.update(competition);
   }
 
   /**

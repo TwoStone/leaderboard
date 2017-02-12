@@ -42,6 +42,18 @@ export class CompetitionService {
         }).map((res) => res.json());
     }
 
+    public save(competition: Competition) {
+        let url = 'api/competitions';
+        let body = JSON.stringify(competition);
+
+        let headers =  new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.post(url, body, {
+            headers
+        }).map((res) => res.json());
+    }
+
     public getAll(): Rx.Observable<Competition[]> {
         return this.http.get('api/competitions')
             .map((res) => res.json());
