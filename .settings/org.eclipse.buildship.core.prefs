@@ -1,4 +1,6 @@
 GRADLE_BUILD_COMMANDS=org.eclipse.jdt.core.javabuilder
 GRADLE_FILTERS=1.0-projectRelativePath-matches-false-false-subprojects/webapp
 GRADLE_NATURES=org.eclipse.jdt.core.javanature
+connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
+connection.project.dir=
 eclipse.preferences.version=1
