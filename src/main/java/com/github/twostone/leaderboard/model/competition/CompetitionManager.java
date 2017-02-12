@@ -83,4 +83,8 @@ public class CompetitionManager {
   public Iterable<Competition> findAll() {
     return this.competitionRepository.findAll();
   }
+
+  public Competition update(Competition competition) {
+    return this.competitionRepository.save(competition);
+  }
 }

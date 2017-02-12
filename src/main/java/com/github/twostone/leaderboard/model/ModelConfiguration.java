@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.eventbus.EventBus;
 
@@ -30,10 +29,4 @@ public class ModelConfiguration {
   public Module installGuavaModule() {
     return new GuavaModule();
   }
-  
-  @Bean
-  public Module installJacksonHibernateModule() {
-    return new Hibernate5Module();
-  }
-  
 }

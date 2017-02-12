@@ -2,18 +2,17 @@
     <i class="fa fa-plus"></i>
     Create event
 </a>
-<div class="table-responsive">
+<div *ngIf="events" class="table-responsive">
     <table class="table table-hover">
         <thead>
             <tr>
                 <th>Event</th>
                 <th>Name</th>
-                <th>Type</th>
                 <th>Description</th>
                 <th>Scalable</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="container" dragula [dragulaModel]='events'>
             <tr *ngFor="let event of events; let i = index" (click)="editEvent(event)">
                 <td width="5%">{{ i + 1 }}</td>
                 <td>{{ event.name }}</td>

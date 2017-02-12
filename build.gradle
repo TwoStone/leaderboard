@@ -26,18 +26,20 @@ repositories {
 }
 
 dependencies {
-  compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+  compile('org.springframework.boot:spring-boot-starter-data-jpa') {
+  	exclude group: 'org.hibernate'
+  }
   compile 'org.springframework.boot:spring-boot-starter-data-rest'
   compile 'org.springframework.boot:spring-boot-starter-web'
   compile 'org.springframework.boot:spring-boot-devtools'
 
+  compile 'org.eclipse.persistence:eclipselink:2.6.4'
   compile 'org.springframework:spring-core'
   compile 'javax.inject:javax.inject:1'
   compile 'com.google.guava:guava:19.0'
 
   compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.4'
   compile 'com.fasterxml.jackson.datatype:jackson-datatype-guava:2.7.1'
-  compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.6'
   
   compile 'org.yaml:snakeyaml:1.17'
 
