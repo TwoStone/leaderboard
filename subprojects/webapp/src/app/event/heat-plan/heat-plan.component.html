@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <div class="form">
+            <div class="form align-right">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Actions<span class="caret"></span>
@@ -20,17 +20,32 @@
                 <div class="form-group">
                     <label for="heat-size" class="col-sm-2 control-label">Heat size</label>
                     <div class="col-sm-10">
-                        <input type="number" name="heat-size" class="form-control" min="1" max="99"required="required" [(ngModel)]="plan.config.heatSize" >
+                        <input type="number" name="heat-size" class="form-control" min="1" max="99"required="required" [(ngModel)]="plan.heatSize" >
                     </div>
                 </div>
             </div>
         </div>    
     </div>
-    <heat-display *ngFor="let heat of heats; let i = index" heat="heat" num="i" plan="plan.config"></heat-display>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <button type="button" class="btn btn-primary" (click)="addHeat()">Add heat</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <heat-display *ngFor="let heat of plan.heats; let i = index" 
+                [heat]="heat" 
+                [divisions]="competition.divisions"
+                [num]="i + 1" 
+                [size]="plan.heatSize"
+                (onCompetitorAdded)="competitorAdded(heat, $event)"
+                ></heat-display>
+        </div>
+    </div>    
 </div>
 
 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-    <heat-competitor-list plan="plan"></heat-competitor-list>
+    <heat-plan-competitor-list [competitors]="plan.remainingCompetitors" [divisions]="competition.divisions"></heat-plan-competitor-list>
 </div>
 
 

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Division, Competition, ModelService } from '../model/model';
-import { CompetitionService } from '../services/competition.service';
+import { CompetitionService } from '../competition/competition.service';
 
 import { CreateDivisionComponent } from './create-division.component';
 

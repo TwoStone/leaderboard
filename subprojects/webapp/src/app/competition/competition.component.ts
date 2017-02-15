@@ -11,7 +11,7 @@ import { EventListComponent } from '../event/event-list.component';
 import { ScoreComponent } from '../score/score.component';
 import { ScoreboardComponent } from '../scoreboard/scoreboard.component';
 
-import { CompetitionService } from '../services/competition.service';
+import { CompetitionService } from '../competition/competition.service';
 
 @Component({
     templateUrl: './competition.component.html',

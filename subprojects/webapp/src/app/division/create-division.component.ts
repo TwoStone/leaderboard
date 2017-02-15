@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import {
     CompetitionService,
     NewDivision
-} from '../services/competition.service';
+} from '../competition/competition.service';
 
 import { ModelService } from '../model/model';
 

@@ -1,9 +1,9 @@
 // Angular
+import '@angular/common';
+import '@angular/core';
+import '@angular/http';
 import '@angular/platform-browser';
 import '@angular/platform-browser-dynamic';
-import '@angular/core';
-import '@angular/common';
-import '@angular/http';
 import '@angular/router';
 
 // RxJS
@@ -21,5 +21,8 @@ import 'font-awesome-loader';
 // dragula
 import 'dragula/dist/dragula.css';
 
+import 'jquery';
+
+import 'bootstrap/dist/js/bootstrap';
 // Other vendors for example jQuery, Lodash or Bootstrap
 // You can import js, ts, css, sass, ...

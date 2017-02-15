@@ -10,15 +10,20 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Scalable</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody class="container" dragula [dragulaModel]='events'>
-            <tr *ngFor="let event of events; let i = index" (click)="editEvent(event)">
+            <tr *ngFor="let event of events; let i = index">
                 <td width="5%">{{ i + 1 }}</td>
                 <td>{{ event.name }}</td>
                 <td>{{ event.description }}</td>
                 <td>
                     <div *ngIf="event.scalable"><i class="fa fa-check"></i></div>
+                </td>
+                <td>
+                    <a class="btn btn-default" (click)="editEvent(event)">Edit</a>
+                    <a class="btn btn-default" (click)="goToHeats(event)">Heats</a>
                 </td>
             </tr>
         </tbody>

@@ -5,7 +5,7 @@ import {
 
 import {
     CompetitionService,
-} from '../services/competition.service';
+} from '../competition/competition.service';
 
 import {
     ModelService,

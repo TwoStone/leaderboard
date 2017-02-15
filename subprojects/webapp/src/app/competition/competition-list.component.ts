@@ -5,7 +5,7 @@ import {
     CreateCompetitionComponent
 } from './create-competition.component';
 
-import { CompetitionService } from '../services/competition.service';
+import { CompetitionService } from '../competition/competition.service';
 
 @Component({
     templateUrl: './competition-list.component.html',

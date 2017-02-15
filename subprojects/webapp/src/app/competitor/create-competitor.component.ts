@@ -10,7 +10,7 @@ import {
     Division
 } from '../model/model';
 
-import { CompetitionService, NewCompetitor } from '../services/competition.service';
+import { CompetitionService, NewCompetitor } from '../competition/competition.service';
 
 class CompetitorModel implements NewCompetitor {
     name: string;

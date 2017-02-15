@@ -14,7 +14,7 @@ import {
     Event
 } from '../model/model';
 
-import { CompetitionService } from '../services/competition.service';
+import { CompetitionService } from '../competition/competition.service';
 import { RankingService } from '../services/ranking.service';
 
 @Component({

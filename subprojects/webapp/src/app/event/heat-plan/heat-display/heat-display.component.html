@@ -1,0 +1,16 @@
+<!--component html goes here -->
+<div class="panel" dnd-droppable (onDropSuccess)="addTo($event)" [allowDrop]="allowDrop()">
+    <div class="panel panel-default">
+          <div class="panel-heading">
+                <h3 class="panel-title">Heat {{num}}</h3>
+          </div>
+          <ul class="list-group" >
+              <li dnd-draggable class="list-group-item" *ngFor="let competitor of heat.competitors; let lane = index">
+                {{ competitor.name }}
+              </li>
+              <li class="list-group-item text-muted" *ngFor="let lane of emptyLanes">
+                  Empty Lane
+              </li>
+          </ul>
+    </div>
+</div>

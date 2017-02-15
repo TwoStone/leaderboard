@@ -6,7 +6,7 @@ import {
 
 import { Router } from '@angular/router';
 
-import { CompetitionService, NewCompetition } from '../services/competition.service';
+import { CompetitionService, NewCompetition } from '../competition/competition.service';
 
 @Component({
     selector: 'create-competition',

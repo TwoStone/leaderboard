@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 
 import { DragulaService } from 'ng2-dragula';
 
-import { CompetitionService } from '../services/competition.service';
+import { CompetitionService } from '../competition/competition.service';
 
 import {
     ModelService,
@@ -54,10 +54,14 @@ export class EventListComponent implements OnInit, OnDestroy {
     }
 
     public editEvent(e: Event) {
-        this.router.navigate(['../event', e.id], {relativeTo: this.route});
+        this.router.navigate([e.id], {relativeTo: this.route});
     }
 
     public createEvent() {
-        this.router.navigate(['../event/new'], { relativeTo: this.route})
+        this.router.navigate(['new'], { relativeTo: this.route});
+    }
+
+    public goToHeats(e: Event) {
+        this.router.navigate([e.id, 'heats'], { relativeTo: this.route });
     }
 }
