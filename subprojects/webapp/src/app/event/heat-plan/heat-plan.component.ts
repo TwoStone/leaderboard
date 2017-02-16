@@ -61,4 +61,9 @@ export class HeatPlanComponent {
     public requestHeatAssignment(competitor: Competitor) {
         this.onAssignmentRequested.emit(competitor);
     }
+
+    public removeHeat(heat: Heat) {
+        this.plan.heats.splice(this.plan.heats.indexOf(heat));
+        this.remainingCompetitors = this.getRemainingCompetitors();
+    }
 }

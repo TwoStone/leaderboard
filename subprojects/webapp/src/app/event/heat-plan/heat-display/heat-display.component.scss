@@ -23,6 +23,11 @@
     font-size: small;
 }
 
+.unselectable {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 .panel > .list-group:last-child .list-group-item:last-child {
     .lane-number {
         border-bottom-left-radius: 3px;

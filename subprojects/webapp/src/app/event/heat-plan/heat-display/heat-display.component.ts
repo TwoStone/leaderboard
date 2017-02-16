@@ -31,6 +31,9 @@ export class HeatDisplayComponent implements OnInit {
     @Output()
     public onCompetitorAdded: EventEmitter<Competitor> = new EventEmitter();
 
+    @Output()
+    public onRemove: EventEmitter<Heat> = new EventEmitter();
+
     private canAssign: boolean;
     private assignmentPending: Competitor;
 
@@ -78,5 +81,9 @@ export class HeatDisplayComponent implements OnInit {
     public remove(competitor: Competitor) {
         let removed = this.heat.competitors.splice(this.heat.competitors.indexOf(competitor), 1);
         this.onCompetitorAdded.emit(removed[0]);
+    }
+
+    public removeHeat() {
+        this.onRemove.emit(this.heat);
     }
 }

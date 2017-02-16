@@ -1,7 +1,14 @@
 <!--component html goes here -->
     <div class="panel" [ngClass]="displayState" (click)="assignCompetitor()">
           <div class="panel-heading">
-                <h3 class="panel-title">Heat {{num}}</h3>
+                <h3 class="panel-title">Heat {{num}}
+                    <span class="pull-right unselectable">
+                        <span class="badge">
+                            {{ emptyLanes.length }}
+                        </span>
+                        <i class="fa fa-remove" (click)="removeHeat()"></i>
+                    </span>
+                </h3>                
           </div>
           <ul class="list-group" >
               <li class="list-group-item" *ngFor="let competitor of heat.competitors; let lane = index">
