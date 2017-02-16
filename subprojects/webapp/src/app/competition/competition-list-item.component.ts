@@ -4,7 +4,7 @@ import { Competition } from '../model/model';
 @Component({
     selector: 'competition-list-item',
     template: `
-        <a [routerLink]="['/competition', competition.id]">
+        <a [routerLink]="[competition.id]">
         {{ competition.name }}
         </a>
     `

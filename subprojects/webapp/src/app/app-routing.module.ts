@@ -20,19 +20,19 @@ import { StandaloneScoreBoardComponent } from './scoreboard/standalone-score-boa
 
 const appRoutes: Routes = [
     {
-        path: 'competition/:id',
+        path: 'competitions/:id/scores/standalone',
+        component: StandaloneScoreBoardComponent,
+        resolve: {
+            competition: CompetitionResolver
+        }
+    },
+    {
+        path: 'competitions/:id',
         component: CompetitionComponent,
         resolve: {
             competition: CompetitionResolver
         },
         children: [
-            {
-              path: 'scores/standalone',
-              component: StandaloneScoreBoardComponent,
-              resolve: {
-                competition: CompetitionResolver
-              }
-            },
             { path: '', component: CompetitionDashboardComponent },
             { path: 'divisions', component: DivisionListComponent },
             { path: 'divisions/:divisionId', component: DivisionComponent },
