@@ -15,22 +15,6 @@ export class HeatPlanService {
                 name: 'Some event'
             },
             heats: [],
-            remainingCompetitors: [
-                {
-                    name: 'Demo Team One',
-                    id: 5,
-                    division: {
-                        id: 2
-                    }
-                },
-                {
-                    name: 'Demo Team Two',
-                    id: 6,
-                    division: {
-                        id: 2
-                    }
-                },
-            ],
             heatSize: 5
         } as HeatPlan)
     }

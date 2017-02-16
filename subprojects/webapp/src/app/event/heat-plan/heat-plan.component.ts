@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { HeatDisplayComponent } from './heat-display/heat-display.component';
+import { Observable } from 'rxjs/Rx';
+import { Component, ComponentRef, EventEmitter, OnInit, ViewChildren, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Competition, Competitor } from '../../model/model';
 
@@ -10,35 +12,53 @@ import { HeatPlan } from './heat-plan';
     templateUrl: './heat-plan.component.html',
     styleUrls: ['./heat-plan.component.css']
 })
-export class HeatPlanComponent implements OnInit {
+export class HeatPlanComponent {
 
     public plan: HeatPlan;
     public competition: Competition;
 
+    public onAssignmentRequested: EventEmitter<Competitor> = new EventEmitter();
+    public onAssignmentFinished: EventEmitter<void> = new EventEmitter<void>();
+
+    public remainingCompetitors: Competitor[] = [];
+
     constructor(
         private route: ActivatedRoute
     ) {
-    }
+        this.route.data.pluck('heatPlan').subscribe((plan: HeatPlan) => {
+            this.plan = plan;
+        });
 
-    public ngOnInit() {
-        this.plan = this.route.snapshot.data['heatPlan'];
-        this.competition = this.route.snapshot.parent.data['competition'];
+        this.route.parent.data.pluck('competition').subscribe((competition: Competition) => {
+            this.competition = competition;
+            this.remainingCompetitors = this.getRemainingCompetitors();
+        });
     }
 
     public addHeat() {
+        this.onAssignmentFinished.emit();
         this.plan.heats.push({
             competitors: []
         });
     }
 
-    public competitorAdded(heat: Heat, competitor: Competitor) {
-        let competitors = this.plan.heats.map((h) => {
-            return h.competitors
-        }).reduce((result, current) => {
-            return result.concat(...current);
-        }, [] as Competitor[]);
-        this.plan.remainingCompetitors = this.competition.competitors.filter((c) => {
-            return competitors.indexOf(c) < 0
+    public getRemainingCompetitors(): Competitor[] {
+        let assigned = this.plan.heats.map((h) => h.competitors).reduce((prev: Competitor[], current: Competitor[]) => {
+            prev.push(...current);
+            return prev;
+        }, []);
+
+        return this.competition.competitors.filter((c) => {
+            return assigned.indexOf(c) < 0;
         });
+    }
+
+    public competitorAdded(heat: Heat, competitor: Competitor) {
+        this.onAssignmentFinished.emit();
+        this.remainingCompetitors = this.getRemainingCompetitors();
+    }
+
+    public requestHeatAssignment(competitor: Competitor) {
+        this.onAssignmentRequested.emit(competitor);
     }
 }

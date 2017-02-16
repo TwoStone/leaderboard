@@ -38,6 +38,8 @@
                 [divisions]="competition.divisions"
                 [num]="i + 1" 
                 [size]="plan.heatSize"
+                [assignmentRequest]="onAssignmentRequested"
+                [assignmentFinish]="onAssignmentFinished"
                 (onCompetitorAdded)="competitorAdded(heat, $event)"
                 ></heat-display>
         </div>
@@ -45,7 +47,11 @@
 </div>
 
 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-    <heat-plan-competitor-list [competitors]="plan.remainingCompetitors" [divisions]="competition.divisions"></heat-plan-competitor-list>
+    <heat-plan-competitor-list 
+        [competitors]="remainingCompetitors" 
+        [divisions]="competition.divisions"
+        (onAssignRequested)="requestHeatAssignment($event)">
+    </heat-plan-competitor-list>
 </div>
 
 
