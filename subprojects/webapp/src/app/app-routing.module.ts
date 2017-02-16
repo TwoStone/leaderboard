@@ -8,7 +8,6 @@ import { CompetitionComponent } from './competition/competition.component';
 import { CreateCompetitionComponent } from './competition/create-competition.component';
 
 const appRoutes: Routes = [
-    { path: 'competition.create', component: CreateCompetitionComponent},
     {
         path: 'competitions/:id/scores/standalone',
         component: StandaloneScoreBoardComponent,
