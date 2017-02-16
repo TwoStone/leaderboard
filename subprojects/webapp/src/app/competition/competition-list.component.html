@@ -41,7 +41,11 @@
                                 </competition-list-item>
                             </td>
                             <td>
-                                <a [routerLink]="[competition.id, 'scores', 'standalone']" target="_blank"><i class="fa fa-television" aria-hidden="true"></i></a>
+                                <a [routerLink]="[competition.id, 'scores', 'standalone']" 
+                                    target="_blank"
+                                    tooltip="Show scoreboard"
+                                    placement="bottom"
+                                    ><i class="fa fa-television" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     </tbody>
