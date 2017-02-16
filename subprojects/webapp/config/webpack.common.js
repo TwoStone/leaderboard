@@ -70,6 +70,12 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: ['app', 'vendor', 'polyfills']
     }),
+    new webpack.ProvidePlugin({
+      jquery: 'jquery',
+      jQuery: 'jquery',
+      $: 'jquery',
+      'window.jquery': 'jquery'
+    }),
 
     new HtmlWebpackPlugin({
       template: 'src/index.html',
