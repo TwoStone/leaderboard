@@ -25,7 +25,7 @@ export class CreateCompetitionComponent {
     }
 
     onSubmit() {
-        this._competitionService.create(this.model).subscribe(competition => {
+        this._competitionService.create(this.model).subscribe((competition) => {
             this.onCreated.emit(competition);
         });
     }

@@ -1,9 +1,7 @@
 import {
     Component,
-    OnInit,
     OnDestroy,
-    Pipe,
-    PipeTransform
+    OnInit
 } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,8 +13,8 @@ import { DragulaService } from 'ng2-dragula';
 import { CompetitionService } from '../competition/competition.service';
 
 import {
-    ModelService,
-    Event
+    Event,
+    ModelService
 } from '../model/model';
 
 @Component({

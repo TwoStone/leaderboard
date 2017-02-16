@@ -1,6 +1,6 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Competitor, Division } from '../../../model/model';
 import { Heat } from '../heat';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'heat-display',
@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     styleUrls: ['heat-display.component.css']
 })
 export class HeatDisplayComponent {
-    
+
     @Input()
     public heat: Heat;
 

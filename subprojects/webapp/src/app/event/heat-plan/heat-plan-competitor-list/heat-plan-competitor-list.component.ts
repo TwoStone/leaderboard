@@ -1,5 +1,5 @@
-import { Competitor } from '../../../model/model';
 import { Component, Input, OnInit } from '@angular/core';
+import { Competitor } from '../../../model/model';
 
 import { Division } from '../../../model/division';
 
@@ -9,7 +9,7 @@ import { Division } from '../../../model/division';
     styleUrls: ['./heat-plan-competitor-list.component.css']
 })
 export class HeatPlanCompetitorListComponent implements OnInit {
-    
+
     @Input()
     public competitors: Competitor[];
 

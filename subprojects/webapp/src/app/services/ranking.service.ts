@@ -6,10 +6,6 @@ import {
     Http
 } from '@angular/http';
 
-import {
-    RankedEventScore
-} from '../model/model';
-
 @Injectable()
 export class RankingService {
 

@@ -1,7 +1,7 @@
 import {
     Component,
-    Output,
-    EventEmitter
+    EventEmitter,
+    Output
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -42,7 +42,7 @@ export class CreateDivisionComponent {
     }
 
     onSubmit() {
-        this._competitionService.addDivision(this._model.competition, this.model).subscribe(d => {
+        this._competitionService.addDivision(this._model.competition, this.model).subscribe((d) => {
             this._model.updateModel();
             this.model = new DivisionModel();
             this.onCreated.emit(d);

@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { HeatDisplayModule } from './heat-display/heat-display.module';
-import { HeatPlanCompetitorListModule } from './heat-plan-competitor-list/heat-plan-competitor-list.module';
-import { HeatPlanCompetitorListComponent } from './heat-plan-competitor-list/heat-plan-competitor-list.component';
 // Angular Imports
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HeatDisplayModule } from './heat-display/heat-display.module';
+import { HeatPlanCompetitorListModule } from './heat-plan-competitor-list/heat-plan-competitor-list.module';
 
 // This Module's Components
 import { HeatPlanComponent } from './heat-plan.component';

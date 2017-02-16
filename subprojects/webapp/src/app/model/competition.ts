@@ -1,5 +1,5 @@
-import { Division } from './division';
 import { Competitor } from './competitor';
+import { Division } from './division';
 import { Event } from './event';
 
 export interface Competition {

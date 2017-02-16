@@ -1,9 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Competition } from '../model/model';
-
-import {
-    CreateCompetitionComponent
-} from './create-competition.component';
 
 import { CompetitionService } from '../competition/competition.service';
 

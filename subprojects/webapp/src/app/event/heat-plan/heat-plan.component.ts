@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Competition, Competitor } from '../../model/model';
 
-import { HeatPlan } from './heat-plan';
 import { Heat } from './heat';
+import { HeatPlan } from './heat-plan';
 
 @Component({
     selector: 'heat-plan',

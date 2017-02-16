@@ -8,6 +8,7 @@
     "test": "karma start",
     "check": "npm run tslint",
     "tslint": "tslint -t stylish --force src/**/*.ts",
+    "tslint:fix": "tslint -t stylish --force --fix src/app/**/*.ts",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
   },
   "dependencies": {

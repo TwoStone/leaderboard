@@ -1,10 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
-import { ScoreboardComponent }   from './scoreboard.component';
 import { CompetitionScoreboard } from './competitionscoreboard.component';
 import { EventScoreBoard } from './eventscoreboard.component';
+import { ScoreboardComponent }   from './scoreboard.component';
 
 import { ScoreModule } from '../score/score.module';
 

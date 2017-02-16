@@ -3,13 +3,8 @@ import {
     PipeTransform
 } from '@angular/core';
 
-import * as moment from 'moment';
-
 import {
-    ModelService,
-    Event,
-    Score,
-    Division
+    Score
 } from '../model/model';
 
 @Pipe({ name: 'scoringQueryFilter'})

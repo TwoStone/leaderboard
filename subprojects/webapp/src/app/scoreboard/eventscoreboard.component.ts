@@ -4,8 +4,6 @@ import {
     OnChanges
 } from '@angular/core';
 
-import { ScoreToStringPipe } from '../score/score-to-string.pipe';
-
 import { RankingService } from '../services/ranking.service';
 
 import {
@@ -51,7 +49,7 @@ export class EventScoreBoard implements OnChanges {
     }
 
     updateData() {
-        this.rankingService.getRankingForEvent(this.competitionId, this.eventId, this.divisionId).subscribe(rankings => {
+        this.rankingService.getRankingForEvent(this.competitionId, this.eventId, this.divisionId).subscribe((rankings) => {
             this.scores = rankings;
         });
     }

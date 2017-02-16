@@ -3,13 +3,12 @@ import {
     ComponentFactory,
     ComponentFactoryResolver,
     ComponentRef,
-    HostBinding,
-    ViewChild,
-    ViewContainerRef,
     EventEmitter,
     Input,
     OnInit,
-    Output } from '@angular/core';
+    Output,
+    ViewChild,
+    ViewContainerRef } from '@angular/core';
 
 import { ScoreInput } from './score-input';
 import { ScorePointInputComponent } from './score-point-input.component';

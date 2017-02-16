@@ -1,8 +1,4 @@
-import { Component, OnInit, Host } from '@angular/core';
-
-import { CompetitionService } from '../competition/competition.service';
-
-import { Competition } from '../model/competition';
+import { Component } from '@angular/core';
 
 @Component({
     template: `

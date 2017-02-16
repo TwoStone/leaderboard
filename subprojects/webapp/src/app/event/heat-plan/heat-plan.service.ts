@@ -1,9 +1,6 @@
-import { Competitor } from '../../model/model';
 import { Injectable } from '@angular/core';
 
-import { Observable, Subject } from 'rxjs';
-
-import { Event } from '../../model/event';
+import { Observable } from 'rxjs';
 import { HeatPlan } from './heat-plan';
 
 @Injectable()
@@ -20,14 +17,14 @@ export class HeatPlanService {
             heats: [],
             remainingCompetitors: [
                 {
-                    name: "Demo Team One",
+                    name: 'Demo Team One',
                     id: 5,
                     division: {
                         id: 2
                     }
                 },
                 {
-                    name: "Demo Team Two",
+                    name: 'Demo Team Two',
                     id: 6,
                     division: {
                         id: 2

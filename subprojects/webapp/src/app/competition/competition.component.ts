@@ -1,15 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { Competition, ModelService } from '../model/model';
-import { DivisionComponent } from '../division/division.component';
-import { DivisionListComponent } from '../division/division-list.component';
-import { CreateDivisionComponent } from '../division/create-division.component';
-import { CompetitionDashboardComponent } from './competition-dashboard.component';
-import { CompetitorsListComponent } from '../competitor/competitor-list.component';
-import { EventListComponent } from '../event/event-list.component';
-import { ScoreComponent } from '../score/score.component';
-import { ScoreboardComponent } from '../scoreboard/scoreboard.component';
 
 import { CompetitionService } from '../competition/competition.service';
 

@@ -1,19 +1,12 @@
 import {
     Component,
-    EventEmitter,
-    Input,
     OnInit,
-    Output,
 } from '@angular/core';
 
 import {
     Competitor,
     ModelService
 } from '../model/model';
-
-import {
-    CreateCompetitorComponent
-} from './create-competitor.component';
 
 @Component({
     selector: 'competitor-list',
@@ -65,7 +58,7 @@ export class CompetitorsListComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.service.onCompetitionUpdate.subscribe(comp => {
+        this.service.onCompetitionUpdate.subscribe((comp) => {
             this.competitors = comp.competitors;
         });
     }

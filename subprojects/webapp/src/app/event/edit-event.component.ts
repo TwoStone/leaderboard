@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { EventService } from './event.service';
 import { Event } from '../model/event';
 import { ScoreIngredientType } from '../model/score-ingredient-type';
+import { EventService } from './event.service';
 
 import { ModelService } from '../model/model';
 

@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import * as moment from 'moment';
 
+import { PartialScore } from '../model/partial-score';
 import { Score } from '../model/score';
 import { ScoreIngredientType } from '../model/score-ingredient-type';
-import { PartialScore } from '../model/partial-score';
 
 @Pipe({
     name: 'scoreToString'

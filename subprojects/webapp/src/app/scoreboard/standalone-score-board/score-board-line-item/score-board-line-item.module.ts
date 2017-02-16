@@ -1,8 +1,8 @@
-import { ScoreModule } from '../../../score/score.module';
-import { PipesModule } from '../../../pipes/pipes.module';
 import { CommonModule } from '@angular/common';
 // Angular Imports
 import { NgModule } from '@angular/core';
+import { PipesModule } from '../../../pipes/pipes.module';
+import { ScoreModule } from '../../../score/score.module';
 
 // This Module's Components
 import { ScoreBoardLineItemComponent } from './score-board-line-item.component';
