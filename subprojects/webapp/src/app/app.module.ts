@@ -1,3 +1,4 @@
+import { StandaloneScoreBoardModule } from './scoreboard/standalone-score-board/standalone-score-board.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -32,6 +33,7 @@ import '../styles/style.css'
     PipesModule,
     ServiceModule,
     CompetitionModule,
+    StandaloneScoreBoardModule,
     AppRoutingModule
   ],
   declarations: [

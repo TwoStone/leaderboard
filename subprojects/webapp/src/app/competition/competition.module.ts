@@ -1,3 +1,4 @@
+import { ServiceModule } from '../services/service.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +11,7 @@ import { DivisionComponent } from '../division/division.component';
 import { DivisionListComponent, DivisionListItemComponent } from '../division/division-list.component';
 import { CreateDivisionComponent } from '../division/create-division.component';
 import { CompetitionDashboardComponent } from './competition-dashboard.component';
+import { CompetitionResolver } from './shared/competition.resolver';
 import { CompetitorsListComponent } from '../competitor/competitor-list.component';
 import { CompetitorListItemComponent } from '../competitor/competitor-list-item.component';
 import { CreateCompetitorComponent } from '../competitor/create-competitor.component';
@@ -30,6 +32,7 @@ import { ModelService } from '../model/model';
         PipesModule,
         EventModule,
         ScoreModule,
+        ServiceModule,
         CompetitionRoutingModule
     ],
     declarations: [
@@ -42,7 +45,7 @@ import { ModelService } from '../model/model';
         CompetitorListItemComponent,
         CreateCompetitorComponent
     ],
-    providers: [ ModelService ]
+    providers: [ ModelService, CompetitionResolver ]
 })
 export class CompetitionModule {
 
