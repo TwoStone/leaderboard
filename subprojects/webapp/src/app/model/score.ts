@@ -8,4 +8,5 @@ export interface Score extends Entity {
     competitor: Competitor;
     scaled: boolean;
     parts: Map<string, PartialScore>;
+    notSet: boolean;
 }

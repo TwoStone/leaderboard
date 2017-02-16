@@ -1,9 +1,8 @@
 import { StandaloneScoreBoardModule } from './standalone-score-board.module';
 import { Observable } from 'rxjs/Observable';
 import { AbstractCompetitionComponent } from '../../competition/shared/abstract-competition.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { RankingService } from '../../services/ranking.service';
 import { CompetitionService } from '../../services/competition.service';
 import { Competition } from '../../model/competition';
@@ -14,7 +13,7 @@ import { Division } from '../../model/division';
 @Component({
     selector: 'standalone-score-board',
     templateUrl: 'standalone-score-board.component.html',
-    styleUrls: ['standalone-score-board.component.css']
+    styleUrls: ['standalone-score-board.component.scss']
 })
 export class StandaloneScoreBoardComponent extends AbstractCompetitionComponent {
 
@@ -57,17 +56,21 @@ export class StandaloneScoreBoardComponent extends AbstractCompetitionComponent 
             return this.rankingService.getRankingForCompetition(this.competitionId, d.id);
         });
 
-        this.rankings.subscribe(() => {
+        this.rankings.subscribe((r) => {
             setTimeout(() => {
-                this.nextDivision.subscribe((d) => {
-                    let queryParams = {};
-                    queryParams[StandaloneScoreBoardComponent.DIVISION_QUERY_PARAM] = d.id
-
-                    this.router.navigate([], {
-                        queryParams
-                    });
+                let totalHeight = $('.score-container').height()
+                let itemHeight = $('.score-row').first().height();
+                let self = this;
+                $('.score-container').animate({
+                    scrollTop: ($('.score-row').last().offset().top + itemHeight - totalHeight)
+                }, {
+                    easing: 'linear',
+                    always: (() => {
+                        self.scrollFinished()
+                    }),
+                    duration: r.length * 2500,
                 });
-            }, 10 * 1000);
+            }, 2500);
         });
     }
 
@@ -79,5 +82,19 @@ export class StandaloneScoreBoardComponent extends AbstractCompetitionComponent 
             let nextIndex = (currentIndex + 1) % c.divisions.length;
             return c.divisions[nextIndex];
         });
+    }
+
+    private scrollFinished() {
+        console.log("Scrolling finished");
+        setTimeout(() => {
+            this.nextDivision.subscribe((d) => {
+                let queryParams = {};
+                queryParams[StandaloneScoreBoardComponent.DIVISION_QUERY_PARAM] = d.id
+
+                this.router.navigate([], {
+                    queryParams
+                });
+            });
+        }, 2500);
     }
 }
