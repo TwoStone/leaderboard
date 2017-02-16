@@ -1,0 +1,20 @@
+<!--component html goes here -->
+
+
+<div class="panel panel-default score-card">
+    <div class="panel-body score-body">
+       <div class="col-xs-2 col-sm-2 col-md-4 col-lg-2 score">
+        <h1>{{ ranking.rank }}</h1>
+        <p class="text-muted">Score: {{ ranking.score }}</p>
+    </div>
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+        <h2>{{ ranking.competitor.name }}</h2>
+        <p > 
+            <span class="label label-primary event-score" [ngClass]="{ 'label-default': score.score.notSet, 'label-primary': !score.score.notSet }" *ngFor="let score of ranking.eventScores">
+                {{ score.score.event.name }}: {{ score.rank }} ({{ score.score | scoreToString:"-" }})
+            </span>
+        </p>     
+    </div>
+    </div>
+</div>
+

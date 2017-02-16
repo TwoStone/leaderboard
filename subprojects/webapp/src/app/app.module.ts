@@ -1,3 +1,5 @@
+import { TooltipModule } from 'ng2-bootstrap/tooltip';
+import { StandaloneScoreBoardModule } from './scoreboard/standalone-score-board/standalone-score-board.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -34,6 +36,8 @@ import 'ng2-dnd/style.css'
     PipesModule,
     ServiceModule,
     CompetitionModule,
+    TooltipModule.forRoot(),
+    StandaloneScoreBoardModule,
     AppRoutingModule
   ],
   declarations: [

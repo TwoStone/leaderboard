@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { ScoreboardComponent }   from './scoreboard.component';
 import { CompetitionScoreboard } from './competitionscoreboard.component';
 import { EventScoreBoard } from './eventscoreboard.component';
-import { StandaloneScoreboardComponent } from './scoreboard-standalone.component';
 
 import { ScoreModule } from '../score/score.module';
 
@@ -21,8 +20,7 @@ import { RankingService } from '../services/ranking.service';
     [
         ScoreboardComponent,
         CompetitionScoreboard,
-        EventScoreBoard,
-        StandaloneScoreboardComponent
+        EventScoreBoard
     ],
     providers: [
         RankingService

@@ -1,3 +1,4 @@
+import { ServiceModule } from '../services/service.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +9,7 @@ import { ModalModule } from 'ng2-bootstrap/modal';
 import { PipesModule } from '../pipes/pipes.module';
 
 import { CompetitionService } from './competition.service';
+import { CompetitionResolver } from './shared/competition.resolver';
 import { CompetitorListItemComponent } from '../competitor/competitor-list-item.component';
 import { CompetitorsListComponent } from '../competitor/competitor-list.component';
 import { CreateCompetitorComponent } from '../competitor/create-competitor.component';

@@ -1,0 +1,18 @@
+<div *ngIf="competition">
+    <div class="header">
+        <h1>{{ (competition | async)?.name }}</h1>
+        <h3>{{ (division | async)?.name }}</h3>
+    </div>
+    <div class="container-fluid score-container" #container>
+        <div class="row score-row" *ngFor="let ranking of rankings | async; let i = index">
+            <div class="col-xs-0 col-sm-1 col-md-2 col-lg-2">
+            </div>
+            <score-board-line-item class="col-xs-12 col-sm-10 col-md-8 col-lg-8" 
+                [ranking]="ranking"
+                [events]="events">
+            </score-board-line-item>
+            <div class="col-xs-0 col-sm-1 col-md-2 col-lg-2">
+            </div>
+        </div>
+    </div>
+</div>

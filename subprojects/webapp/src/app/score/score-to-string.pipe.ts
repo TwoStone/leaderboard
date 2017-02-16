@@ -23,7 +23,7 @@ export class ScoreToStringPipe implements PipeTransform {
             } : undefined;
         }).map((score) => {
             if (score) {
-                return `${score.name}: ${score.value}`;
+                return `${score.value}`;
             }
         }).filter((v) => {
             return v !== undefined;

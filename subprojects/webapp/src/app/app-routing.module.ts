@@ -1,3 +1,5 @@
+import { StandaloneScoreBoardComponent } from './scoreboard/standalone-score-board/standalone-score-board.component';
+import { CompetitionResolver } from './competition/shared/competition.resolver';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -15,7 +17,6 @@ import { HeatPlanComponent } from './event/heat-plan/heat-plan.component';
 import { HeatPlanResolver } from './event/heat-plan/heat-plan.resolver';
 import { EditScoreComponent } from './score/edit-score.component';
 import { ScoreComponent } from './score/score.component';
-import { StandaloneScoreboardComponent } from './scoreboard/scoreboard-standalone.component';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 
 const appRoutes: Routes = [
@@ -26,6 +27,13 @@ const appRoutes: Routes = [
             competition: CompetitionResolver
         },
         children: [
+            { 
+              path: 'scores/standalone',
+              component: StandaloneScoreBoardComponent,
+              resolve: {
+                competition: CompetitionResolver
+              }
+            },
             { path: '', component: CompetitionDashboardComponent },
             { path: 'divisions', component: DivisionListComponent },
             { path: 'divisions/:divisionId', component: DivisionComponent },
@@ -51,7 +59,6 @@ const appRoutes: Routes = [
             { path: 'scoreboard', component: ScoreboardComponent}
         ]
     },
-    { path: 'scores/:competitionId', component: StandaloneScoreboardComponent},
     { path: 'competitions', component: CompetitionListComponent },
     { path: '', redirectTo: 'competitions', pathMatch: 'full'},
 ];
