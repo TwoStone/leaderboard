@@ -14,4 +14,22 @@
 .score-container {
     overflow: auto;
     max-height: 81vh;
+    max-width: 102vw;
+}
+
+.standalone-scoreboard::after {
+    content: "";
+    background-image: url('../../../public/images/scoreboard-bg.jpg');
+    background-size: cover;
+    background-color: black;
+    opacity: 0.9;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+    height: 100vh;
+    width: 100vw;
+    filter: blur(5px);
 }
