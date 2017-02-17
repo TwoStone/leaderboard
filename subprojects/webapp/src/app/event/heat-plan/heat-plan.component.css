@@ -2,3 +2,7 @@
 .align-right {
     text-align: right;
 }
+
+.action-row {
+    margin-bottom: 20px;
+}

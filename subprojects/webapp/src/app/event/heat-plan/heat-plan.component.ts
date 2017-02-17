@@ -1,3 +1,4 @@
+import { HeatPlanService } from './heat-plan.service';
 import { HeatDisplayComponent } from './heat-display/heat-display.component';
 import { Observable } from 'rxjs/Rx';
 import { Component, ComponentRef, EventEmitter, OnInit, ViewChildren, ViewContainerRef } from '@angular/core';
@@ -23,6 +24,7 @@ export class HeatPlanComponent {
     public remainingCompetitors: Competitor[] = [];
 
     constructor(
+        private heatService: HeatPlanService,
         private route: ActivatedRoute
     ) {
         this.route.data.pluck('heatPlan').subscribe((plan: HeatPlan) => {
@@ -49,13 +51,18 @@ export class HeatPlanComponent {
         }, []);
 
         return this.competition.competitors.filter((c) => {
-            return assigned.indexOf(c) < 0;
+            return assigned.findIndex((o) => {
+                return c.id === o.id;
+            }) < 0;
         });
     }
 
     public competitorAdded(heat: Heat, competitor: Competitor) {
         this.onAssignmentFinished.emit();
-        this.remainingCompetitors = this.getRemainingCompetitors();
+        this.heatService.savePlan(this.competition.id, this.plan).subscribe((newPlan) => {
+            this.plan = newPlan;
+            this.remainingCompetitors = this.getRemainingCompetitors();
+        });
     }
 
     public requestHeatAssignment(competitor: Competitor) {

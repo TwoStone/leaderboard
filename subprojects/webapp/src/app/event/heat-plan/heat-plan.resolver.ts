@@ -12,7 +12,8 @@ export class HeatPlanResolver implements Resolve<HeatPlan> {
     constructor(private heatPlanService: HeatPlanService) {}
 
     public resolve(route: ActivatedRouteSnapshot): Observable<HeatPlan> {
+        let competitionId = route.parent.params['id'];
         let eventId = route.params['eventId'];
-        return this.heatPlanService.getPlan(+eventId);
+        return this.heatPlanService.getPlan(competitionId, eventId);
     }
 }

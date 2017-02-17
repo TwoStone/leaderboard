@@ -48,11 +48,11 @@ export class HeatDisplayComponent implements OnInit {
 
     public get displayState() {
         return {
-            'panel-default': !this.assignmentPending,
+            'panel-primary': !this.assignmentPending,
             'panel-success': this.assignmentPending && this.canAssign,
-            'panel-warning': this.assignmentPending && !this.canAssign,
+            'panel-danger': this.assignmentPending && !this.canAssign,
             'assignable': this.assignmentPending && this.canAssign,
-            'not-assignable': this.assignmentPending && !this.canAssign
+            'panel-warning': this.heat.competitors.length > this.size
         }
     }
 
@@ -72,7 +72,7 @@ export class HeatDisplayComponent implements OnInit {
     }
 
     public assignCompetitor() {
-        if (this.assignmentPending && this.canAssign) {
+        if (this.assignmentPending) {
             this.heat.competitors.push(this.assignmentPending);
             this.onCompetitorAdded.emit(this.assignmentPending);
         }
