@@ -9,14 +9,11 @@
         </div>
     </div>
     <div id="{{division.id}}" class="panel-collapse collapse in" > 
-        <ul class="list-group">
-            <li class="list-group-item" 
-                *ngFor="let competitor of competitors | filterByDivision:division ; let i = index"
-                >
-                <i class="fa fa-arrow-circle-o-left" aria-hidden="true" (click)="assignToHeat(competitor)" ></i>
+        <ul class="list-group" [dragula]="'heats-bag'" [dragulaModel]="competitors | filterByDivision:division">
+            <li class="list-group-item" *ngFor="let competitor of competitors | filterByDivision:division ; let i = index">
                 {{ competitor.name }}
             </li>
-            <li class="list-group-item text-muted center" *ngIf="!(competitors | filterByDivision:division)?.length">
+            <li class="no-drag list-group-item text-muted center" *ngIf="!(competitors | filterByDivision:division)?.length">
                 No competitor left
             </li>
         </ul>

@@ -1,3 +1,4 @@
+import { DragulaModule } from 'ng2-dragula/components/dragular.module';
 import { CommonModule } from '@angular/common';
 // Angular Imports
 import { NgModule } from '@angular/core';
@@ -12,6 +13,7 @@ import { HeatPlanService } from './heat-plan.service';
 
 @NgModule({
     imports: [
+        DragulaModule,
         CommonModule,
         FormsModule,
         HeatDisplayModule,

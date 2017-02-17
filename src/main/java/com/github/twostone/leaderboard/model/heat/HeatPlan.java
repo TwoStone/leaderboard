@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 
 import com.github.twostone.leaderboard.model.base.AbstractEntity;
 import com.github.twostone.leaderboard.model.event.Event;
@@ -26,7 +27,9 @@ public class HeatPlan extends AbstractEntity {
 
   @NonNull
   @OneToMany(cascade = CascadeType.ALL)
+  @OrderColumn
   private List<Heat> heats;
+
   private int heatSize;
 
   @NonNull

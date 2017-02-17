@@ -28,6 +28,14 @@
     -webkit-user-select: none;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
+.division-label {
+    margin-right: 5px;
+}
+
 .panel > .list-group:last-child .list-group-item:last-child {
     .lane-number {
         border-bottom-left-radius: 3px;

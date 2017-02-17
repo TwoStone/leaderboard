@@ -1,7 +1,17 @@
+import { Subject } from 'rxjs/Subject';
+import { DragulaService } from 'ng2-dragula/components/dragula.provider';
 import { HeatPlanService } from './heat-plan.service';
 import { HeatDisplayComponent } from './heat-display/heat-display.component';
 import { Observable } from 'rxjs/Rx';
-import { Component, ComponentRef, EventEmitter, OnInit, ViewChildren, ViewContainerRef } from '@angular/core';
+import {
+    Component,
+    ComponentRef,
+    EventEmitter,
+    OnDestroy,
+    OnInit,
+    ViewChildren,
+    ViewContainerRef
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Competition, Competitor } from '../../model/model';
 
@@ -13,17 +23,13 @@ import { HeatPlan } from './heat-plan';
     templateUrl: './heat-plan.component.html',
     styleUrls: ['./heat-plan.component.css']
 })
-export class HeatPlanComponent {
+export class HeatPlanComponent implements OnInit, OnDestroy {
 
     public plan: HeatPlan;
     public competition: Competition;
 
-    public onAssignmentRequested: EventEmitter<Competitor> = new EventEmitter();
-    public onAssignmentFinished: EventEmitter<void> = new EventEmitter<void>();
-
-    public remainingCompetitors: Competitor[] = [];
-
     constructor(
+        private dragService: DragulaService,
         private heatService: HeatPlanService,
         private route: ActivatedRoute
     ) {
@@ -33,44 +39,50 @@ export class HeatPlanComponent {
 
         this.route.parent.data.pluck('competition').subscribe((competition: Competition) => {
             this.competition = competition;
-            this.remainingCompetitors = this.getRemainingCompetitors();
         });
     }
 
+    public ngOnInit() {
+        this.dragService.setOptions('heats-bag', {
+            invalid: ((el: HTMLElement) => {
+                return el.classList.contains('no-drag');
+            })
+        });
+    }
+
+    public ngOnDestroy() {
+        this.dragService.destroy('heats-bag');
+    }
+
     public addHeat() {
-        this.onAssignmentFinished.emit();
         this.plan.heats.push({
             competitors: []
         });
     }
 
-    public getRemainingCompetitors(): Competitor[] {
-        let assigned = this.plan.heats.map((h) => h.competitors).reduce((prev: Competitor[], current: Competitor[]) => {
-            prev.push(...current);
-            return prev;
-        }, []);
-
-        return this.competition.competitors.filter((c) => {
-            return assigned.findIndex((o) => {
-                return c.id === o.id;
-            }) < 0;
-        });
-    }
-
-    public competitorAdded(heat: Heat, competitor: Competitor) {
-        this.onAssignmentFinished.emit();
+    public saveHeats() {
         this.heatService.savePlan(this.competition.id, this.plan).subscribe((newPlan) => {
             this.plan = newPlan;
-            this.remainingCompetitors = this.getRemainingCompetitors();
         });
     }
 
-    public requestHeatAssignment(competitor: Competitor) {
-        this.onAssignmentRequested.emit(competitor);
+    public moveHeatUp(heat: Heat) {
+        let index = this.plan.heats.indexOf(heat);
+        if (index > 0) {
+            let removed = this.plan.heats.splice(index, 1);
+            this.plan.heats.splice(index - 1, 0, ...removed);
+        }
+    }
+
+    public moveHeatDown(heat: Heat) {
+        let index = this.plan.heats.indexOf(heat);
+        if (index < this.plan.heats.length - 1) {
+            let removed = this.plan.heats.splice(index, 1);
+            this.plan.heats.splice(index + 1, 0, ...removed);
+        }
     }
 
     public removeHeat(heat: Heat) {
-        this.plan.heats.splice(this.plan.heats.indexOf(heat));
-        this.remainingCompetitors = this.getRemainingCompetitors();
+        this.plan.heats.splice(this.plan.heats.indexOf(heat), 1);
     }
 }

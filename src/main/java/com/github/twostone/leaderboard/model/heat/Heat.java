@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderColumn;
 
 import com.github.twostone.leaderboard.model.base.AbstractEntity;
 import com.github.twostone.leaderboard.model.competition.Competitor;
@@ -24,6 +25,7 @@ public class Heat extends AbstractEntity {
 
   @NonNull
   @ManyToMany
+  @OrderColumn
   private List<Competitor> competitors;
 
   @SuppressWarnings("unused")

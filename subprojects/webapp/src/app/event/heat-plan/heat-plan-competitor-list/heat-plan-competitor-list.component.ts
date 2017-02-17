@@ -1,7 +1,8 @@
+import { HeatPlan } from '../heat-plan';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Division } from '../../../model/division';
-import { Competitor } from '../../../model/model';
+import { Competition, Competitor } from '../../../model/model';
 
 @Component({
     selector: 'heat-plan-competitor-list',
@@ -11,15 +12,24 @@ import { Competitor } from '../../../model/model';
 export class HeatPlanCompetitorListComponent {
 
     @Input()
-    public competitors: Competitor[];
+    public plan: HeatPlan;
 
     @Input()
-    public divisions: Division[];
+    public competition: Competition;
 
-    @Output()
-    public onAssignRequested: EventEmitter<Competitor> = new EventEmitter();
+    public get divisions(): Division[] {
+        return this.competition.divisions;
+    }
 
-    public assignToHeat(competitor: Competitor) {
-        this.onAssignRequested.emit(competitor);
+    public get competitors(): Competitor[] {
+        let assignedIds = this.plan.heats.map((h) => h.competitors)
+            .reduce((p, c) => {
+            p.push(...c);
+            return p;
+        }, []).map((c) => c.id);
+
+        return this.competition.competitors.filter((competitor) => {
+            return assignedIds.indexOf(competitor.id) < 0;
+        });
     }
 }

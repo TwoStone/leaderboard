@@ -1,3 +1,4 @@
+import { DragulaModule } from 'ng2-dragula/components/dragular.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FilterByDivisionPipe } from './filter-by-division.pipe';
@@ -6,6 +7,7 @@ import { HeatPlanCompetitorListComponent } from './heat-plan-competitor-list.com
 @NgModule({
     imports: [
         CommonModule,
+        DragulaModule
     ],
     declarations: [
         FilterByDivisionPipe,
