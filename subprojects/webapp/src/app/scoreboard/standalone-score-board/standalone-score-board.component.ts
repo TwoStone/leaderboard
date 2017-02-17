@@ -1,14 +1,11 @@
-import { StandaloneScoreBoardModule } from './standalone-score-board.module';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { AbstractCompetitionComponent } from '../../competition/shared/abstract-competition.component';
-import { Component, EventEmitter, Inject, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RankingService } from '../../services/ranking.service';
-import { CompetitionService } from '../../services/competition.service';
-import { Competition } from '../../model/competition';
-import { RankedCompetitionScore } from '../../model/ranked-competition-score';
-import { Event } from '../../model/event';
 import { Division } from '../../model/division';
+import { Event } from '../../model/event';
+import { RankedCompetitionScore } from '../../model/ranked-competition-score';
+import { RankingService } from '../../services/ranking.service';
 
 @Component({
     selector: 'standalone-score-board',
@@ -25,7 +22,6 @@ export class StandaloneScoreBoardComponent extends AbstractCompetitionComponent 
     private division: Observable<Division>;
 
     constructor(
-        private competitionService: CompetitionService,
         private rankingService: RankingService,
         private router: Router,
         route: ActivatedRoute) {
@@ -85,7 +81,7 @@ export class StandaloneScoreBoardComponent extends AbstractCompetitionComponent 
     }
 
     private scrollFinished() {
-        console.log("Scrolling finished");
+
         setTimeout(() => {
             this.nextDivision.subscribe((d) => {
                 let queryParams = {};

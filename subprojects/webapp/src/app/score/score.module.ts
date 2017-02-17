@@ -1,9 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
-import { ScoreComponent } from './score.component';
 import { EditScoreComponent } from './edit-score.component';
+import { ScoreComponent } from './score.component';
 
 import { PipesModule } from '../pipes/pipes.module';
 

@@ -105,17 +105,6 @@ public class ScoreManager {
    * Adds a new score or updates an existing score.
    */
   public Score addScore(Score score) {
-//    Iterable<Score> oldScore = this.scoreRepository.findByEventAndCompetitor(event, competitor);
-//
-//    Score score;
-//    if (!Iterables.isEmpty(oldScore)) {
-//      score = oldScore.iterator().next();
-//      score.setParts(parts);
-//      score.setScaled(scaled);
-//    } else {
-//      score = new Score(event, competitor, scaled);
-//    }
-//
     return this.scoreRepository.save(score);
   }
 

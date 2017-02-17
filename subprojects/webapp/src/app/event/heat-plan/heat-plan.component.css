@@ -1,0 +1,8 @@
+ /*component css goes here*/
+.align-right {
+    text-align: right;
+}
+
+.action-row {
+    margin-bottom: 20px;
+}

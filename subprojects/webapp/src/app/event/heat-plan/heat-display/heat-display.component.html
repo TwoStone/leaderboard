@@ -1,0 +1,37 @@
+<!--component html goes here -->
+<div class="panel" [ngClass]="displayState">
+    <div class="panel-heading">
+        <h3 class="panel-title">Heat {{num}}
+            <span class="pull-right unselectable">
+                <span class="label label-warning division-label" *ngFor="let d of heatDivisions">
+                    {{d}}
+                </span>
+                <span class="badge">
+                    {{ emptyLanes }}
+                </span>
+                <i class="fa fa-arrow-up clickable" (click)="moveUp()"></i>
+                <i class="fa fa-arrow-down clickable" (click)="moveDown()"></i>
+                <i class="fa fa-remove clickable" (click)="removeHeat()"></i>
+            </span>
+        </h3>
+    </div>
+    <ul class="list-group" [dragula]="'heats-bag'" [dragulaModel]="heat.competitors">
+        <li class="list-group-item" *ngFor="let competitor of heat.competitors; let lane = index">
+            <span class="lane-number">
+                {{lane + 1}}
+            </span> 
+            {{ competitor.name }}
+            <span class="pull-right">
+                <i class="fa fa-remove clickable" (click)="remove(competitor)"></i>
+            </span>
+        </li>
+        <li class="list-group-item text-muted no-drag" *ngIf="heat.competitors?.length === 0">
+            Drop competitor here
+        </li>
+    </ul>
+    <ul class="list-group" *ngIf="emptyLanes > 0">
+        <li class="list-group-item" *ngFor="let emptyLane of emptyLanesArray">
+            Empty lane
+        </li>
+    </ul>
+</div>

@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import { Headers, Http, URLSearchParams } from '@angular/http';
 
 import * as Rx from 'rxjs';
 
 import {
-    Event,
-    Competition,
-    Competitor,
     Score
 } from '../model/model';
 

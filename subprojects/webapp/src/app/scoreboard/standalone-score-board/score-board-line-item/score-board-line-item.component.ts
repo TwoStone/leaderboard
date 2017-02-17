@@ -1,6 +1,6 @@
-import { RankedCompetitionScore } from '../../../model/model';
-import { Observable } from 'rxjs/Observable';
 import { Component, Input } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { RankedCompetitionScore } from '../../../model/model';
 
 import { Event } from '../../../model/event';
 

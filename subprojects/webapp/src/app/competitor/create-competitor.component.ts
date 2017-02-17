@@ -1,16 +1,16 @@
 import {
     Component,
+    EventEmitter,
     OnInit,
-    Output,
-    EventEmitter
+    Output
 } from '@angular/core';
 
 import {
-    ModelService,
-    Division
+    Division,
+    ModelService
 } from '../model/model';
 
-import { CompetitionService, NewCompetitor } from '../services/competition.service';
+import { CompetitionService, NewCompetitor } from '../competition/competition.service';
 
 class CompetitorModel implements NewCompetitor {
     name: string;
@@ -49,7 +49,7 @@ class CompetitorModel implements NewCompetitor {
 })
 export class CreateCompetitorComponent implements OnInit {
 
-    divisions: Array<Division>;
+    divisions: Division[];
     model: CompetitorModel;
 
     @Output() onCreated = new EventEmitter();
@@ -61,13 +61,13 @@ export class CreateCompetitorComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.service.onCompetitionUpdate.subscribe(comp => {
+        this.service.onCompetitionUpdate.subscribe((comp) => {
             this.divisions = comp.divisions;
         });
     }
 
     onSubmit() {
-        this.competitionService.addCompetitor(this.service.competition, this.model).subscribe(competitor => {
+        this.competitionService.addCompetitor(this.service.competition, this.model).subscribe((competitor) => {
             this.service.updateModel();
             this.onCreated.emit(competitor);
             this.model = new CompetitorModel();

@@ -37,7 +37,11 @@
         "no-duplicate-variable": true,
         "no-eval": true,
         "no-internal-module": true,
+        "no-string-literal": false,
         "no-trailing-whitespace": true,
+        "no-unused-variable": [
+            true
+        ],
         "no-var-keyword": true,
         "one-line": [
             true,
@@ -49,7 +53,7 @@
             "single"
         ],
         "object-literal-sort-keys": false,
-        "ordered-imports": false,
+        "ordered-imports": true,
         "semicolon": false,
         "triple-equals": [
             true,

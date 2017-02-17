@@ -1,16 +1,15 @@
 import {
     Component,
-    OnInit,
-    ViewChild
+    OnInit
 } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
 import {
-    ModelService,
+    Division,
     Event,
-    Score,
-    Division
+    ModelService,
+    Score
 } from '../model/model';
 
 import { ScoreService } from '../services/score.service';

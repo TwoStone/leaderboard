@@ -5,22 +5,14 @@ import {
 
 import {
     CompetitionService,
-} from '../services/competition.service';
+} from '../competition/competition.service';
 
 import {
-    ModelService,
     Competition,
     Division,
-    Event
+    Event,
+    ModelService
 } from '../model/model';
-
-import {
-    EventScoreBoard
-} from './eventscoreboard.component';
-
-import {
-    CompetitionScoreboard
-} from './competitionscoreboard.component';
 
 interface ScoreQuery {
     event: number;

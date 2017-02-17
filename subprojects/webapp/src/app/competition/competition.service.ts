@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Headers, Http } from '@angular/http';
+
 import {
     Competition,
-    Division,
     Competitor,
-    Event
+    Division
 } from '../model/model';
 
 import * as Rx from 'rxjs';
@@ -24,8 +24,6 @@ export interface NewCompetitor {
 
 @Injectable()
 export class CompetitionService {
-
-    private baseUrl = '/api/competitions';
 
     constructor(private http: Http) {
         this.http = http;

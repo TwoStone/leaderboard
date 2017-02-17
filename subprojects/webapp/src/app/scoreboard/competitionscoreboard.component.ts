@@ -1,23 +1,18 @@
 import {
     Component,
-    OnChanges,
     Input,
-    ViewEncapsulation
+    OnChanges
 } from '@angular/core';
-
-import {
-    NgFor
-} from '@angular/common';
 
 import {
     RankingService
 } from '../services/ranking.service';
 
 import {
-    RankedCompetitionScore,
-    RankedEventScore,
+    Event,
     ModelService,
-    Event
+    RankedCompetitionScore,
+    RankedEventScore
 } from '../model/model';
 
 @Component({
@@ -85,15 +80,15 @@ export class CompetitionScoreboard implements OnChanges {
     events: Event[];
 
     constructor(private rankingService: RankingService,
-        private modelService: ModelService) {
-        modelService.onCompetitionUpdate.subscribe(competition => {
+                private modelService: ModelService) {
+        modelService.onCompetitionUpdate.subscribe((competition) => {
             this.events = competition.events;
         });
     }
 
     ngOnChanges() {
         if (this.competitionId && this.divisionId) {
-            this.rankingService.getRankingForCompetition(this.competitionId, this.divisionId).subscribe(rankings => {
+            this.rankingService.getRankingForCompetition(this.competitionId, this.divisionId).subscribe((rankings) => {
                 this.rankings = rankings;
             });
         }

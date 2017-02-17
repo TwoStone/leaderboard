@@ -76,7 +76,6 @@ module.exports = {
       $: 'jquery',
       'window.jquery': 'jquery'
     }),
-
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       favicon: 'src/favicon.ico'

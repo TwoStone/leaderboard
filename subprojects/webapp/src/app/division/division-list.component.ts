@@ -1,9 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-
-import { Division, Competition, ModelService } from '../model/model';
-import { CompetitionService } from '../services/competition.service';
-
-import { CreateDivisionComponent } from './create-division.component';
+import { Division, ModelService } from '../model/model';
 
 @Component({
     selector: 'division-item',
@@ -21,13 +17,13 @@ export class DivisionListItemComponent {
 })
 export class DivisionListComponent implements OnInit {
 
-    divisions: Array<Division>;
+    divisions: Division[];
 
     constructor(private model: ModelService) {
     }
 
     ngOnInit() {
-        this.model.onCompetitionUpdate.subscribe(comp => {
+        this.model.onCompetitionUpdate.subscribe((comp) => {
             this.divisions = comp.divisions
         });
     }

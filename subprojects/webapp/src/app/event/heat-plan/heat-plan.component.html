@@ -1,0 +1,53 @@
+
+<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="page-header">
+                <h1>{{plan.event.name}}</h1>
+            </div>
+        </div> 
+    </div>
+    <div class="row action-row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-inline">
+            <button type="button" class="btn btn-primary" (click)="addHeat()">Add heat</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Actions<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a (click)="fillByRanking()" >Fill by current ranking</a></li>
+                    <li><a (click)="copyFromPrevious()">Copy from previous</a></li>
+                    <!--<li><a (click)="merge()">Merge</a></li>-->
+                </ul>
+            </div>
+            <button type="button" class="btn btn-success" (click)="saveHeats()">Save</button>
+            <div class="form-group">
+                <label for="heat-size" class="control-label">Heat size</label>
+                <input type="number" name="heat-size" class="form-control" min="1" max="99"required="required" [(ngModel)]="plan.heatSize" >
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <heat-display *ngFor="let heat of plan.heats; let i = index" 
+                [heat]="heat" 
+                [divisions]="competition.divisions"
+                [num]="i + 1" 
+                [size]="plan.heatSize"
+                (onMoveUp)="moveHeatUp($event)"
+                (onMoveDown)="moveHeatDown($event)"
+                (onRemove)="removeHeat($event)">
+            </heat-display>
+        </div>
+    </div>    
+</div>
+
+<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+    <heat-plan-competitor-list 
+        [plan]="plan" 
+        [competition]="competition"
+        (onAssignRequested)="requestHeatAssignment($event)">
+    </heat-plan-competitor-list>
+</div>
+
+

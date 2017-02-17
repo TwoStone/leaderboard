@@ -1,7 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-
 import { Observable } from 'rxjs';
-
 import { Competition } from '../../model/model';
 
 export abstract class AbstractCompetitionComponent {

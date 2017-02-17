@@ -1,29 +1,13 @@
 import {
      Component,
-     Input,
-     Output,
-     EventEmitter,
-     ElementRef,
-     ComponentRef,
-     ComponentFactoryResolver,
-     OnInit,
-     Type,
-     ViewChild,
-     ViewContainerRef
+     OnInit
 } from '@angular/core';
-import {  } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import * as jQuery from 'jquery';
-import * as moment from 'moment';
-import { Observable } from 'rxjs';
-
 import { ModelService } from '../model/model';
-import { ScoreService } from '../services/score.service';
 import { Score } from '../model/model';
 import { PartialScore } from '../model/partial-score';
-import { ScoreIngredient } from '../model/score-ingredient';
-import { ScoreIngredientType } from '../model/score-ingredient-type';
+import { ScoreService } from '../services/score.service';
 
 @Component({
     templateUrl: './edit-score.component.html',
