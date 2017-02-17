@@ -1,20 +1,45 @@
 spring:
+  profiles:
+    active:
+    - prod
   jpa:
     generate-ddl: true
   application:
-    name: Leaderboard
+    name: LeaderBoard - Dev
 
 server:
-  port: 8080
-    
----
+  port: ${port:8080}
 
+---
+spring.profiles: 
+  prod
+spring.profiles.include:
+    - prod-db
+    - prod-logging
 spring:
-  profiles: prod
+  application:
+    name: LeaderBoard
   devtools:
     livereload:
       enabled: false
     restart:
       enabled: false
+      
+leaderboard:
+  home: ~/.leaderboard/data
+---
+spring:
+  profiles: prod-db
+  datasource:
+    url: jdbc:h2:file:${leaderboard.home}/db/leaderboard;DB_CLOSE_ON_EXIT=FALSE
+      
+---
+spring:
+  profiles: prod-logging
+  
 logging:
-  path: ./logs    
+  path: ${leaderboard.home}/logs
+  
+   
+
+

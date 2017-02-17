@@ -13,12 +13,14 @@ import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 @Service
+@Profile("default")
 public class BootstrapDataPopulator implements InitializingBean {
 
   private Logger log = LoggerFactory.getLogger(BootstrapDataPopulator.class);

@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "leaderboard.home",
+  "type": "java.lang.String",
+  "description": "Home directory for the application data"
+}]}
