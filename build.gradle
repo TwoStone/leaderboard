@@ -19,7 +19,6 @@ tasks.withType(AbstractCompile) {
 
 archivesBaseName = 'leaderboard'
 
-version = "1.0.3-SNAPSHOT"
 group = 'com.github.twostone.leaderboard'
 
 repositories {
@@ -76,4 +75,10 @@ check.dependsOn jacocoTestReport
 
 task wrapper(type: Wrapper) {
   gradleVersion = '3.3'
+}
+
+release {
+  git {
+    requireBranch = '(release/\\d+\\.\\d+\\.\\d+)'
+  }
 }
