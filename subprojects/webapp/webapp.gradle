@@ -22,7 +22,9 @@ sourceSets {
 }
 
 jar {
-	from (distDir) {	}
+	from (distDir) {	
+		into 'META-INF/resources'
+	}
 }
 
 task cleanDist(type: Delete) {
