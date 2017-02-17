@@ -15,8 +15,9 @@
                     Actions<span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Sort by current ranking</a></li>
-                    <li><a href="#">Use from previous</a></li>
+                    <li><a (click)="fillByRanking()" >Fill by current ranking</a></li>
+                    <li><a (click)="copyFromPrevious()">Copy from previous</a></li>
+                    <!--<li><a (click)="merge()">Merge</a></li>-->
                 </ul>
             </div>
             <button type="button" class="btn btn-success" (click)="saveHeats()">Save</button>

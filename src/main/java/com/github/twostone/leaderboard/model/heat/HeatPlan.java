@@ -23,7 +23,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @ToString
 @Entity
-public class HeatPlan extends AbstractEntity {
+public class HeatPlan extends AbstractEntity { 
 
   @NonNull
   @OneToMany(cascade = CascadeType.ALL)

@@ -85,4 +85,22 @@ export class HeatPlanComponent implements OnInit, OnDestroy {
     public removeHeat(heat: Heat) {
         this.plan.heats.splice(this.plan.heats.indexOf(heat), 1);
     }
+
+    public fillByRanking() {
+        this.heatService.fillByRanking(this.competition.id, this.plan).subscribe((p) => {
+            this.plan = p;
+        });
+    }
+
+    public copyFromPrevious() {
+        this.heatService.copyFromPreviousEvent(this.competition.id, this.plan).subscribe((p) =>{
+            this.plan = p;
+        });
+    }
+
+    public merge() {
+        this.heatService.merge(this.competition.id, this.plan).subscribe((p) => {
+            this.plan = p;
+        });
+    }
 }

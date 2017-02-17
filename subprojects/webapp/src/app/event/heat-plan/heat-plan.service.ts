@@ -21,4 +21,19 @@ export class HeatPlanService {
             })
         }).map((res) => res.json());
     }
+
+    public copyFromPreviousEvent(competitionId: number, plan: HeatPlan): Observable<HeatPlan> {
+        return this.http.post(`api/competitions/${competitionId}/events/${plan.event.id}/heats/copy`,
+            JSON.stringify(plan)).map((res) => res.json());
+    }
+
+    public fillByRanking(competitionId: number, plan: HeatPlan) {
+        return this.http.post(`api/competitions/${competitionId}/events/${plan.event.id}/heats/byRank`,
+            JSON.stringify(plan)).map((res) => res.json());
+    }
+
+    public merge(competitionId: number, plan: HeatPlan) {
+        return this.http.post(`api/competitions/${competitionId}/events/${plan.event.id}/heats/merge`,
+            JSON.stringify(plan)).map((res) => res.json());
+    }
 }

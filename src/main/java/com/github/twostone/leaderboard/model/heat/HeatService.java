@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -34,6 +35,21 @@ public class HeatService {
   @PostMapping
   public HeatPlan saveHeatPlan(@RequestBody final HeatPlan plan) {
     return this.heatManager.save(plan);
+  }
+  
+  @PostMapping("byRank")
+  public HeatPlan fillByRanking(@PathVariable("id") long competitionId, @RequestBody final HeatPlan plan) {
+    return this.heatManager.fillByRanking(competitionId, plan);
+  }
+  
+  @PostMapping("copy")
+  public HeatPlan copyFromPrevious(@PathVariable("id") long competitionId, @RequestBody final HeatPlan plan) {
+    return this.heatManager.copyFromPrevious(competitionId, plan);
+  }
+  
+  @PostMapping("merge")
+  public HeatPlan merge(@RequestBody HeatPlan plan, @RequestParam(value = "mergeDivisions", defaultValue = "false") boolean mergeDivisions) {
+    return this.heatManager.mergeHeats(plan, mergeDivisions);
   }
 
 }
