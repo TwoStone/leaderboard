@@ -15,7 +15,7 @@ export class EditEventComponent implements OnInit {
     public ScoreIngredientType = ScoreIngredientType;
     private competitionId: number;
 
-    constructor(
+    constructor( 
         private eventService: EventService,
         private route: ActivatedRoute,
         private router: Router,
@@ -54,6 +54,7 @@ export class EditEventComponent implements OnInit {
 
     public onSubmit() {
         this.eventService.saveEvent(this.competitionId, this.event).subscribe((event) => {
+            this.modelService.updateModel();
             this.router.navigate(['../../events'], { relativeTo: this.route });
         });
     }
