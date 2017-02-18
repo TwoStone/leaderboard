@@ -10,7 +10,7 @@
     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
         <h2>{{ ranking.competitor.name }}</h2>
         <p > 
-            <span class="label label-primary event-score" [ngClass]="{ 'label-default': score.score.notSet, 'label-primary': !score.score.notSet }" *ngFor="let score of ranking.eventScores">
+            <span class="label label-primary event-score" [ngClass]="{ 'label-default': score.score.notSet, 'label-primary': !score.score.notSet }" *ngFor="let score of ranking.eventScores | filterNotSet">
                 {{ score.score.event.name }}: {{ score.rank }} ({{ score.score | scoreToString:"-" }})
             </span>
         </p>     

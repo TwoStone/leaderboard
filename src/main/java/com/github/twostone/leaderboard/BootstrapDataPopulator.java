@@ -53,22 +53,16 @@ public class BootstrapDataPopulator implements InitializingBean {
     Division eliteDivision = this.competitionService.addDivision(competition.getId(), "Elite");
     Division scaledDivision = this.competitionService.addDivision(competition.getId(), "Scaled");
 
-    
+
     for (int i = 1; i <= 30; i++) {
       this.competitionService.registerCompetitor(competition.getId(),
           this.createRegisterRequest(eliteDivision, "Elite Team " + i));
     }
-    
-    this.competitionService.registerCompetitor(competition.getId(),
-        this.createRegisterRequest(scaledDivision, "Scaled Team 1"));
-    this.competitionService.registerCompetitor(competition.getId(),
-        this.createRegisterRequest(scaledDivision, "Scaled Team 2"));
-    this.competitionService.registerCompetitor(competition.getId(),
-        this.createRegisterRequest(scaledDivision, "Scaled Team 3"));
-    this.competitionService.registerCompetitor(competition.getId(),
-        this.createRegisterRequest(scaledDivision, "Scaled Team 4"));
-    this.competitionService.registerCompetitor(competition.getId(),
-        this.createRegisterRequest(scaledDivision, "Scaled Team 5"));
+
+    for (int i = 1; i <= 30; i++) {
+      this.competitionService.registerCompetitor(competition.getId(),
+          this.createRegisterRequest(scaledDivision, "Scaled Team " + i));
+    }
 
     ScoreIngredient forTime =  new ScoreIngredient();
     forTime.setName("time");
