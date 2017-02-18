@@ -53,6 +53,8 @@ export class StandaloneScoreBoardComponent extends AbstractCompetitionComponent 
         });
 
         this.rankings.subscribe((r) => {
+            // Reset scrolling position
+            $('.score-container').scrollTop(0);
             setTimeout(() => {
                 let totalHeight = $('.score-container').height()
                 let itemHeight = $('.score-row').first().height();
