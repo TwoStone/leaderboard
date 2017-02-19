@@ -19,15 +19,16 @@ import {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Score</th>
                         <th>Rank</th>
+                        <th>Score</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let score of scores">
                         <td>{{ score.score.competitor.name }}</td>
-                        <td>{{ score.score | scoreToString:"-" }}</td>
                         <td>{{ score.rank }}</td>
+                        <td>{{ score.score | scoreToString:"-" }}</td>
                     </tr>
                 </tbody>
             </table>

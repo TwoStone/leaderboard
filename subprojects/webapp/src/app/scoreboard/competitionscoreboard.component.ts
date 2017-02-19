@@ -50,21 +50,21 @@ class EventScore {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th *ngFor="let event of events">
-                            {{ event. name }} - Rank
-                        </th>
-                        <th>Score</th>
                         <th>Rank</th>
+                        <th>Score</th>
+                        <th *ngFor="let event of events">
+                            {{ event. name }}
+                        </th>
                     </tr>
                 </thead>   
                 <tbody>
                     <tr *ngFor="let ranking of rankings">
                         <td>{{ ranking.competitor.name }}</td>
+                        <td>{{ ranking.rank }}</td>
+                        <td>{{ ranking.score }}</td>
                         <td *ngFor="let score of ranking.eventScores">
                             {{ score.rank }} ({{ score.score | scoreToString:"-" }})
                         </td> 
-                        <td>{{ ranking.score }}</td>
-                        <td>{{ ranking.rank }}</td>
                     </tr>
                 </tbody>
             </table>
